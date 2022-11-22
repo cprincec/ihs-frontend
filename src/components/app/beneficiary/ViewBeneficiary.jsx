@@ -141,6 +141,7 @@ const ViewBeneficiary = () => {
 					</div>
 					<div className="flex justify-between items-center mt-10">
 						<h2 className="md:text-2xl text-xl">Appointments</h2>
+						<button className="py-3 md:px-4 px-2" onClick={() => navigate('/appointments/bookappointment')}>Book Appointment</button>
 					</div>
 
 					<hr className="my-10"/>
