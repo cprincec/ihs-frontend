@@ -36,7 +36,7 @@ const Sidebar = () => {
 
 		localStorage.clear();
 
-		navigate('/');
+		navigate('/signin');
 	}
 
 	const displayLinks = (links) => {

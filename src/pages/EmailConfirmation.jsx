@@ -1,5 +1,7 @@
 import React from 'react';
+import Navbar from "../components/website/globals/Navbar";
 import EmailConfirmed from "../components/app/EmailConfirmed";
+import Footer from "../components/website/globals/Footer";
 import {Helmet, HelmetProvider} from "react-helmet-async";
 
 const EmailConfirmation = () => {
@@ -11,7 +13,9 @@ const EmailConfirmation = () => {
 					<link rel="canonical" href="https://www.ihsmdinc.com/" />
 				</Helmet>
 				<>
+					<Navbar />
 					<EmailConfirmed />
+					<Footer />
 				</>
 			</>
 		</HelmetProvider>

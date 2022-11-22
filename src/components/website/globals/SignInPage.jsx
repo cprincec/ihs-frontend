@@ -7,7 +7,7 @@ const SignInPage = () => {
 	return (
 		<div className="py-20">
 			<div className="flex flex-col justify-center items-center py-4">
-				<a href="https://ihsmdinc.com"><img src={Logo} className="w-44 lg:w-56" alt="ihs-logo"/></a>
+				<img src={Logo} className="w-44 lg:w-56" alt="ihs-logo"/>
 				<h1 className="md:text-4xl text-2xl text-ihs-green pt-20">Sign in to your account</h1>
 				<p className="text-sm py-2">Don't have an account? <span className="text-ihs-green hover:underline"><Link to="/signup">Sign Up</Link></span></p>
 			</div>

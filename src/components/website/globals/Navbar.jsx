@@ -49,7 +49,7 @@ const Navbar = () => {
 						(
 							<div className="font-semibold hidden md:flex pr-4">
 								<button className="bg-transparent border-0 text-gray-800 md:px-7 md:py-3" onClick={() => {
-									navigate('/')
+									navigate('/signin')
 								}}>Sign In</button>
 								<button className="px-8 py-3" onClick={() => {
 									navigate('/signup')
@@ -103,7 +103,7 @@ const Navbar = () => {
 					(
 						<div className="flex flex-col my-4">
 							<button className="bg-transparent text-ihs-green px-8 py-3 mb-4" onClick={() => {
-								navigate('/'); handleNav(); return scrollToTop
+								navigate('/signin'); handleNav(); return scrollToTop
 							}}>
 								Sign In
 							</button>
