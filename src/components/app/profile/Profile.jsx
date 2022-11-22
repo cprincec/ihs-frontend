@@ -52,7 +52,7 @@ const Profile = () => {
 			} catch (err){
 				// if status is 401 then redirect to signin page
 				if (err?.response?.status === 401) {
-					navigate('/', {state: {from: location}, replace: true});
+					navigate('/signin', {state: {from: location}, replace: true});
 				}
 				console.error(err)
 			}
@@ -81,7 +81,7 @@ const Profile = () => {
 
 		setAuth({});
 		localStorage.clear();
-		navigate('/');
+		navigate('/signin');
 	}
 
 	const handlePortal = async (e) => {

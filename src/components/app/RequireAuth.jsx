@@ -10,7 +10,7 @@ const RequireAuth = ({allowedUserTypes}) => {
 			? <Outlet />
 			: auth?.accessToken
 				? <Navigate to="/unauthorized" state={{from: location}} replace />
-				: <Navigate to="/" state={{from: location}} replace />
+				: <Navigate to="/signin" state={{from: location}} replace />
 	);
 };
 

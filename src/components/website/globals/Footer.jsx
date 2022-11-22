@@ -24,7 +24,7 @@ const Footer = () => {
 							<button className="p-4 text-lg shadow-md md:w-44 text-base"
 											onClick={() =>{navigate("/signup")}}>Get Started</button>
 							<button className="bg-ihs-blue p-4 text-lg shadow-md hover:text-ihs-blue hover:border-ihs-blue text-base"
-											onClick={() =>{navigate("/")}}>Sign In</button>
+											onClick={() =>{navigate("/signin")}}>Sign In</button>
 						</div>
 					</div>
 
