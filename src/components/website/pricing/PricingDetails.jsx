@@ -11,6 +11,10 @@ TopBarProgress.config({
 	shadowBlur: 5
 });
 
+const biweeklyPricing = process.env.REACT_APP_BIWEEKLY_PRICING;
+const monthlyPricing = process.env.REACT_APP_MONTHLY_PRICING;
+const yearlyPricing = process.env.REACT_APP_YEARLY_PRICING;
+
 const PricingDetails = () => {
 	const axiosPrivate = useAxiosPrivate();
 	const [priceId, setPriceId] = useState('');
@@ -84,9 +88,12 @@ const PricingDetails = () => {
 							</span>
 						</h4>
 
-						<form onSubmit={handleCheckout} onFocus={(e) => setPriceId("price_1LyxXsIGWAGjsS3FsxeZJGoG")}>
-							<input type="hidden" name="priceId" id="priceId" value="price_1LyxXsIGWAGjsS3FsxeZJGoG" />
-							<button disabled={beneficiarySubscriptionStatus} className="disabled:bg-slate-400 disabled:border-slate-200 disabled:hover:text-white bg-ihs-green w-full px-4 py-2 mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform rounded-md focus:outline-none ">
+						<form onSubmit={handleCheckout}>
+							<button disabled={beneficiarySubscriptionStatus}
+											className="disabled:bg-slate-400 disabled:border-slate-200
+											disabled:hover:text-white bg-ihs-green w-full px-4 py-2 mt-10
+											font-medium tracking-wide text-white capitalize transition-colors
+											duration-200 transform rounded-md focus:outline-none" onClick={() => setPriceId(biweeklyPricing)}>
 								Subscribe
 							</button>
 						</form>
@@ -99,9 +106,11 @@ const PricingDetails = () => {
 							className="font-light text-sm text-gray-600 capitalize">/ Beneficiary
 						</span></h4>
 
-						<form onSubmit={handleCheckout} onFocus={(e) => setPriceId("price_1LyxXlIGWAGjsS3FOgUK9mtv")}>
-							<input type="hidden" name="priceId" id="priceId" value="price_1LyxXlIGWAGjsS3FOgUK9mtv" />
-							<button disabled={beneficiarySubscriptionStatus} className="disabled:bg-slate-400 disabled:border-slate-200 disabled:hover:text-white bg-ihs-green w-full px-4 py-2 mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform rounded-md focus:outline-none ">
+						<form onSubmit={handleCheckout}>
+							<button disabled={beneficiarySubscriptionStatus}
+											className="disabled:bg-slate-400 disabled:border-slate-200 disabled:hover:text-white
+											bg-ihs-green w-full px-4 py-2 mt-10 font-medium tracking-wide text-white capitalize
+											transition-colors duration-200 transform rounded-md focus:outline-none " onClick={() => setPriceId(monthlyPricing	)}>
 								Subscribe
 							</button>
 						</form>
@@ -114,9 +123,11 @@ const PricingDetails = () => {
 							className="font-light text-sm text-gray-600 capitalize">/ Beneficiary
 						</span></h4>
 
-						<form onSubmit={handleCheckout} onFocus={(e) => setPriceId("price_1LyxWsIGWAGjsS3FApAVIdPc")}>
-							<input type="hidden" name="priceId" id="priceId" value="price_1LyxWsIGWAGjsS3FApAVIdPc" />
-							<button disabled={beneficiarySubscriptionStatus} className="disabled:bg-slate-400 disabled:border-slate-200 disabled:hover:text-white bg-ihs-green w-full px-4 py-2 mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform rounded-md focus:outline-none ">
+						<form onSubmit={handleCheckout}>
+							<button disabled={beneficiarySubscriptionStatus}
+											className="disabled:bg-slate-400 disabled:border-slate-200 disabled:hover:text-white
+											bg-ihs-green w-full px-4 py-2 mt-10 font-medium tracking-wide text-white capitalize
+											transition-colors duration-200 transform rounded-md focus:outline-none " onClick={() => setPriceId(yearlyPricing	)}>
 								Subscribe
 							</button>
 						</form>
