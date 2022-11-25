@@ -202,7 +202,7 @@ const Terms = () => {
 								Either Party may terminate this Agreement for any reason at any time with 14 days’ written notice.
 							</li>
 							<li>
-								The User understands and acknowledges that the Services’ fees are non-refundable and non- transferable without exception.
+								The User understands and acknowledges that the Services’ fees ($1200 USD) are final, non-refundable and non-transferable without exception; collection of outstanding fees apply upon termination.
 							</li>
 						</ol>
 					</li>

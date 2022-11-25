@@ -17,10 +17,22 @@ const Faq = () => {
 							</summary>
 							<div className="bg-white px-5 py-3 border border-gray-100 lg:text-xl text-gray-500 ">
 								<p>
-									The IHS Services & Coverage cost $50 bi-weekly per term (1 Year).
+									The IHS Services & Coverage cost $50 bi-weekly / $100 monthly / $1200 annually per term (1 Year).
 								</p>
 							</div>
 						</details>
+
+						<details className="bg-white border rounded-md open:bg-gray-50 duration-300 my-2">
+							<summary className="bg-inherit text-gray-800 px-5 py-3 lg:text-xl cursor-pointer">
+								What happens if I cancel mid-term?
+							</summary>
+							<div className="bg-white px-5 py-3 border border-gray-100 lg:text-xl text-gray-500 ">
+								<p>
+									Each subscription runs for a year, and users are responsible for outstanding balances upon cancellation (see Section 9 of Terms).
+								</p>
+							</div>
+						</details>
+
 						<details className="bg-white border rounded-md open:bg-gray-100 duration-300 my-2">
 							<summary className="bg-inherit text-gray-800 px-5 py-3 lg:text-xl cursor-pointer">
 								Does IHS sub-contract to different Health Workers & Providers?
@@ -31,6 +43,7 @@ const Faq = () => {
 								</p>
 							</div>
 						</details>
+
 						<details className="bg-white border rounded-md open:bg-gray-100 duration-300 my-2">
 							<summary className="bg-inherit text-gray-800 px-5 py-3 lg:text-xl cursor-pointer">
 								Can my Beneficiaries keep their existing Doctor/Provider?
@@ -41,6 +54,7 @@ const Faq = () => {
 								</p>
 							</div>
 						</details>
+
 						<details className="bg-white border rounded-md open:bg-gray-100 duration-300 my-2">
 							<summary className="bg-inherit text-gray-800 px-5 py-3 lg:text-xl cursor-pointer">
 								To what extent is data collected, used and protected?
