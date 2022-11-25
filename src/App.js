@@ -1,7 +1,6 @@
 import React from 'react';
 import "@stripe/stripe-js";
 import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
 import ErrorPage from "./pages/ErrorPage";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -18,13 +17,16 @@ import PersistLogin from "./components/app/PersistLogin";
 import Service from "./components/app/service/Service";
 import AllAppointment from "./components/app/appointment/AllAppointment";
 import ResetPassword from "./pages/ResetPassword";
+import SignInPage from "./features/auth/SignInPage";
+import OldSignInPage from "./pages/SignIn";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="newSignin" element={<SignInPage />} />
         <Route path="signup" element={<SignUp />} />
-        <Route path="/" element={<SignIn />} />
+        <Route path="/" element={<OldSignInPage />} />
         <Route path="confirm/:confirmationCode" element={<EmailConfirmation />} />
         <Route path="reset-password" element={<ResetPassword />} />
         <Route element={<PersistLogin />}>

@@ -1,14 +1,15 @@
 import {useLocation, Navigate, Outlet} from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import {useSelector} from "react-redux";
 
 const RequireAuth = ({allowedUserTypes}) => {
-	const {auth} = useAuth();
+	const { accessToken, userType } = useSelector((state) => state.auth.userAccess)
+
 	const location = useLocation();
 
 	return (
-		auth?.userType && allowedUserTypes.includes(auth.userType)
+		userType && allowedUserTypes.includes(userType)
 			? <Outlet />
-			: auth?.accessToken
+			: accessToken
 				? <Navigate to="/unauthorized" state={{from: location}} replace />
 				: <Navigate to="/" state={{from: location}} replace />
 	);
