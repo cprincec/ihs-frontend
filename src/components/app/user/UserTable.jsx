@@ -23,7 +23,17 @@ const UserTable = () => {
 				const response = await axiosPrivate.get("/users/all");
 
 				const userList = response.data.data.filter(user => loggedInUser.id !== user.id);
-				setUsers(userList);
+				setUsers(userList.sort(
+					(a, b) => {
+						if (a.firstName < b.firstName) {
+							return -1;
+						}
+						if (a.firstName > b.firstName) {
+							return 1;
+						}
+						return 0;
+					})
+				);
 		}, [axiosPrivate, setUsers, loggedInUser.id]);
 
 		useEffect(() => {
@@ -36,16 +46,7 @@ const UserTable = () => {
 	const laptopTableData = useMemo(() => {
 		const firstPageIndex = (currentPage - 1) * laptopPageSize;
 		const lastPageIndex = firstPageIndex + laptopPageSize;
-		return users.slice(firstPageIndex, lastPageIndex).sort(
-			(a, b) => {
-				if (a.firstName < b.firstName) {
-					return -1;
-				}
-				if (a.firstName > b.firstName) {
-					return 1;
-				}
-				return 0;
-			})
+		return users.slice(firstPageIndex, lastPageIndex);
 	}, [currentPage, users]);
 
 	const mobileTableData = useMemo(() => {
