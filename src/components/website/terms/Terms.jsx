@@ -199,10 +199,10 @@ const Terms = () => {
 
 						<ol className="list-disc text-gray-500 font-thin">
 							<li>
-								Either Party may terminate this Agreement for any reason at any time with 14 days’ written notice.
+								Either Party may terminate this Agreement with written notice within 14 days from renewal.
 							</li>
 							<li>
-								The User understands and acknowledges that the Services’ fees ($1200 USD) are final, non-refundable and non-transferable without exception; collection of outstanding fees apply upon termination.
+								The User understands and acknowledges that the Service Fees ($1200 USD) are final, non-refundable and non-transferable without exception; collection of outstanding fees apply upon coverage cancellation.
 							</li>
 						</ol>
 					</li>

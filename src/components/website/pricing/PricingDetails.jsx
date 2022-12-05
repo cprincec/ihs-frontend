@@ -74,6 +74,9 @@ const PricingDetails = () => {
 					<div>
 						<h2 className="md:text-3xl text-xl font-bold text-gray-800">Transparent Pricing,</h2>
 						<p className="mt-1 text-gray-500 font-thin">No Hidden Fees.</p>
+						<p className="mt-1 text-gray-500 font-thin">Our service fees are $1200/term (annually) and we provide the below
+							payment options. Please contact us for multi-Beneficiary discounts,
+							clarifications and/or any required accommodation.</p>
 					</div>
 				</div>
 
