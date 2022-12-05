@@ -23,16 +23,8 @@ const UserTable = () => {
 				const response = await axiosPrivate.get("/users/all");
 
 				const userList = response.data.data.filter(user => loggedInUser.id !== user.id);
-				setUsers(userList.sort(
-					(a, b) => {
-						if (a.firstName < b.firstName) {
-							return -1;
-						}
-						if (a.firstName > b.firstName) {
-							return 1;
-						}
-						return 0;
-					})
+				setUsers(userList.sort((a, b) =>
+						a.firstName.localeCompare(b.firstName))
 				);
 		}, [axiosPrivate, setUsers, loggedInUser.id]);
 
