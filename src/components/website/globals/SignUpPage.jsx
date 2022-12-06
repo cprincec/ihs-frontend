@@ -7,7 +7,7 @@ const SignUpPage = () => {
 	return (
 		<div className="py-20 relative">
 			<div className="flex flex-col justify-center items-center py-4">
-				<img src={Logo} className="w-44 lg:w-56" alt="ihs-logo"/>
+				<a href="https://ihsmdinc.com"><img src={Logo} className="w-44 lg:w-56" alt="ihs-logo"/></a>
 				<h1 className="md:text-4xl text-2xl text-ihs-green pt-20">Create an account. It's free</h1>
 				<p className="text-lg py-2">Already have an account? <span className="text-ihs-green hover:underline"><Link to="/signin">Sign In</Link></span></p>
 			</div>

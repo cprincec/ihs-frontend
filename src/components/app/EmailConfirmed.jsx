@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import {BaseURL} from '../../api/axios';
 import TopBarProgress from "react-topbar-progress-indicator";
+import Logo from "../../assets/images/logo.svg";
 
 TopBarProgress.config({
 	barColors: {
@@ -44,8 +45,9 @@ const EmailConfirmed = () => {
 	return (
 		<>
 			{loading && <TopBarProgress />}
-			<div className="flex flex-col justify-center items-center py-4 md:py-56 pt-44 pb-20 relative">
-				{success ? <h1 className="md:text-4xl text-2xl text-ihs-green py-2">{successMessage}</h1>  : <h1 className="md:text-4xl text-2xl text-ihs-green py-2">{errMsg}</h1>}
+			<div className="flex flex-col justify-center items-center py-4 pt-20 pb-20 relative">
+				<a href="https://ihsmdinc.com"><img src={Logo} className="w-44 lg:w-56" alt="ihs-logo"/></a>
+				{success ? <h1 className="md:text-4xl text-2xl text-ihs-green pt-20">{successMessage}</h1>  : <h1 className="md:text-4xl text-2xl text-ihs-green pt-20">{errMsg}</h1>}
 				{!loading && <p className="text-lg py-2">Proceed to <span className="text-ihs-green hover:underline"><Link to="/signin">Sign In</Link></span></p>}
 			</div>
 		</>
