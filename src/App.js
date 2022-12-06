@@ -24,7 +24,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="signup" element={<SignUp />} />
-        <Route path="signin" element={<SignIn />} />
+        <Route path="/" element={<SignIn />} />
         <Route path="confirm/:confirmationCode" element={<EmailConfirmation />} />
         <Route path="reset-password" element={<ResetPassword />} />
         <Route element={<PersistLogin />}>

@@ -48,7 +48,7 @@ const EmailConfirmed = () => {
 			<div className="flex flex-col justify-center items-center py-4 pt-20 pb-20 relative">
 				<a href="https://ihsmdinc.com"><img src={Logo} className="w-44 lg:w-56" alt="ihs-logo"/></a>
 				{success ? <h1 className="md:text-4xl text-2xl text-ihs-green pt-20">{successMessage}</h1>  : <h1 className="md:text-4xl text-2xl text-ihs-green pt-20">{errMsg}</h1>}
-				{!loading && <p className="text-lg py-2">Proceed to <span className="text-ihs-green hover:underline"><Link to="/signin">Sign In</Link></span></p>}
+				{!loading && <p className="text-lg py-2">Proceed to <span className="text-ihs-green hover:underline"><Link to="/">Sign In</Link></span></p>}
 			</div>
 		</>
 	);
