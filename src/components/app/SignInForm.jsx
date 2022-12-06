@@ -59,7 +59,6 @@ const SignInForm = () => {
 				setErrMsg('No Server Response');
 				setLoading(false);
 			} else if (err.response) {
-				console.log(err.response);
 				setErrMsg(err.response.data.message.replace("Error: ", ""));
 				setLoading(false);
 			} else {
