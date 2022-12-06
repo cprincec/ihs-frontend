@@ -14,7 +14,7 @@ TopBarProgress.config({
 const LOGIN_URL = "/user/login";
 
 const SignInForm = () => {
-	const {setAuth, persist, setPersist} = useAuth();
+	const {auth, setAuth, persist, setPersist} = useAuth();
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -72,6 +72,12 @@ const SignInForm = () => {
 	const togglePersist = () => {
 		setPersist(prev => !prev)
 	}
+
+	useEffect(() => {
+		if (auth?.accessToken){
+			navigate("/dashboard");
+		}
+	})
 
 	useEffect(() => {
 		localStorage.setItem("persist", persist);

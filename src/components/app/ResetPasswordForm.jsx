@@ -36,11 +36,8 @@ const ResetPasswordForm = () => {
 			setEmail('');
 			setErrMsg('');
 
-			if (from === "/") {
-				navigate('/signin');
-			} else {
-				navigate(from, {replace: true});
-			}
+			navigate(from, {replace: true});
+
 		} catch (err) {
 			if (!err.response) {
 				setErrMsg('No Server Response');
