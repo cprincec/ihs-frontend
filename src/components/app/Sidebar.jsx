@@ -7,12 +7,16 @@ import {NavLink, useNavigate} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Modal from "./Modal";
 import axios from "../../api/axios";
+import {useDispatch} from "react-redux";
+import {storeAuthInfo} from "../../features/auth/authSlice";
 
 const activeLink = "flex w-70 items-center gap-5 text-lg text-ihs-green bg-ihs-green-shade-200 border border-0 border-r-2 border-r-ihs-green pl-5 py-2"
 const normalLink = "flex w-70 items-center gap-5 text-lg hover:bg-ihs-green-shade-100 border border-0 hover:border-r-2 hover:border-r-ihs-green pl-5 py-2"
 
 const Sidebar = () => {
-	const {auth, setAuth} = useAuth();
+	const dispatch = useDispatch();
+
+	const {auth,} = useAuth();
 	const navigate = useNavigate();
 	const [toggleModal, setToggleModal] = useState(false)
 
@@ -21,14 +25,18 @@ const Sidebar = () => {
 	}
 
 	const logout = async () => {
-		setAuth({});
+		dispatch(storeAuthInfo({
+			accessToken: '',
+			userType: '',
+		}));
+
 		await axios('/logout', {
 			withCredentials: true
 		});
 
 		localStorage.clear();
 
-		navigate('/newSignin');
+		navigate('/');
 	}
 
 	const displayLinks = (links) => {

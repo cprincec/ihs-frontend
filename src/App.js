@@ -24,9 +24,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="newSignin" element={<SignInPage />} />
+        {/*<Route path="newSignin" element={<SignInPage />} />*/}
         <Route path="signup" element={<SignUp />} />
-        <Route path="/" element={<OldSignInPage />} />
+        <Route path="/" element={<SignInPage />} />
         <Route path="confirm/:confirmationCode" element={<EmailConfirmation />} />
         <Route path="reset-password" element={<ResetPassword />} />
         <Route element={<PersistLogin />}>

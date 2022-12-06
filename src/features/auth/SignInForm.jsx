@@ -26,7 +26,7 @@ const SignInForm = () => {
 
 	useEffect(() => {
 		if (accessToken){
-			navigate("/newDashboard");
+			navigate("/dashboard");
 		}
 	})
 
