@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 import axios from '../../api/axios';
-import {Link} from "react-router-dom";
 import TopBarProgress from "react-topbar-progress-indicator";
 
 TopBarProgress.config({
@@ -180,7 +179,7 @@ const SignUpForm = () => {
 						</div>
 
 						<div className="flex justify-center">
-							<p className="text-lg pt-5 text-slate-500">By clicking Sign Up, you agree to to IHS’ <Link to="/terms" className="text-ihs-green">Terms of Use</Link> and <Link to="/privacy-policy" className="text-ihs-green">Privacy Policy.</Link></p>
+							<p className="text-lg pt-5 text-slate-500">By clicking Sign Up, you agree to to IHS’ <a href="https://ihsmdinc.com/terms" className="text-ihs-green">Terms of Use</a> and <a href="https://ihsmdinc.com/privacy-policy" className="text-ihs-green">Privacy Policy.</a></p>
 						</div>
 						<div>
 							<button
