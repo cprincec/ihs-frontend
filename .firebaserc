@@ -1,5 +1,10 @@
 {
   "projects": {
-    "default": "ihs-project"
-  }
+    "default": "ihs-project",
+    "dev": "ihs-dev-1972b",
+    "staging": "ihs-staging",
+    "prod": "ihs-project"
+  },
+  "targets": {},
+  "etags": {}
 }
