@@ -1,13 +1,13 @@
 import React, {Fragment} from 'react';
 import {Outlet} from "react-router-dom";
 import Logo from "../../assets/images/logo.svg";
-import useAuth from "../../hooks/useAuth";
 import {avatar} from "../../data/enums";
 import Avatar from "react-avatar";
 import Sidebar from "./Sidebar";
+import {useSelector} from "react-redux";
 
 const Layout = () => {
-	const {loggedInUser} = useAuth();
+	const loggedInUser = useSelector((state) => state.auth.loggedInUser);
 
 	return (
 		<div className="flex-1">

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";
 import BeneficiaryTable from "./beneficiary/BeneficiaryTable";
@@ -8,6 +8,8 @@ import {userRoles} from "../../data/enums";
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import TopBarProgress from "react-topbar-progress-indicator";
 import AllAppointmentsTable from "./appointment/AllAppointmentsTable";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchUserProfile, storeLoggedInUser} from "../../features/auth/authSlice";
 
 TopBarProgress.config({
 	barColors: {
@@ -19,51 +21,21 @@ TopBarProgress.config({
 const Dashboard = () => {
 	const navigate = useNavigate();
 	const axiosPrivate = useAxiosPrivate();
-	const location = useLocation();
 	const [loading, setLoading] = useState(false)
 	const [hasLoaded, setHasLoaded] = useState(false);
-	const {loggedInUser, setLoggedInUser, beneficiaries, appointments, auth, setAllAppointments, setBeneficiaries, setAppointments, metrics, setMetrics} = useAuth();
+	const {beneficiaries, appointments, auth, setAllAppointments, setBeneficiaries, setAppointments, metrics, setMetrics} = useAuth();
 
-	useEffect( () => {
-		let isMounted = true;
-		const controller = new AbortController();
+	const dispatch = useDispatch();
 
-		const getLoggedInUser = async () => {
-			try {
-				const response = await axiosPrivate.get(
-					"/user/profile",
-					{signal: controller?.signal}
-				);
+	const userType = useSelector((state) => state.auth.userAccess.userType);
+	const loggedInUser = useSelector((state) => state.auth.loggedInUser);
 
-				const loggedInUserObject = {
-					id: response.data.data.id,
-					firstName: response.data.data.firstName,
-					lastName: response.data.data.lastName,
-					phone: response.data.data.phone,
-					email: response.data.data.email,
-					customerId: response.data.data.stripeCustomerId
-
-				}
-
-				isMounted && setLoggedInUser(loggedInUserObject);
-
-				// todo: move the next line to the auth context
-				setLoading(false)
-			} catch (err){
-				// if status is 401 then redirect to signin page
-				if (err?.response?.status === 401) {
-					navigate('/', {state: {from: location}, replace: true});
-				}
-				console.error(err)
-			}
-		}
-		getLoggedInUser();
-
-		return () => {
-			isMounted = false;
-			controller.abort();
-		}
-	}, [axiosPrivate, setLoggedInUser, location, navigate]);
+	useEffect(() => {
+		dispatch(fetchUserProfile()).unwrap()
+		.then((result) => {
+			dispatch(storeLoggedInUser(result));
+		})
+	}, [dispatch])
 
 	useEffect(() => {
 		let isMounted = true;
@@ -208,7 +180,7 @@ const Dashboard = () => {
 						</div>
 					</div>
 
-					{auth?.userType !== userRoles.User &&
+					{userType !== userRoles.User &&
 						<>
 							{/*Admin Cards*/}
 							<div className="grid md:grid-cols-3 grid-cols-2 md:gap-7 gap-3 my-10">
