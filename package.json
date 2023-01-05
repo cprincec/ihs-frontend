@@ -14,6 +14,7 @@
     "classnames": "^2.3.2",
     "env-cmd": "^10.1.0",
     "firebase": "^9.10.0",
+    "formik": "^2.2.9",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-avatar": "^5.0.3",
@@ -25,7 +26,8 @@
     "react-scripts": "5.0.1",
     "react-star-rating-element": "^1.0.7",
     "react-topbar-progress-indicator": "^4.1.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start:prod": "env-cmd -f .env.prod react-scripts start",
