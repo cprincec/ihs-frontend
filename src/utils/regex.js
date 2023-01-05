@@ -3,7 +3,7 @@
 // );
 
 export const validPassword = new RegExp(
-	'^(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{6,}$'
+	/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/
 );
 
 export const validName = new RegExp(
