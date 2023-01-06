@@ -7,4 +7,5 @@ export const validPassword = new RegExp(
 );
 
 export const validName = new RegExp(
-'^[a-zA-Z]{3,}$');
+'^[a-zA-Z]{3,}$'
+);
