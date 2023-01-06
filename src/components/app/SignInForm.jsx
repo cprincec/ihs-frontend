@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
-import {useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation, Link} from "react-router-dom";
 import TopBarProgress from "react-topbar-progress-indicator";
 import {EyeIcon, EyeOffIcon} from "@heroicons/react/outline";
 import {useFormik} from "formik";
@@ -59,7 +59,7 @@ const SignInForm = () => {
 		} catch (err) {
 			if (!err.response) {
 				setErrMsg('No Server Response');
-			} else if (err.response.status === 409) {
+			} else if (err.response.status === 409 || err.response.status === 500) {
 				setErrMsg(err.response.data.message);
 			} else {
 				setErrMsg('Something went wrong');
@@ -116,9 +116,14 @@ const SignInForm = () => {
 					className={` ${errors.email && touched.email? 'focus:ring-red-600' : 'focus:ring-ihs-green-shade-600'} w-full border border-gray-300 px-3 py-3 text-gray-500 rounded-md focus:outline-none focus:ring-1`}/>
 				{errors.email && touched.email && <p className="text-red-500 normal-case text-xs mt-2">{errors.email}</p>}
 
-				<label htmlFor="password" className="block text-sm font-medium text-gray-500 my-2">
-					Password <span className="text-red-600">*</span>
-				</label>
+				<div className="flex justify-between">
+					<label htmlFor="password" className="block text-sm font-medium text-gray-500 my-2">
+						Password <span className="text-red-600">*</span>
+					</label>
+					<label htmlFor="password" className="block text-sm font-medium my-2 text-ihs-green hover:underline">
+						<Link to="/reset-password">Forgot Password?</Link>
+					</label>
+				</div>
 				<span className="flex items-center">
 					<input
 						value={values.password}
