@@ -12,7 +12,7 @@ const SignInPage = () => {
 				<p className="text-sm py-2">Don't have an account? <span className="text-ihs-green hover:underline"><Link to="/signup">Sign Up</Link></span></p>
 			</div>
 			<div className="flex justify-around">
-				<div className="bg-white lg:w-1/3 md:w-2/3 w-full md:px-16 md:py-16 px-10 md:rounded-3xl md:shadow-lg">
+				<div className="bg-white lg:w-1/3 md:w-2/3 w-full md:px-16 md:py-16 px-10 md:rounded-xl md:shadow-md">
 					<SignInForm />
 				</div>
 			</div>
