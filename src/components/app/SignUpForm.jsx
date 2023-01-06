@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 import axios from '../../api/axios';
 import TopBarProgress from "react-topbar-progress-indicator";
 import {useFormik} from "formik";
 import {signupSchema} from "../../utils/formSchema";
 import {ExclamationCircleIcon} from "@heroicons/react/solid";
 import {EyeIcon, EyeOffIcon} from "@heroicons/react/outline";
+import ReCAPTCHA from "react-google-recaptcha";
 
 TopBarProgress.config({
 	barColors: {
@@ -14,12 +15,34 @@ TopBarProgress.config({
 });
 
 const REGISTER_URL = '/user/signup';
+const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY
 
 const SignUpForm = () => {
 	const [success, setSuccess] = useState(false);
 	const [errMsg, setErrMsg] = useState('');
 	const [revealPwd, setRevealPwd] = useState(false);
+	const [captcha, setCaptcha] = useState(false);
 
+	const captchaRef = useRef(null)
+
+	const handleCaptchaSuccess = async () => {
+		const token = captchaRef.current.getValue();
+		await axios.post('/verifyCaptchaToken', {token})
+		.then(
+			() => setCaptcha(true)
+		)
+		.catch((error) => {
+			console.error(error);
+		})
+	}
+
+	const handleCaptchaError = () => {
+		setErrMsg("Something went wrong")
+	}
+
+	const handleCaptchaExpiration = () => {
+		captchaRef.current.reset();
+	}
 
 	const onSubmit = async (values, actions) => {
 		const firstName = values.firstName;
@@ -158,6 +181,16 @@ const SignUpForm = () => {
 
 								{errors.password && touched.password && <p className="text-red-500 normal-case text-xs mt-2">{errors.password}</p>}
 
+							<div className="mt-4">
+								<ReCAPTCHA
+									sitekey={SITE_KEY}
+									ref={captchaRef}
+									onChange={handleCaptchaSuccess}
+									onErrored={handleCaptchaError}
+									onExpired={handleCaptchaExpiration}
+								/>
+							</div>
+
 							<p className="md:text-lg text-xs text-slate-500 mt-3">
 								By clicking Sign Up, you agree to to IHS’
 								<a href="https://ihsmdinc.com/terms" className="text-ihs-green"> Terms of Use </a>
@@ -166,7 +199,7 @@ const SignUpForm = () => {
 							</p>
 							<button
 								type="submit"
-								disabled={ Object.keys(errors).length > 0 || isSubmitting }
+								disabled={ Object.keys(errors).length > 0 || isSubmitting || captcha === false }
 								className="disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 disabled:shadow-none px-4 py-2 w-full mt-5 bg-ihs-green hover:font-bold focus: outline-none focus:ring-2 focus:ring-ihs-green-shade-500"
 							>
 								{isSubmitting ? "Submitting" : "Sign Up"}
