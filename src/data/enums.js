@@ -34,3 +34,10 @@ export const pageSize = {
 	Mobile: 5,
 	Laptop: 10
 }
+
+export const emailVerification = {
+	Invalid: "Invalid Confirmation Link",
+	Expired: "Verification Link Has Expired",
+	Resent: "Verification Link Resent",
+	Confirmed: "Your Email Has Been Confirmed"
+}

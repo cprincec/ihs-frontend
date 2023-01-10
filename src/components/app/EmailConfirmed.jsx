@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
-import {BaseURL} from '../../api/axios';
+import axios from '../../api/axios';
 import TopBarProgress from "react-topbar-progress-indicator";
 import Logo from "../../assets/images/logo.svg";
+import {emailVerification} from "../../data/enums";
 
 TopBarProgress.config({
 	barColors: {
@@ -15,40 +16,77 @@ const EmailConfirmed = () => {
 	const {confirmationCode} = useParams();
 
 	const [loading, setLoading] = useState(false);
-	const [success, setSuccess] = useState(false);
-	const [errMsg, setErrMsg] = useState('');
-	const [successMessage, setSuccessMessage] = useState('');
+	const [message, setMessage] = useState('');
+	const [resend, setResend] = useState(false);
 
-	// eslint-disable-next-line no-unused-expressions
-	useEffect( () => {
+	const resendVerificationLink = async (e) => {
+		e.preventDefault();
+
+		setLoading(true)
+		const token = window.location.pathname.slice(9);
+
+		await axios.get(`/resendVerificationLink/${token}`)
+		.then((res) => {
+			setMessage(res.data.data);
+			setResend(true);
+			setLoading(false)
+		})
+		.catch((error) => {
+			console.error(error)
+		})
+	}
+
+	const confirmEmail = async () => {
 		setLoading(true);
-		try {
-			fetch(`${BaseURL}/confirm/${confirmationCode}`)
-				.then(res => res.json())
-				.then(data => {
-					setLoading(false);
-					if(data.success) {
-						setSuccessMessage(data.data);
-						setSuccess(true);
-					} else {
-						setErrMsg(data.data);
-					}
-				});
-		} catch (e) {
-			setLoading(false);
-			setErrMsg(e.message);
-		} finally {
-			setLoading(false);
-		}
-	}, [confirmationCode]);
+
+		await axios.get(`/confirm/${confirmationCode}`)
+		.then((res) => {
+			if(res.data.success) {
+				setMessage(res.data.data);
+			}
+		})
+		.catch((e) => {
+			setMessage(e.message);
+		}).finally(() => {
+			setLoading(false)
+		})
+	}
+
+	useEffect( () => {
+		confirmEmail();
+	}, [confirmEmail]);
 
 	return (
 		<>
 			{loading && <TopBarProgress />}
+
 			<div className="flex flex-col justify-center items-center py-4 pt-20 pb-20 relative">
 				<a href="https://ihsmdinc.com"><img src={Logo} className="w-44 lg:w-56" alt="ihs-logo"/></a>
-				{success ? <h1 className="md:text-4xl text-2xl text-ihs-green pt-20">{successMessage}</h1>  : <h1 className="md:text-4xl text-2xl text-ihs-green pt-20">{errMsg}</h1>}
-				{!loading && <p className="text-lg py-2">Proceed to <span className="text-ihs-green hover:underline"><Link to="/">Sign In</Link></span></p>}
+				<section className="rounded-md py-8 my-8 w-3/4 flex flex-col justify-center items-center shadow-md border-0 border-l-4 border-ihs-green-shade-500 text-slate-500 font-thin md:text-lg text-sm">
+					{message && <h1 className="md:text-lg text-ihs-green">{message}</h1>}
+
+					{message === emailVerification.Expired &&
+						<form onSubmit={resendVerificationLink} className="w-full flex justify-center">
+							<button type="submit" disabled={resend || loading} className="px-4 py-2 w-1/2 mt-8 disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 bg-ihs-green focus:outline-none focus:ring-2 focus:ring-ihs-green-shade-500">
+								Resend Link
+							</button>
+						</form>
+					}
+
+					{message === emailVerification.Resent &&
+						<p className=" px-10 py-4 text-slate-500 font-thin md:text-lg text-xs">Please check your email inbox (including junk/spam folder) for new verification link.</p>
+					}
+
+					{message === emailVerification.Invalid &&
+						<button disabled={loading} className="px-4 py-2 w-1/2 mt-8 disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 bg-ihs-green focus:outline-none focus:ring-2 focus:ring-ihs-green-shade-500">
+							<Link to="/signup">Sign Up</Link>
+						</button>
+					}
+
+					{message === emailVerification.Confirmed &&
+						<p className="text-lg py-2">Proceed to <span className="text-ihs-green hover:underline"><Link to="/">Sign In</Link></span></p>
+					}
+				</section>
 			</div>
 		</>
 	);
