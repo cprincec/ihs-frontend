@@ -36,25 +36,25 @@ const EmailConfirmed = () => {
 		})
 	}
 
-	const confirmEmail = async () => {
-		setLoading(true);
+	useEffect(  () => {
+		async function confirmEmail() {
+			setLoading(true);
 
-		await axios.get(`/confirm/${confirmationCode}`)
-		.then((res) => {
-			if(res.data.success) {
+			await axios.get(`/confirm/${confirmationCode}`)
+			.then((res) => {
+				console.log(res);
 				setMessage(res.data.data);
-			}
-		})
-		.catch((e) => {
-			setMessage(e.message);
-		}).finally(() => {
-			setLoading(false)
-		})
-	}
+			})
+			.catch((e) => {
+				console.error(e)
+				setMessage(e.message);
+			}).finally(() => {
+				setLoading(false)
+			})
+		}
 
-	useEffect( () => {
 		confirmEmail();
-	}, [confirmEmail]);
+	}, []);
 
 	return (
 		<>
