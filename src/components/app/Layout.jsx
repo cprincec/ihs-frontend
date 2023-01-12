@@ -11,11 +11,13 @@ const Layout = () => {
 
 	return (
 		<div className="flex-1">
-			<Sidebar />
 			<div>
-				<nav className="flex justify-between h-20 border border-0 border-b border-slate-200 bg-white sm:pl-32 pl-20">
-					<p></p>
-					<img src={Logo} alt="logo" className="w-44" />
+				<nav className="flex justify-between h-20 border border-0 border-b border-slate-200 bg-white fixed w-full">
+					<div className='flex'>
+						<Sidebar />
+						<img src={Logo} alt="logo" className="w-28 ml-20" />
+					</div>
+
 
 					<div className="flex flex-row items-center">
 						<p className="text-xl text-gray-700 hidden md:block">{loggedInUser?.firstName} {loggedInUser?.lastName}</p>

@@ -55,7 +55,7 @@ const ParentContent = () => {
 					<link rel="canonical" href="https://www.ihsmdinc.com/" />
 				</Helmet>
 				<div className="lg:p-20 md:p-10 p-3">
-				<div className="flex justify-between items-center mt-10">
+				<div className="flex justify-between items-center md:mt-16 mt-20">
 					<h2 className="md:text-2xl text-xl">All Services</h2>
 					<button className="py-3 md:px-4 px-2" onClick={() => navigate('/servicess/addservice')}>Add Service</button>
 				</div>

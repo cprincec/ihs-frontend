@@ -40,7 +40,7 @@ const ParentContent = () => {
 				<div className="lg:p-20 md:p-10 p-3">
 
 					{/*Users Section*/}
-					<div className="flex justify-between items-center mt-10">
+					<div className="flex justify-between items-center md:mt-16 mt-20">
 				<h2 className="md:text-2xl text-xl">All Users</h2>
 				{auth?.userType === userRoles.Admin &&
 					<button className="py-3 md:px-4 px-2" onClick={() => navigate('/users/adduser')}>Add Admin User</button>

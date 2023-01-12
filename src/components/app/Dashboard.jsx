@@ -189,7 +189,7 @@ const Dashboard = () => {
 				</Helmet>
 				<div className="lg:p-20 md:p-10 p-3">
 					{loading && <TopBarProgress />}
-					<div className="mb-5 mt-2">
+					<div className="mb-5 lg:mt-10 md:mt-16 mt-24">
 						<h2 className="md:text-4xl text-3xl mb-3">Hello {loggedInUser?.firstName}</h2>
 						<p className="text-slate-500 text-xl">Welcome to your dashboard</p>
 					</div>
