@@ -84,7 +84,7 @@ const Sidebar = () => {
 										<span className="capitalize">Logout</span>
 									</div>
 
-									<p className="flex justify-start pl-5 py-2 text-sm">© 2022 Copyright. v1.1.0</p>
+									<p className="flex justify-start pl-5 py-2 text-sm">© 2023 Copyright. v1.1.0</p>
 								</div>
 
 							</div>
