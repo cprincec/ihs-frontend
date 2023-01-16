@@ -66,11 +66,14 @@ const EmailConfirmed = () => {
 					{message && <h1 className="md:text-lg text-ihs-green">{message}</h1>}
 
 					{message === emailVerification.Expired &&
-						<form onSubmit={resendVerificationLink} className="w-full flex justify-center">
-							<button type="submit" disabled={resend || loading} className="px-4 py-2 w-1/2 mt-8 disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 bg-ihs-green focus:outline-none focus:ring-2 focus:ring-ihs-green-shade-500">
-								Resend Link
-							</button>
-						</form>
+						<>
+							<p>Please click on the button to request a new verification link</p>
+							<form onSubmit={resendVerificationLink} className="w-full flex justify-center">
+								<button type="submit" disabled={resend || loading} className="px-4 py-2 w-1/2 mt-8 disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 bg-ihs-green focus:outline-none focus:ring-2 focus:ring-ihs-green-shade-500">
+									Resend Link
+								</button>
+							</form>
+						</>
 					}
 
 					{message === emailVerification.Resent &&
@@ -78,9 +81,12 @@ const EmailConfirmed = () => {
 					}
 
 					{message === emailVerification.Invalid &&
-						<button disabled={loading} className="px-4 py-2 w-1/2 mt-8 disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 bg-ihs-green focus:outline-none focus:ring-2 focus:ring-ihs-green-shade-500">
-							<Link to="/signup">Sign Up</Link>
-						</button>
+						<>
+							<p>Verification link is invalid. Please click the button to sign up</p>
+							<button disabled={loading} className="px-4 py-2 w-1/2 mt-8 disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 bg-ihs-green focus:outline-none focus:ring-2 focus:ring-ihs-green-shade-500">
+								<Link to="/signup">Sign Up</Link>
+							</button>
+						</>
 					}
 
 					{message === emailVerification.Confirmed &&
