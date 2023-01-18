@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {ChevronLeftIcon, UserCircleIcon} from "@heroicons/react/outline";
+import {ChevronLeftIcon, EyeIcon, EyeOffIcon, UserCircleIcon} from "@heroicons/react/outline";
 import {useLocation, useNavigate} from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import {Helmet, HelmetProvider} from "react-helmet-async";
 import TopBarProgress from "react-topbar-progress-indicator";
+import {useFormik} from "formik";
+import {changePasswordSchema} from "../../../utils/formSchema";
 
 TopBarProgress.config({
 	barColors: {
@@ -21,8 +23,9 @@ const Profile = () => {
 	const axiosPrivate = useAxiosPrivate();
 	const {loggedInUser, setLoggedInUser, setAuth} = useAuth();
 
-	const [newPassword, setNewPassword] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [revealPwd, setRevealPwd] = useState(false);
+	const [revealConfirmPwd, setRevealConfirmPwd] = useState(false);
 
 	useEffect( () => {
 		let isMounted = true;
@@ -65,25 +68,6 @@ const Profile = () => {
 		}
 	}, [axiosPrivate, setLoggedInUser, location, navigate]);
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		setLoading(true);
-
-		await axiosPrivate.post(UPDATE_PASSWORD,
-			JSON.stringify({ password: newPassword }),
-			{ headers: { 'Content-Type': 'application/json' },
-				withCredentials: true
-			}
-		);
-
-		setLoading(false);
-		setNewPassword('');
-
-		setAuth({});
-		localStorage.clear();
-		navigate('/');
-	}
-
 	const handlePortal = async (e) => {
 		e.preventDefault();
 
@@ -110,6 +94,34 @@ const Profile = () => {
 			console.log(`Uncaught Exception ${e}`);
 		}
 	}
+
+	const onSubmit = async (values, actions) => {
+		const password = values.password;
+
+		setLoading(true);
+
+		await axiosPrivate.post(UPDATE_PASSWORD,
+			JSON.stringify({ password: password }),
+			{ headers: { 'Content-Type': 'application/json' },
+				withCredentials: true
+			}
+		);
+
+		setLoading(false);
+		actions.resetForm();
+		setAuth({});
+		localStorage.clear();
+		navigate('/');
+	}
+
+	const {values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit} = useFormik({
+		initialValues: {
+			password: '',
+			confirmPassword: ''
+		},
+		validationSchema: changePasswordSchema,
+		onSubmit,
+	})
 
 	return (
 		<HelmetProvider>
@@ -171,33 +183,52 @@ const Profile = () => {
 
 				<form className="my-5 space-y-0" onSubmit={handleSubmit}>
 
-					{/*Password*/}
-					<div className="flex flex-col">
+					<label htmlFor="password" className="block text-sm font-medium text-gray-500 mb-2">
+						New Password <span className="text-red-600">*</span>
+					</label>
+					<span className="flex items-center">
+						<input
+							value={values.password}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							type={revealPwd ? "text" : "password"}
+							id="password"
+							placeholder='New Password'
+							className={` ${errors.password && touched.password? 'focus:ring-red-600' : 'focus:ring-ihs-green-shade-600'} sm:w-96 w-72 border border-gray-300 px-3 py-3 text-gray-500 rounded-md focus:outline-none focus:ring-1`} />
+						{revealPwd ?
+							<EyeOffIcon className="w-4 -ml-6 text-gray-500" onClick={() => setRevealPwd(prevState => !prevState) }/>
+							:
+							<EyeIcon className="w-4 -ml-6 text-gray-500" onClick={() => setRevealPwd(prevState => !prevState) } />
+						}
+					</span>
+					{errors.password && touched.password && <p className="text-red-500 normal-case text-xs mt-2">{errors.password}</p>}
 
-						<div className="my-5">
-							<label
-								htmlFor="newPassword"
-								className="block text-md font-medium text-gray-500"
-							>
-								New Password
-								<span className="text-red-600">*</span>
-							</label>
-							<div className="mt-1">
-								<input
-									type="password"
-									id="newPassword"
-									required
-									placeholder="New Password"
-									value={newPassword}
-									onChange={(e) => setNewPassword(e.target.value)}
-									className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 sm:w-96 w-72"/>
-							</div>
-						</div>
-					</div>
+					<label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-500 py-2">
+						Confirm Password <span className="text-red-600">*</span>
+					</label>
+					<span className="flex items-center">
+						<input
+							value={values.confirmPassword}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							type={revealConfirmPwd ? "text" : "password"}
+							id="confirmPassword"
+							placeholder='Confirm Password'
+							className={` ${errors.confirmPassword && touched.confirmPassword? 'focus:ring-red-600' : 'focus:ring-ihs-green-shade-600'} sm:w-96 w-72 border border-gray-300 px-3 py-3 text-gray-500 rounded-md focus:outline-none focus:ring-1`} />
+						{revealConfirmPwd ?
+							<EyeOffIcon className="w-4 -ml-6 text-gray-500" onClick={() => setRevealConfirmPwd(prevState => !prevState) }/>
+							:
+							<EyeIcon className="w-4 -ml-6 text-gray-500" onClick={() => setRevealConfirmPwd(prevState => !prevState) } />
+						}
+					</span>
+					{errors.confirmPassword && touched.confirmPassword && <p className="text-red-500 normal-case text-xs mt-2">{errors.confirmPassword}</p>}
 
 					<div className="flex justify-start">
-						<button type="submit" className="px-4 py-3 mt-5 mb-10 bg-ihs-green hover:font-bold focus: outline-none focus:ring-2 focus:ring-ihs-green-shade-500 sm:w-96 w-72 text-lg">
-							Update Password
+						<button
+							type="submit"
+							disabled={ Object.keys(errors).length > 0 || isSubmitting}
+							className="disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 disabled:shadow-none px-4 py-3 mt-5 mb-10 bg-ihs-green hover:font-bold focus: outline-none focus:ring-2 focus:ring-ihs-green-shade-500 sm:w-96 w-72 text-lg">
+							{isSubmitting ? "Updating Password" : "Update Password"}
 						</button>
 					</div>
 				</form>
