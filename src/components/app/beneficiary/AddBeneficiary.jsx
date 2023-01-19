@@ -84,7 +84,7 @@ const AddBeneficiary = () => {
 				<div className="md:py-10 md:px-10 p-4">
 
 					{loading && <TopBarProgress />}
-					<button className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 md:mb-20 md:mt-0 my-8" onClick={() => navigate("/beneficiaries")}>
+					<button className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 md:mt-14 md:mb-4 mt-20 mb-4" onClick={() => navigate("/beneficiaries")}>
 						<ChevronLeftIcon className="w-6" /> <p className="text-lg px-5">Back to Beneficiaries</p>
 					</button>
 

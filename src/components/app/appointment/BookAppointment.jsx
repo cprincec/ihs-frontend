@@ -121,7 +121,7 @@ const BookAppointment = () => {
 				</Helmet>
 				<div className="lg:p-20 md:p-10 p-3">
 					{loading && <TopBarProgress />}
-					<button className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 md:mb-20 md:mt-0 my-8" onClick={() => navigate("/appointments")}>
+					<button className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 md:mt-14 md:mb-4 mt-20 mb-4" onClick={() => navigate("/appointments")}>
 						<ChevronLeftIcon className="w-6" /> <p className="text-lg px-5">Back to Appointments</p>
 					</button>
 
