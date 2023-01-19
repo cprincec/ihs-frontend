@@ -65,17 +65,17 @@ const Sidebar = () => {
 							</div>
 							<hr className="my-2 text-gray-600" />
 
-							<div>
+							<div className="relative lg:h-[calc(100vh_-_110px)] h-[calc(100vh_-_100px)]">
 
 								{ auth?.userType === userRoles.User
-									? displayLinks(userLinks)
-									: auth?.userType === userRoles.Employee
-									? displayLinks(employeeLinks)
-									: displayLinks(adminLinks)
-								}
+										? displayLinks(userLinks)
+										: auth?.userType === userRoles.Employee
+											? displayLinks(employeeLinks)
+											: displayLinks(adminLinks)
+									}
 
 
-								<div className="fixed bottom-0 py-4">
+								<div className="absolute py-4 bottom-0 w-full">
 
 									{displayLinks(footerLinks)}
 
