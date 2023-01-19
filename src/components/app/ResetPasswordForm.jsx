@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from "../../api/axios";
 import TopBarProgress from "react-topbar-progress-indicator";
 
@@ -14,8 +14,8 @@ const RESET_URL = "/user/resetPassword";
 
 const ResetPasswordForm = () => {
 	const navigate = useNavigate();
-	const location = useLocation();
-	const from = location.state?.from?.pathname || "/";
+	// const location = useLocation();
+	// const from = location.state?.from?.pathname || "/";
 
 	const [email, setEmail] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ const ResetPasswordForm = () => {
 		<>
 			{success ? (
 				<section className='flex flex-col items-center space-y-2'>
-					<h1>You’ve been initiated a password reset</h1>
+					<h1>You have initiated a password reset</h1>
 					<p>Please check your email inbox (including junk/spam folder) to reset your password.</p>
 					<button className="px-8 py-3" onClick={() => {navigate('/')}}>Sign In</button>
 				</section>
