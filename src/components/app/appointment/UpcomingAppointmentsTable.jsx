@@ -63,7 +63,7 @@ const UpcomingAppointmentsTable = ({appointmentList, urlPath}) => {
 								</th>
 								<th
 									className="px-6 py-5 text-base font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-ihs-green-shade-50">
-									More...
+									Actions
 								</th>
 							</tr>
 							</thead>
@@ -107,7 +107,7 @@ const UpcomingAppointmentsTable = ({appointmentList, urlPath}) => {
 										<td
 											className="px-6 py-4 md:text-lg text-base leading-5 text-ihs-green ">
 											<Link to={`/${urlPath}/viewappointment/${el?.id}`}>
-												View Details
+												View
 											</Link>
 										</td>
 

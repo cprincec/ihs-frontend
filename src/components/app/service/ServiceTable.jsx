@@ -42,7 +42,7 @@ const ServiceTable = ({services}) => {
 								</th>
 								<th
 									className="px-6 py-3 text-base font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-ihs-green-shade-50">
-									More...
+									Actions
 								</th>
 							</tr>
 							</thead>
@@ -69,7 +69,7 @@ const ServiceTable = ({services}) => {
 										<td
 											className="px-6 py-4 md:text-lg text-base leading-5 text-ihs-green whitespace-no-wrap border-b border-gray-200">
 											<Link to={`viewservice/${service?.id}`}>
-												View Details
+												View
 											</Link>
 										</td>
 
