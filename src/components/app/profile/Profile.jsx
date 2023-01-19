@@ -130,14 +130,13 @@ const Profile = () => {
 					<title>My Profile | IHS Dashboard</title>
 					<link rel="canonical" href="https://www.ihsmdinc.com/" />
 				</Helmet>
-				<>
+			<>
 			{loading && <TopBarProgress />}
 			<div className="lg:p-20 md:p-10 p-3">
-				<button className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 md:mb-20 md:mt-0 my-10" onClick={() => navigate("/dashboard")}>
+				<button className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 md:mt-14 md:mb-4 mt-20 mb-4" onClick={() => navigate("/dashboard")}>
 					<ChevronLeftIcon className="w-6" /> <p className="text-lg px-5">Back to Dashboard</p>
 				</button>
-				<div className="flex">
-					<div className="flex-1">
+				<div className="flex-1">
 						<div className="flex justify-between items-center h-24 bg-ihs-green-shade-50 rounded-md shadow-sm text-gray-600">
 							<div className="flex">
 								<UserCircleIcon className="md:w-14 w-8 md:ml-10 ml-3" />
@@ -166,7 +165,6 @@ const Profile = () => {
 						</div>
 
 					</div>
-				</div>
 
 				<hr className="my-10"/>
 

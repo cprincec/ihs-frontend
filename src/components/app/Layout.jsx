@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Outlet} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import Logo from "../../assets/images/logo.svg";
 import useAuth from "../../hooks/useAuth";
 import {avatar} from "../../data/enums";
@@ -20,9 +20,11 @@ const Layout = () => {
 
 
 					<div className="flex flex-row items-center">
-						<p className="text-xl text-gray-700 hidden md:block">{loggedInUser?.firstName} {loggedInUser?.lastName}</p>
+						<p className="text-xl text-gray-700 hidden md:block"><Link to="/profile">{loggedInUser?.firstName} {loggedInUser?.lastName}</Link></p>
 						<div className="px-5">
-							<Avatar name={`${loggedInUser?.firstName} ${loggedInUser?.lastName}`} color={avatar.BackgroundColor} fgColor={avatar.ForegroundColor}  size={avatar.width} round={true}/>
+							<Link to="/profile">
+								<Avatar name={`${loggedInUser?.firstName} ${loggedInUser?.lastName}`} color={avatar.BackgroundColor} fgColor={avatar.ForegroundColor}  size={avatar.width} round={true}/>
+							</Link>
 						</div>
 					</div>
 				</nav>
