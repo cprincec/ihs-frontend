@@ -55,9 +55,12 @@ const ParentContent = () => {
 
 				<div className="lg:p-20 md:p-10 p-3">
 					{loading && <TopBarProgress/>}
-					<div className="flex justify-between items-center md:mt-16 mt-20">
-						<h2 className="md:text-2xl text-xl">Your Appointments</h2>
-						<button className="py-3 md:px-4 px-2" onClick={() => navigate('/appointments/bookappointment')}>Book Appointment</button>
+					<div className="xs:flex-col justify-center md:flex items-center md:justify-between md:mt-16 mt-20">
+						<h2 className="md:text-2xl text-xl py-2 md:py-2">Your Appointments</h2>
+						<div className="space-x-2">
+							<button className="py-3 md:px-4 px-2 text-sm" onClick={() => navigate('/appointments/bookappointment')}>Book Appointment</button>
+							<button className="py-3 md:px-4 px-2 text-sm" onClick={() => navigate('/beneficiaries/addbeneficiary')}>Add Beneficiary</button>
+						</div>
 					</div>
 
 					<hr className="my-10"/>
