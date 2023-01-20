@@ -198,13 +198,13 @@ const Dashboard = () => {
 
 					{/*User Cards*/}
 					<div className="grid md:grid-cols- grid-cols-2 md:gap-7 gap-3 my-10">
-						<div className="h-40 md:p-5 p-3 rounded-md bg-ihs-blue-shade-50 text-lg shadow-md">
+						<div className="h-40 md:p-5 p-3 rounded-md bg-ihs-blue-shade-50 md:text-lg shadow-md flex flex-col justify-between">
 							<p>Your Beneficiaries</p>
-							<p className="my-10"><span className="font-semibold md:text-3xl text-2xl pr-0.5 md:pr-2">{beneficiaries ? beneficiaries?.length : 0}</span>Beneficiaries</p>
+							<p className="mb-4"><span className="font-semibold md:text-3xl text-2xl pr-0.5 md:pr-2">{beneficiaries ? beneficiaries?.length : 0}</span>Beneficiaries</p>
 						</div>
-						<div className="h-40 md:p-5 p-3 rounded-md bg-ihs-green-shade-50 text-lg shadow-md">
+						<div className="h-40 md:p-5 p-3 rounded-md bg-ihs-green-shade-50 md:text-lg shadow-md flex flex-col justify-between">
 							<p>Your Appointments</p>
-							<p className="my-10"><span className="font-semibold md:text-3xl text-2xl pr-0.5 md:pr-2">{appointments ? appointments?.length : 0}</span>Appointments</p>
+							<p className="mb-4"><span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">{appointments ? appointments?.length : 0}</span>Appointments</p>
 						</div>
 					</div>
 
@@ -212,17 +212,17 @@ const Dashboard = () => {
 						<>
 							{/*Admin Cards*/}
 							<div className="grid md:grid-cols-3 grid-cols-2 md:gap-7 gap-3 my-10">
-								<div className="h-40 md:p-5 p-3 rounded-md bg-ihs-green-shade-50 text-lg shadow-md">
+								<div className="h-40 md:p-5 p-3 rounded-md bg-ihs-green-shade-50 md:text-lg shadow-md flex flex-col justify-between">
 									<p>Total Users</p>
-									<p className="my-10"><span className="font-semibold md:text-3xl text-2xl pr-0.5 md:pr-2">{metrics ? metrics?.totalUsers : 0}</span>Users</p>
+									<p className="mb-4"><span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">{metrics ? metrics?.totalUsers : 0}</span>Users</p>
 								</div>
-								<div className="h-40 md:p-5 p-3 rounded-md bg-ihs-blue-shade-50 text-lg shadow-md">
+								<div className="h-40 md:p-5 p-3 rounded-md bg-ihs-blue-shade-50 md:text-lg shadow-md flex flex-col justify-between">
 									<p>Total Appointments</p>
-									<p className="my-10"><span className="font-semibold md:text-3xl text-2xl pr-0.5 md:pr-2">{metrics ? metrics?.totalAppointments : 0}</span>Appointments</p>
+									<p className="mb-4"><span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">{metrics ? metrics?.totalAppointments : 0}</span>Appointments</p>
 								</div>
-								<div className="h-40 md:p-5 p-3 rounded-md bg-ihs-green-shade-50 text-lg shadow-md">
+								<div className="h-40 md:p-5 p-3 rounded-md bg-ihs-green-shade-50 md:text-lg shadow-md flex flex-col justify-between">
 									<p>Total Health Workers</p>
-									<p className="my-10"><span className="font-semibold md:text-3xl text-2xl pr-0.5 md:pr-2">{metrics ? metrics?.totalHealthWorkers : 0}</span>Health Workers</p>
+									<p className="mb-4"><span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">{metrics ? metrics?.totalHealthWorkers : 0}</span>Health Workers</p>
 								</div>
 							</div>
 						</>

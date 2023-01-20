@@ -59,6 +59,10 @@ const UpcomingAppointmentsTable = ({appointmentList, urlPath}) => {
 								</th>
 								<th
 									className="px-6 py-5 text-base font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-ihs-green-shade-50">
+									Date
+								</th>
+								<th
+									className="px-6 py-5 text-base font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-ihs-green-shade-50">
 									Status
 								</th>
 								<th
@@ -94,6 +98,10 @@ const UpcomingAppointmentsTable = ({appointmentList, urlPath}) => {
 										</td>
 
 										<td className="px-6 py-4 ">
+											<div className="md:text-lg text-base leading-5 text-gray-500">{getDate(el?.date)}</div>
+										</td>
+
+										<td className="px-6 py-4 ">
 										<span
 											className={el?.completed.toString() === booleanString.True
 												? "inline-flex p-2 py-2 text-xs font-semibold leading-5 text-green-900 bg-green-100 rounded-md capitalize"
@@ -117,7 +125,7 @@ const UpcomingAppointmentsTable = ({appointmentList, urlPath}) => {
 								:
 
 								<tr>
-									<td colSpan="5" className="px-6 py-4 text-center">
+									<td colSpan="6" className="px-6 py-4 text-center">
 										<div className="flex flex-col justify-center items-center py-20">
 											<img src={Nodata} alt="No Data" className="w-40 my-10"/>
 											<p className="text-lg md:mx-32 mx-5 text-center">No Upcoming Appointments.</p>

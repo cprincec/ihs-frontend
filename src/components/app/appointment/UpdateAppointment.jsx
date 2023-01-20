@@ -153,7 +153,7 @@ const UpdateAppointment = () => {
 				<button className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 md:mt-14 md:mb-4 mt-20 mb-4" onClick={() => navigate(-1)}>
 					<ChevronLeftIcon className="w-6" /> <p className="text-lg px-5">Back</p>
 				</button>
-				<div className="flex md:justify-start justify-center md:items-start items-center">
+				<div className="flex md:justify-start md:items-start items-center">
 					<div className="md:flex-1">
 
 						<div className="flex justify-between items-center h-24 bg-ihs-green-shade-50 rounded-md shadow-sm text-gray-600">
