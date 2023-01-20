@@ -58,23 +58,21 @@ const ViewBeneficiaryAppointments = () => {
 		<div className="w-full px-2 pb-16 sm:px-0">
 			{loading && <TopBarProgress />}
 			<Tab.Group>
-				<Tab.List className="flex space-x-1 rounded-xl bg-white p-1">
+				<Tab.List className="flex space-x-1 rounded-md bg-gray-200 p-2 md:w-1/2">
 
 					<Tab key="upcoming" className={({selected}) => classNames(
-						'w-full md:w-1/4 rounded-lg py-2.5 text-sm font-medium leading-5 text-ihs-green',
-						'ring-white ring-opacity-60 ring-offset-2 ring-offset-ihs-green-shade-400 focus:outline-none focus:ring-2',
+						'w-full rounded-md py-2.5 text-sm leading-5 border-0 outline-none',
 						selected
-							? 'bg-ihs-green text-white shadow'
-							: 'text-ihs-green hover:bg-white/[0.12] hover:text-white'
+							? 'bg-ihs-green text-white hover:bg-ihs-green hover:text-white'
+							: 'text-gray-500 hover:text-gray-500'
 					)}>
 						Upcoming
 					</Tab>
 					<Tab key="completed" className={({selected}) => classNames(
-						'w-full md:w-1/4 rounded-lg py-2.5 text-sm font-medium leading-5 text-ihs-green',
-						'ring-white ring-opacity-60 ring-offset-2 ring-offset-ihs-green-shade-400 focus:outline-none focus:ring-2',
+						'w-full rounded-md py-2.5 text-sm leading-5 border-0 outline-none',
 						selected
-							? 'bg-ihs-green text-white shadow'
-							: 'text-ihs-green hover:bg-white/[0.12] hover:text-white ring-0'
+							? 'bg-ihs-green text-white hover:bg-ihs-green hover:text-white'
+							: 'text-gray-500 hover:text-gray-500'
 					)}>
 						Completed
 					</Tab>
