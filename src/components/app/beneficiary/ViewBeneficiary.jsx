@@ -7,6 +7,7 @@ import TopBarProgress from "react-topbar-progress-indicator";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import {timePeriod} from "../../../data/enums";
 import {getDate} from "../../../hooks/useFormatDate";
+import Shimmer from "../Shimmer";
 
 TopBarProgress.config({
 	barColors: {
@@ -23,7 +24,7 @@ const ViewBeneficiary = () => {
 	const beneficiary = useParams();
 	const beneficiaryId = beneficiary.beneficiaryId;
 	const navigate = useNavigate();
-	const [loading, setLoading] = useState();
+	const [loading, setLoading] = useState(true);
 
 	const getBeneficiary = useCallback(async () => {
 			const response = await axiosPrivate.get(`/user/beneficiary/${beneficiaryId}`);
@@ -85,37 +86,37 @@ const ViewBeneficiary = () => {
 							<div className="my-10 ml-5 text-gray-600 md:text-xl text-md" >
 								<div className="grid grid-cols-4">
 									<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Full Name: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{beneficiaryDetails?.firstName} {beneficiaryDetails?.lastName} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${beneficiaryDetails?.firstName} ${beneficiaryDetails?.lastName}`} </p>
 								</div>
 								<div className="grid grid-cols-4">
 									<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Date of Birth: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{beneficiaryDetails?.dob ? getDate(beneficiaryDetails?.dob) : ""} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${beneficiaryDetails?.dob ? getDate(beneficiaryDetails?.dob) : ""}`} </p>
 								</div>
 								<div className="grid grid-cols-4">
 									<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Relationship: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{beneficiaryDetails ? beneficiaryDetails?.relationship : ""} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${beneficiaryDetails ? beneficiaryDetails?.relationship : ""}`} </p>
 								</div>
 								<div className="grid grid-cols-4">
 									<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Phone Number: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{beneficiaryDetails ? beneficiaryDetails?.phone : ""} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${beneficiaryDetails ? beneficiaryDetails?.phone : ""}`} </p>
 								</div>
 								<div className="grid grid-cols-4">
 									<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Address: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{beneficiaryDetails ? beneficiaryDetails?.address : ""} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${beneficiaryDetails ? beneficiaryDetails?.address : ""}`} </p>
 								</div>
 								<div className="grid grid-cols-4">
 									<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">City: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{beneficiaryDetails ? beneficiaryDetails?.city : ""} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${beneficiaryDetails ? beneficiaryDetails?.city : ""}`} </p>
 								</div>
 								<div className="grid grid-cols-4">
 									<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">State: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{beneficiaryDetails ? beneficiaryDetails?.state : ""} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${beneficiaryDetails ? beneficiaryDetails?.state : ""}`} </p>
 								</div>
 								<div className="grid grid-cols-4">
 									<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Coverage Status: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">{beneficiaryDetails?.subscription ? beneficiaryDetails.subscription.status : "No Health Coverage"} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">{loading ? <Shimmer /> : beneficiaryDetails?.subscription ? beneficiaryDetails.subscription.status : "No Health Coverage"} </p>
 								</div>
-								{beneficiaryDetails?.subscription && (
+								{loading ? <Shimmer /> : beneficiaryDetails?.subscription && (
 									<>
 										<div className="grid grid-cols-4">
 											<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Payment Frequency: </p>

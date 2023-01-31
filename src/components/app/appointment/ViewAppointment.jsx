@@ -9,6 +9,7 @@ import AppointmentDropdown from "./AppointmentDropdown";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import TopBarProgress from "react-topbar-progress-indicator";
 import {getDate} from "../../../hooks/useFormatDate";
+import Shimmer from "../Shimmer";
 
 TopBarProgress.config({
 	barColors: {
@@ -75,48 +76,48 @@ const ViewAppointment = () => {
 							<div className="mt-10 text-gray-600 md:text-xl text-md" >
 								<div className="grid grid-cols-4 items-center">
 									<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Beneficiary: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{appointmentDetails?.beneficiaryName} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${appointmentDetails?.beneficiaryName}`} </p>
 								</div>
 
 								<div className="grid grid-cols-4 items-center">
 									<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Contact: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{appointmentDetails?.beneficiaryPhone} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${appointmentDetails?.beneficiaryPhone}` }</p>
 								</div>
 
 								<div className="grid grid-cols-4 items-center">
 									<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Service: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{appointmentDetails?.serviceName} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${appointmentDetails?.serviceName}`} </p>
 								</div>
 
 								<div className="grid grid-cols-4 items-center">
 									<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Health Worker: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{appointmentDetails?.healthWorkerName ? appointmentDetails?.healthWorkerName : "Unassigned"} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${appointmentDetails?.healthWorkerName ? appointmentDetails?.healthWorkerName : "Unassigned"}`} </p>
 								</div>
 
 								<div className="grid grid-cols-4 items-center">
 									<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Date: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{appointmentDetails?.date ? getDate(appointmentDetails?.date) : ""} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${appointmentDetails?.date ? getDate(appointmentDetails?.date) : ""}`} </p>
 								</div>
 
 								<div className="grid grid-cols-4 items-center">
 									<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Time: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{appointmentDetails?.time}</p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${appointmentDetails?.time}`}</p>
 								</div>
 
 								<div className="grid grid-cols-4 items-center">
 									<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Status: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">{appointmentDetails?.status}</p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">{loading ? <Shimmer /> : `${appointmentDetails?.status}`}</p>
 								</div>
 
 								<div className="grid grid-cols-4 items-center">
 									<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Review: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{appointmentDetails?.review ? appointmentDetails?.review : "Unreviewed Appointment"} </p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${appointmentDetails?.review ? appointmentDetails?.review : "Unreviewed Appointment"}`} </p>
 								</div>
 
 								<div className="grid grid-cols-4 items-center">
 									<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Rating: </p>
 
-									<div className="py-5 md:ml-3 md:col-start-2 col-span-2">
+									<div className="py-5 md:ml-3 md:col-start-2 col-span-2">{loading ? <Shimmer /> :
 										<StarRating
 											ratingValue={appointmentDetails?.rating}
 											starEmptyColor="#999999"
@@ -124,6 +125,7 @@ const ViewAppointment = () => {
 											starDimension={25}
 											starRatedColor="#1eb7b8"
 										/>
+									}
 									</div>
 								</div>
 

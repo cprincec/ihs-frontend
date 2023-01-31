@@ -5,17 +5,20 @@ import useAuth from "../../../hooks/useAuth";
 import ViewUserBeneficiaries from "./ViewUserBeneficiaries";
 import {Helmet, HelmetProvider} from "react-helmet-async";
 import UserDropdown from "./UserDropdown";
+import Shimmer from "../Shimmer";
 
 const ViewUser = () => {
 	const user = useParams();
 	const navigate = useNavigate();
 	const {users} = useAuth();
 	const [userDetails, setUserDetails] = useState({})
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const userId = user.userId;
 		const filteredUser = users.filter(user => user.id === userId);
 		filteredUser.length === 0 ? navigate(-1) : setUserDetails(filteredUser[0]);
+		setLoading(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -44,19 +47,19 @@ const ViewUser = () => {
 					<div className="my-10 ml-5 text-gray-600 text-md" >
 						<div className="grid grid-cols-5">
 							<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Full Name: </p>
-							<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{userDetails?.firstName} {userDetails?.lastName} </p>
+							<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${userDetails?.firstName} ${userDetails?.lastName}`} </p>
 						</div>
 						<div className="grid grid-cols-5">
 							<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Email: </p>
-							<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{userDetails?.email} </p>
+							<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${userDetails?.email}`} </p>
 						</div>
 						<div className="grid grid-cols-5">
 							<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Phone: </p>
-							<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{userDetails?.phone}</p>
+							<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${userDetails?.phone}`}</p>
 						</div>
 						<div className="grid grid-cols-5">
 							<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Role: </p>
-							<p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">{userDetails?.userType}</p>
+							<p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">{loading ? <Shimmer /> : `${userDetails?.userType}`}</p>
 						</div>
 
 					</div>
