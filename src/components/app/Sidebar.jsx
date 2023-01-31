@@ -46,12 +46,7 @@ const Sidebar = () => {
 	}
 
 	const openBar = () => {
-		document.querySelector('.sidebar').classList.add('left-[0px]')
-	}
-
-	const closeBar = () => {
-		document.querySelector('.sidebar').classList.remove('left-[0px]')
-		document.querySelector('.sidebar').classList.add('left-[-300px]')
+		document.querySelector('.sidebar').classList.toggle('left-[-300px]')
 	}
 
 	return (
@@ -66,7 +61,7 @@ const Sidebar = () => {
 						<div>
 							<div className="p-2.5 mt-1 flex items-center rounded-md ">
 								<img src={Logo} alt="logo" className="w-40" />
-								<XIcon className="ml-20 text-slate-500 w-10 h-10 bg-transparent border" onClick={closeBar}/>
+								<XIcon className="ml-20 text-slate-500 w-10 h-10 bg-transparent border" onClick={openBar}/>
 							</div>
 							<hr className="my-2 text-gray-600" />
 

@@ -9,11 +9,6 @@ import Sidebar from "./Sidebar";
 const Layout = () => {
 	const {loggedInUser} = useAuth();
 
-	const closeBar = () => {
-		document.querySelector('.sidebar').classList.remove('left-[0px]')
-		document.querySelector('.sidebar').classList.add('left-[-300px]')
-	}
-
 	return (
 		<div className="flex-1">
 			<div>
@@ -34,9 +29,7 @@ const Layout = () => {
 					</div>
 				</nav>
 				<Fragment>
-					<div onClick={closeBar}>
-						<Outlet />
-					</div>
+					<Outlet />
 				</Fragment>
 			</div>
 		</div>
