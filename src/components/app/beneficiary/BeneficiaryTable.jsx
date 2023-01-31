@@ -103,7 +103,7 @@ const BeneficiaryTable = () => {
 											<div className="flex items-center">
 												<div>
 													<div className="md:text-lg text-base font-medium leading-5 text-gray-500">
-														{beneficiary?.firstName} {beneficiary?.lastName}
+														{beneficiary?.firstName}&nbsp;{beneficiary?.lastName}
 													</div>
 												</div>
 											</div>
@@ -170,7 +170,7 @@ const BeneficiaryTable = () => {
 									<tr className="py-4 whitespace-no-wrap border-b even:bg-gray-100" key={index} onClick={() => navigate(`/beneficiaries/viewbeneficiary/${beneficiary?.id}`)}>
 										<td className="p-4 ">
 											<div className="flex justify-between items-center text-md text-gray-800">
-												<span>{beneficiary?.firstName} {beneficiary?.lastName}</span>
+												<span>{beneficiary?.firstName}&nbsp;{beneficiary?.lastName}</span>
 											</div>
 											<div className="text-sm text-gray-500">
 												<p className="flex justify-between mt-1">

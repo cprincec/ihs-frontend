@@ -70,7 +70,7 @@ const HealthWorkerTable = ({healthWorkers}) => {
 											<div className="flex items-center">
 												<div>
 													<div className="md:text-lg text-base font-medium leading-5 text-gray-500">
-														{worker?.firstName} {worker?.lastName}
+														{worker?.firstName}&nbsp;{worker?.lastName}
 													</div>
 												</div>
 											</div>
@@ -138,7 +138,7 @@ const HealthWorkerTable = ({healthWorkers}) => {
 									<tr className="py-4 whitespace-no-wrap border-b even:bg-gray-100" key={index} onClick={() => navigate(`/healthworkers/viewhealthworker/${healthWorker?.id}`)}>
 										<td className="p-4 ">
 											<div className="flex justify-between items-center text-md text-gray-800">
-												<span>{healthWorker?.firstName} {healthWorker?.lastName}</span>
+												<span>{healthWorker?.firstName}&nbsp;{healthWorker?.lastName}</span>
 											</div>
 											<div className="text-sm text-gray-500">
 												<p className="flex justify-between mt-1">
