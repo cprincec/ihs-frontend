@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {LogoutIcon, ViewListIcon, XIcon} from "@heroicons/react/outline";
 import Logo from "../../assets/images/logo.svg";
 import {userRoles} from "../../data/enums";
@@ -7,11 +7,15 @@ import {NavLink, useNavigate} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Modal from "./Modal";
 import axios from "../../api/axios";
+import OutsideClick from "../../hooks/outsideClick";
 
 const activeLink = "flex w-70 items-center gap-5 text-lg text-ihs-green bg-ihs-green-shade-200 border border-0 border-r-2 border-r-ihs-green pl-5 py-2"
 const normalLink = "flex w-70 items-center gap-5 text-lg hover:bg-ihs-green-shade-100 border border-0 hover:border-r-2 hover:border-r-ihs-green pl-5 py-2"
 
 const Sidebar = () => {
+	const sidebarRef = useRef(null);
+	const outsideSidebarClick = OutsideClick(sidebarRef);
+
 	const {auth, setAuth} = useAuth();
 	const navigate = useNavigate();
 	const [toggleModal, setToggleModal] = useState(false)
@@ -51,13 +55,13 @@ const Sidebar = () => {
 
 	return (
 		<>
-			<div>
+			<div ref={sidebarRef}>
 				<span className="absolute text-white text-4xl top-5 left-4 cursor-pointer" onClick={openBar}>
 
 					<ViewListIcon className="w-10 h-10 px-2 bg-ihs-green text-white rounded-md shadow-xl"/>
 				</span>
-				<div className="sidebar fixed top-0 bottom-0 3xl:left-0 left-[-300px] duration-500
-				 w-[300px] overflow-y-auto text-center bg-cyan-50 shadow h-full z-10">
+				<div className={`sidebar fixed top-0 bottom-0 3xl:left-0 left-[-300px] duration-500
+				 w-[300px] overflow-y-auto text-center bg-cyan-50 shadow h-full z-10 ${outsideSidebarClick ? 'left-[-300px]' : ''}`}>
 						<div>
 							<div className="p-2.5 mt-1 flex items-center rounded-md ">
 								<img src={Logo} alt="logo" className="w-40" />
