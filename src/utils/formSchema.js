@@ -18,3 +18,7 @@ export const changePasswordSchema = yup.object().shape({
 	password: yup.string().min(6).matches(validPassword, { message: "Minimum of 6 characters. Must contain 1 uppercase letter, 1 lowercase letter and 1 number" }).required("Password is required"),
 	confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required("Confirm password is required"),
 })
+
+export const changePhoneNumberSchema = yup.object().shape({
+	phone: yup.string().required("Phone Number is required"),
+})

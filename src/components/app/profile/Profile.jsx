@@ -7,6 +7,7 @@ import {Helmet, HelmetProvider} from "react-helmet-async";
 import TopBarProgress from "react-topbar-progress-indicator";
 import {useFormik} from "formik";
 import {changePasswordSchema} from "../../../utils/formSchema";
+import ChangePhoneNumberModal from "./ChangePhoneNumberModal";
 
 TopBarProgress.config({
 	barColors: {
@@ -26,6 +27,8 @@ const Profile = () => {
 	const [loading, setLoading] = useState(false);
 	const [revealPwd, setRevealPwd] = useState(false);
 	const [revealConfirmPwd, setRevealConfirmPwd] = useState(false);
+	const [showUpdatePhoneModal, setShowUpdatePhoneModal] = useState(false);
+	const [updatePhoneModalSuccess, setUpdatePhoneModalSuccess] = useState(false);
 
 	useEffect( () => {
 		let isMounted = true;
@@ -60,13 +63,19 @@ const Profile = () => {
 				console.error(err)
 			}
 		}
+
+		// refetch user information if phone number was updated on the modal
+		if (updatePhoneModalSuccess === true) {
+			getLoggedInUser();
+		}
+
 		getLoggedInUser();
 
 		return () => {
 			isMounted = false;
 			controller.abort();
 		}
-	}, [axiosPrivate, setLoggedInUser, location, navigate]);
+	}, [axiosPrivate, setLoggedInUser, location, navigate, updatePhoneModalSuccess]);
 
 	const handlePortal = async (e) => {
 		e.preventDefault();
@@ -123,6 +132,10 @@ const Profile = () => {
 		onSubmit,
 	})
 
+	const handleShowUpdatePhoneModal = () => {
+		setShowUpdatePhoneModal(true);
+	}
+
 	return (
 		<HelmetProvider>
 			<>
@@ -132,6 +145,15 @@ const Profile = () => {
 				</Helmet>
 			<>
 			{loading && <TopBarProgress />}
+
+			{/*	show modal if modal is toggled*/}
+			{showUpdatePhoneModal && <ChangePhoneNumberModal
+				existingPhoneNumber={loggedInUser.phone}
+				setShowUpdatePhoneModal={setShowUpdatePhoneModal}
+				updatePhoneModalSuccess={updatePhoneModalSuccess}
+				setUpdatePhoneModalSuccess={setUpdatePhoneModalSuccess}
+			/>}
+
 			<div className="lg:p-20 md:p-10 p-3">
 				<button className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 md:mt-14 md:mb-4 mt-20 mb-4" onClick={() => navigate("/dashboard")}>
 					<ChevronLeftIcon className="w-6" /> <p className="text-lg px-5">Back to Dashboard</p>
@@ -161,6 +183,12 @@ const Profile = () => {
 							<div className="grid grid-cols-5">
 								<p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">Phone Number: </p>
 								<p className="py-5 md:ml-5 md:col-start-2">{loggedInUser ? loggedInUser?.phone : ""} </p>
+							</div>
+							<div className="grid grid-cols-5">
+								<button className="py-5 font-semibold col-start-1 col-span-2 text-ihs-green bg-transparent border-0 text-start"
+								onClick={handleShowUpdatePhoneModal}>
+									Update Phone Number
+								</button>
 							</div>
 						</div>
 
