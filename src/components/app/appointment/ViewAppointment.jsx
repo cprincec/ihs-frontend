@@ -81,7 +81,7 @@ const ViewAppointment = () => {
 
 								<div className="grid grid-cols-4 items-center">
 									<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Contact: </p>
-									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${appointmentDetails?.beneficiaryPhone}` }</p>
+									<p className="py-5 md:ml-5 md:col-start-2 col-span-2">{loading ? <Shimmer /> : `${appointmentDetails?.beneficiaryPhone === '' || appointmentDetails?.beneficiaryPhone === undefined ? 'No Contact Information' : appointmentDetails.beneficiaryPhone}` }</p>
 								</div>
 
 								<div className="grid grid-cols-4 items-center">
@@ -112,7 +112,7 @@ const ViewAppointment = () => {
 								{auth.userType === userRoles.Admin &&
 									<div className="grid grid-cols-4 items-center">
 										<p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">Notes: </p>
-										<p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">{loading ? <Shimmer /> : `${appointmentDetails?.notes === '' ? 'No Notes Available' : appointmentDetails.notes}`}</p>
+										<p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">{loading ? <Shimmer /> : `${appointmentDetails?.notes === '' || appointmentDetails?.notes === undefined ? 'No Notes Available' : appointmentDetails.notes}`}</p>
 									</div>
 								}
 
