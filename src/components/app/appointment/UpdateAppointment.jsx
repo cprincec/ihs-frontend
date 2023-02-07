@@ -26,6 +26,7 @@ const UpdateAppointment = () => {
 	const [time, setTime] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [completed, setCompleted] = useState(true);
+	const [notes, setNotes] = useState('');
 
 	const getServices = useCallback( async () => {
 		const response = await axiosPrivate.get(
@@ -52,6 +53,7 @@ const UpdateAppointment = () => {
 				setServiceId(response.data.data[0].serviceId);
 				setDate(response.data.data[0].date);
 				setTime(response.data.data[0].time);
+				setNotes(response.data.data[0].notes);
 				setLoading(false);
 			} catch (err){
 				console.error(err)
@@ -74,6 +76,7 @@ const UpdateAppointment = () => {
 		const filteredService = services.filter(service => service.id === serviceId);
 		return filteredService[0].name;
 	}
+
 	const handleUpdate = async (e) => {
 		e.preventDefault();
 		setLoading(true);
@@ -82,7 +85,7 @@ const UpdateAppointment = () => {
 			//select service name
 			await axiosPrivate.patch(`/admin/appointment/${appointmentId}`,
 				JSON.stringify({
-					serviceName: getServiceName(), serviceId, date, time, status: appointmentStatus.Confirmed}),
+					serviceName: getServiceName(), serviceId, date, time, status: appointmentStatus.Confirmed, notes}),
 				{
 					headers: {
 						'Content-Type': 'application/json',
@@ -95,6 +98,7 @@ const UpdateAppointment = () => {
 			setServiceId('');
 			setDate('');
 			setTime('');
+			setNotes('');
 
 			setLoading(false);
 			// setSuccess(true);
@@ -149,18 +153,22 @@ const UpdateAppointment = () => {
 					<link rel="canonical" href="https://www.ihsmdinc.com/" />
 				</Helmet>
 				<div className="lg:p-20 md:p-10 p-3">
+
 				{loading && <TopBarProgress />}
+
 				<button className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 md:mt-14 md:mb-4 mt-20 mb-4" onClick={() => navigate(-1)}>
 					<ChevronLeftIcon className="w-6" /> <p className="text-lg px-5">Back</p>
 				</button>
+
 				<div className="flex md:justify-start md:items-start items-center">
 					<div className="md:flex-1">
-
 						<div className="flex justify-between items-center h-24 bg-ihs-green-shade-50 rounded-md shadow-sm text-gray-600">
+
 							<div className="flex">
 								<ClipboardCopyIcon className="md:w-14 w-8 md:ml-10 ml-3" />
 								<h3 className="md:text-3xl text-2xl py-8 md:px-8 px-2">Update Appointment</h3>
 							</div>
+
 							{!completed &&
 								<div className="flex md:flex-row flex-col items-center md:gap-x-2 pr-2">
 									{auth?.userType === userRoles.Admin && (
@@ -170,7 +178,6 @@ const UpdateAppointment = () => {
 									)}
 								</div>
 							}
-
 
 						</div>
 
@@ -283,6 +290,29 @@ const UpdateAppointment = () => {
 								</div>
 
 							</div>
+
+							{/*Notes*/}
+							<div className="flex md:pt-10 pt-5 md:flex-row flex-col">
+
+								<div>
+									<label
+										htmlFor="notes"
+										className="block text-md font-medium text-gray-500"
+									>
+										Notes
+									</label>
+									<div className="mt-1">
+										<textarea
+											id="notes"
+											value={notes}
+											onChange={(e) => setNotes(e.target.value)}
+											className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 text-gray-500 w-96">
+										</textarea>
+									</div>
+								</div>
+
+							</div>
+
 							<div className="flex justify-start">
 								<button type="submit" className="px-4 py-3 my-20 bg-ihs-green hover:font-bold focus: outline-none focus:ring-2 focus:ring-ihs-green-shade-500 w-96 text-lg">
 									Update
