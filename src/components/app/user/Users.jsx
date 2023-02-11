@@ -1,4 +1,4 @@
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import ViewUser from "./ViewUser";
 import UserTable from "./UserTable";
 import AddUser from "./AddUser";
@@ -7,6 +7,8 @@ import useAuth from "../../../hooks/useAuth";
 import ViewUserBeneficiary from "./ViewUserBeneficiary";
 import {Helmet, HelmetProvider} from "react-helmet-async";
 import TopBarProgress from "react-topbar-progress-indicator";
+import AddUserModal from "./AddUserModal";
+import {useState} from "react";
 
 TopBarProgress.config({
 	barColors: {
@@ -27,11 +29,25 @@ const Users = () => {
 };
 
 const ParentContent = () => {
-	const navigate = useNavigate();
 	const {auth} = useAuth();
+
+	const [showAddUserModal, setShowAddUserModal] = useState(false);
+	const [addUserModalSuccess, setAddUserModalSuccess] = useState(false);
+
+	const handleShowAddUserModal = () => {
+		setShowAddUserModal(true);
+	}
 
 	return (
 		<HelmetProvider>
+
+			{/*	show modal if modal is toggled*/}
+			{showAddUserModal && <AddUserModal
+				setShowAddUserModal={setShowAddUserModal}
+				addUserModalSuccess={addUserModalSuccess}
+				setAddUserModalSuccess={setAddUserModalSuccess}
+			/>}
+
 			<>
 				<Helmet>
 					<title>Users | IHS Dashboard</title>
@@ -43,7 +59,7 @@ const ParentContent = () => {
 					<div className="flex justify-between items-center md:mt-16 mt-20">
 				<h2 className="md:text-2xl text-xl">All Users</h2>
 				{auth?.userType === userRoles.Admin &&
-					<button className="py-3 md:px-4 px-2" onClick={() => navigate('/users/adduser')}>Add Admin User</button>
+					<button className="py-3 md:px-4 px-2" onClick={handleShowAddUserModal}>Add Admin User</button>
 				}
 			</div>
 
