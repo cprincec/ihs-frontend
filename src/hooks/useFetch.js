@@ -17,7 +17,7 @@ const useFetch = (url, key, staleTime) => {
     queryFn: async () => {
       return await axiosPrivate.get(url).then((response) => response.data.data);
     },
-    staleTime: staleTime,
+    staleTime: staleTime || 1000 * 60 * 5,
   });
 };
 

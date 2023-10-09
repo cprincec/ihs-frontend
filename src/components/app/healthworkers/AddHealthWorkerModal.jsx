@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { addHealthWorkerSchema } from "../../../utils/formSchema";
-import { usePost } from "../../../hooks/useMutate";
+import usePost from "../../../hooks/usePost";
 
 const AddHealthWorkerModal = ({
   setAddHealthWorkerModalSuccess,
