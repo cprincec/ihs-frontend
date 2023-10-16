@@ -19,7 +19,7 @@ const AddUserModal = ({
   const queryClient = useQueryClient();
 
   const onSubmit = async (values, actions) => {
-    const body = {
+    const userData = {
       firstName: values.firstName,
       lastName: values.lastName,
       phone: values.phone,
@@ -37,17 +37,15 @@ const AddUserModal = ({
             : values.role === userRoles.Admin
             ? "/user/addAdmin"
             : null,
-        body,
+        body: userData,
       },
       {
         onError: (error) => {
           error.response?.data?.data === "Error: User already exists"
             ? setErrMsg("User already exists")
             : setErrMsg("Error adding user");
-          console.log(error.response);
         },
-        onSuccess: (data, context, variables) => {
-          console.log(data, context, variables);
+        onSuccess: () => {
           actions.resetForm();
           setAddUserModalSuccess(true);
           queryClient.invalidateQueries(["users"]);

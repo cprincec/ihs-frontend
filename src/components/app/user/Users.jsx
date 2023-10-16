@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import ViewUser from "./ViewUser";
 import UserTable from "./UserTable";
-import AddUser from "./AddUser";
+// import AddUser from "./AddUser";
 import { userRoles } from "../../../data/enums";
 import ViewUserBeneficiary from "./ViewUserBeneficiary";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -26,7 +26,7 @@ const Users = () => {
     <Routes>
       <Route index element={<ParentContent />} />
       <Route path="/viewuser/:userId" element={<ViewUser />} />
-      <Route path="/adduser" element={<AddUser />} />
+      {/* <Route path="/adduser" element={<AddUser />} /> */}
       <Route
         path="/viewuser/:userId/beneficiary/:beneficiaryId"
         element={<ViewUserBeneficiary />}
