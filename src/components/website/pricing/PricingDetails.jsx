@@ -186,7 +186,7 @@ const PricingDetails = () => {
 
   const [priceId, setPriceId] = useState("");
   const [platform, setPlatform] = useState("");
-  const [disableSubButton, setDisableSubButton] = useState(false);
+  const [disableSubButton, setDisableSubButton] = useState(true);
   const params = useParams();
   const beneficiaryId = params.beneficiaryId;
 
@@ -194,15 +194,15 @@ const PricingDetails = () => {
     `/user/beneficiary/${beneficiaryId}`,
     `beneficiary, ${beneficiaryId}`
   );
-
   const checkoutMutation = usePost();
 
   useEffect(() => {
-    console.log(data);
     setPlatform(Capacitor.getPlatform());
+  }, []);
 
+  useEffect(() => {
     isSuccess &&
-    (!data.subscription?.status || data.subscription?.status !== "active")
+    (!data?.subscription?.status || data?.subscription?.status !== "active")
       ? setDisableSubButton(false)
       : setDisableSubButton(true);
   }, [isSuccess, data]);
@@ -242,6 +242,7 @@ const PricingDetails = () => {
   return (
     <section className="bg-white mb-20">
       {isLoading && <TopBarProgress />}
+
       <div className="container px-6 py-8 mx-auto">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>
@@ -275,7 +276,7 @@ const PricingDetails = () => {
                 className="disabled:bg-slate-400 disabled:border-slate-200
 											disabled:hover:text-white bg-ihs-green w-full px-4 py-2 mt-10
 											font-medium tracking-wide text-white capitalize transition-colors
-											duration-200 transform rounded-md focus:outline-none"
+											duration-200 transform rounded-md focus:outline-none disabled:cursor-not-allowed"
                 onClick={() => setPriceId(biweeklyPricing)}
               >
                 Subscribe
@@ -297,7 +298,7 @@ const PricingDetails = () => {
                 disabled={disableSubButton}
                 className="disabled:bg-slate-400 disabled:border-slate-200 disabled:hover:text-white
 											bg-ihs-green w-full px-4 py-2 mt-10 font-medium tracking-wide text-white capitalize
-											transition-colors duration-200 transform rounded-md focus:outline-none "
+											transition-colors duration-200 transform rounded-md focus:outline-none disabled:cursor-not-allowed"
                 onClick={() => setPriceId(monthlyPricing)}
               >
                 Subscribe
@@ -319,7 +320,7 @@ const PricingDetails = () => {
                 disabled={disableSubButton}
                 className="disabled:bg-slate-400 disabled:border-slate-200 disabled:hover:text-white
 											bg-ihs-green w-full px-4 py-2 mt-10 font-medium tracking-wide text-white capitalize
-											transition-colors duration-200 transform rounded-md focus:outline-none "
+											transition-colors duration-200 transform rounded-md focus:outline-none disabled:cursor-not-allowed"
                 onClick={() => setPriceId(yearlyPricing)}
               >
                 Subscribe

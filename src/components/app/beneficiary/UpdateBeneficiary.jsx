@@ -467,7 +467,7 @@ const UpdateBeneficiary = () => {
                         placeholder="John"
                         autoComplete="current-firstName"
                         defaultValue={data?.firstName}
-                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-80 md:w-72"
+                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                       />
                     </div>
                   </div>
@@ -488,7 +488,7 @@ const UpdateBeneficiary = () => {
                         placeholder="Doe"
                         autoComplete="current-lastName"
                         defaultValue={data?.lastName}
-                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-80 md:w-72"
+                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                       />
                     </div>
                   </div>
@@ -511,7 +511,7 @@ const UpdateBeneficiary = () => {
                         required
                         autoComplete="current-dob"
                         defaultValue={data?.dob}
-                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-80 md:w-72"
+                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                       />
                     </div>
                   </div>
@@ -529,7 +529,7 @@ const UpdateBeneficiary = () => {
                         required
                         aria-required="true"
                         defaultValue={data?.relationship}
-                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-80 md:w-72"
+                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                       >
                         <option value="">Select Relationship</option>
                         <option value="Brother">Brother</option>
@@ -558,28 +558,9 @@ const UpdateBeneficiary = () => {
                     </div>
                   </div>
                 </div>
-                {/*Email and Phone Number*/}
-                <div className="flex md:flex-row flex-col md:pt-10 pt-5 ">
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-md font-medium text-gray-500"
-                    >
-                      Email
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="johndoe@email.com"
-                        autoComplete="current-email"
-                        defaultValue={data?.email}
-                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-80 md:w-72"
-                      />
-                    </div>
-                  </div>
-                  <div className="md:ml-10 md:mt-0 mt-5">
+                {/*Phone Number and Address*/}
+                <div className="flex lg:flex-row flex-col lg:pt-10 pt-5 ">
+                  <div className=" lg:mt-0 ">
                     <label
                       htmlFor="phone"
                       className="block text-md font-medium text-gray-500"
@@ -594,16 +575,14 @@ const UpdateBeneficiary = () => {
                         name="phone"
                         required
                         placeholder="Phone Number"
-                        autoComplete="current-phone"
                         defaultValue={data?.phone}
-                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-80 md:w-72"
+                        autoComplete="current-phone"
+                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                       />
                     </div>
                   </div>
-                </div>
-                {/*Address, City and State*/}
-                <div className="flex md:flex-wrap md:flex-row flex-col md:pt-10 pt-5">
-                  <div>
+
+                  <div className="lg:ml-10 lg:mt-0 mt-5">
                     <label
                       htmlFor="address"
                       className="block text-md font-medium text-gray-500"
@@ -617,14 +596,18 @@ const UpdateBeneficiary = () => {
                         id="address"
                         name="address"
                         required
+                        defaultValue={data?.address}
                         placeholder="123 Maple Street"
                         autoComplete="current-address"
-                        defaultValue={data?.address}
-                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-80 md:w-72"
+                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                       />
                     </div>
                   </div>
-                  <div className="md:ml-10 md:mt-0 mt-5">
+                </div>
+
+                {/*City and State*/}
+                <div className="flex lg:flex-row flex-col lg:pt-10 pt-5 ">
+                  <div className="lg:mt-0">
                     <label
                       htmlFor="city"
                       className="block text-md font-medium text-gray-500"
@@ -638,14 +621,15 @@ const UpdateBeneficiary = () => {
                         id="city"
                         name="city"
                         required
+                        defaultValue={data?.city}
                         placeholder="Ikeja"
                         autoComplete="current-city"
-                        defaultValue={data?.city}
-                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-80 md:w-72"
+                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                       />
                     </div>
                   </div>
-                  <div className="lg:ml-10 lg:mt-0 md:mt-10 mt-5">
+
+                  <div className="lg:ml-10 lg:mt-0 mt-5">
                     <label
                       htmlFor="state"
                       className="block text-md font-medium text-gray-500"
@@ -659,10 +643,10 @@ const UpdateBeneficiary = () => {
                         id="state"
                         name="state"
                         required
+                        defaultValue={data?.state}
                         placeholder="Lagos"
                         autoComplete="current-state"
-                        defaultValue={data?.state}
-                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-80 md:w-72"
+                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                       />
                     </div>
                   </div>
