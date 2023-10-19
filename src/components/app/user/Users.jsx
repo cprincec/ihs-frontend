@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import ViewUser from "./ViewUser";
 import UserTable from "./UserTable";
-// import AddUser from "./AddUser";
 import { userRoles } from "../../../data/enums";
 import ViewUserBeneficiary from "./ViewUserBeneficiary";
 import { Helmet, HelmetProvider } from "react-helmet-async";
