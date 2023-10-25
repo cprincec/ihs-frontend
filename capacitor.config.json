@@ -2,7 +2,6 @@
   "appId": "com.ihsmedical.inc",
   "appName": "IHSMDINC",
   "webDir": "build",
-  "bundledWebRuntime": false,
   "backgroundColor": "#fff",
   "plugins": {
     "SplashScreen": {
