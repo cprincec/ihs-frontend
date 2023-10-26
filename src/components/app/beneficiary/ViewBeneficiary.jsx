@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { ChevronLeftIcon, UserCircleIcon } from "@heroicons/react/outline";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -73,7 +73,7 @@ const ViewBeneficiary = () => {
       <>
         <Helmet>
           <title>View Beneficiary | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmia.com/" />
+          <link rel="canonical" href="https://www.ihsmdinc.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
           {loading && <TopBarProgress />}

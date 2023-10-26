@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { addServiceSchema } from "../../../utils/formSchema";
-import { usePost } from "../../../hooks/useMutate";
+import usePost from "../../../hooks/usePost";
 
 const AddServiceModal = ({
   setAddServiceModalSuccess,

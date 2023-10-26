@@ -6,7 +6,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import TopBarProgress from "react-topbar-progress-indicator";
 import useFetch from "../../../hooks/useFetch";
 import { useQueryClient } from "@tanstack/react-query";
-import { useDelete } from "../../../hooks/useMutate";
+import useDelete from "../../../hooks/useDelete";
 
 TopBarProgress.config({
   barColors: {

@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import TopBarProgress from "react-topbar-progress-indicator";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 TopBarProgress.config({
   barColors: {
@@ -29,6 +29,6 @@ root.render(
         </PersistGate>
       </Provider>
     </AuthProvider>
-    {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+    <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>
 );

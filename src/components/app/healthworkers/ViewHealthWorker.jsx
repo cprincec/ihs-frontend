@@ -51,7 +51,7 @@ const ViewHealthWorker = () => {
                 <div className="my-10 ml-5 text-gray-600 md:text-xl text-md">
                   <div className="grid grid-cols-4">
                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                      Full Name:{" "}
+                      Full Name:
                     </p>
                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
                       {capitalizeString(data.firstName)}{" "}
@@ -60,10 +60,10 @@ const ViewHealthWorker = () => {
                   </div>
                   <div className="grid grid-cols-4">
                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                      Email:{" "}
+                      Email:
                     </p>
                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                      {data.email}{" "}
+                      {data.email}
                     </p>
                   </div>
                   <div className="grid grid-cols-4">

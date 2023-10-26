@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import ViewUser from "./ViewUser";
 import UserTable from "./UserTable";
-import AddUser from "./AddUser";
 import { userRoles } from "../../../data/enums";
 import ViewUserBeneficiary from "./ViewUserBeneficiary";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -82,7 +81,7 @@ const ParentContent = () => {
       <>
         <Helmet>
           <title>Users | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmia.com/" />
+          <link rel="canonical" href="https://www.ihsmdinc.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
           {/*Users Section*/}

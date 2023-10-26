@@ -6,6 +6,9 @@ import UpdateBeneficiary from "./UpdateBeneficiary";
 import BeneficiaryTable from "./BeneficiaryTable";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Checkout from "./Checkout";
+import useFetch from "../../../hooks/useFetch";
+import TopBarProgress from "react-topbar-progress-indicator";
+import { useState } from "react";
 
 const Beneficiaries = () => {
   return (
@@ -36,7 +39,7 @@ const ParentContent = () => {
       <>
         <Helmet>
           <title>My Beneficiaries | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmia.com/" />
+          <link rel="canonical" href="https://www.ihsmdinc.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
           {/*Beneficiaries Section*/}

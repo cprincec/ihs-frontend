@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ChevronLeftIcon, UserAddIcon } from "@heroicons/react/outline";
 import { useNavigate, useParams } from "react-router-dom";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import TopBarProgress from "react-topbar-progress-indicator";
+import useFetch from "../../../hooks/useFetch";
+import usePatch from "../../../hooks/usePatch";
+import { useQueryClient } from "@tanstack/react-query";
 
 TopBarProgress.config({
   barColors: {
@@ -125,7 +127,7 @@ const UpdateBeneficiary = () => {
       <>
         <Helmet>
           <title>Update Beneficiary | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmia.com/" />
+          <link rel="canonical" href="https://www.ihsmdinc.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
           {loading && <TopBarProgress />}

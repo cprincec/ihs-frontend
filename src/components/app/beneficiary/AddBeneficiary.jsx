@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeftIcon, UserAddIcon } from "@heroicons/react/outline";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import TopBarProgress from "react-topbar-progress-indicator";
+import usePost from "../../../hooks/usePost";
+import { useQueryClient } from "@tanstack/react-query";
 
 TopBarProgress.config({
   barColors: {
@@ -12,72 +13,35 @@ TopBarProgress.config({
   shadowBlur: 5,
 });
 
-const ADD_BENEFICIARY = "/user/addBeneficiary";
-
 const AddBeneficiary = () => {
-  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
-
-  const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [dob, setDob] = useState("");
-  const [relationship, setRelationship] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
+  const addBeneficiaryMutation = usePost();
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    try {
-      await axiosPrivate.post(
-        ADD_BENEFICIARY,
-        JSON.stringify({
-          firstName,
-          lastName,
-          dob,
-          relationship,
-          email,
-          phone,
-          address,
-          city,
-          state,
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+    const formData = new FormData(e.target);
+    const beneficiaryData = {};
 
-      setFirstName("");
-      setLastName("");
-      setDob("");
-      setRelationship("");
-      setEmail("");
-      setPhone("");
-      setAddress("");
-      setCity("");
-      setState("");
-
-      setLoading(false);
-
-      navigate("/beneficiaries");
-    } catch (err) {
-      if (!err.response) {
-        setErrMsg("No Server Response");
-        setLoading(false);
-      } else {
-        setErrMsg(err);
-        console.error(err);
-      }
+    for (const [key, value] of formData) {
+      beneficiaryData[key] = value;
     }
+
+    addBeneficiaryMutation.mutate(
+      {
+        url: "/user/addBeneficiary",
+        body: beneficiaryData,
+      },
+      {
+        onError: () => setErrMsg("Error Adding Beneficiary. Try again."),
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: "beneficiaries" });
+          navigate("/beneficiaries");
+        },
+      }
+    );
   };
 
   return (
@@ -85,10 +49,10 @@ const AddBeneficiary = () => {
       <>
         <Helmet>
           <title>Add Beneficiary | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmia.com/" />
+          <link rel="canonical" href="https://www.ihsmdinc.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
-          {loading && <TopBarProgress />}
+          {addBeneficiaryMutation.isLoading && <TopBarProgress />}
           <button
             className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 lg:mt-10 my-5"
             onClick={() => navigate("/beneficiaries")}
@@ -133,11 +97,10 @@ const AddBeneficiary = () => {
                   <input
                     type="text"
                     id="firstName"
+                    name="firstName"
                     required
                     placeholder="John"
                     autoComplete="current-firstName"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
                     className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                   />
                 </div>
@@ -155,11 +118,10 @@ const AddBeneficiary = () => {
                   <input
                     type="text"
                     id="lastName"
+                    name="lastName"
                     required
                     placeholder="Doe"
                     autoComplete="current-lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
                     className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                   />
                 </div>
@@ -180,10 +142,9 @@ const AddBeneficiary = () => {
                   <input
                     type="date"
                     id="dob"
+                    name="dob"
                     required
                     autoComplete="current-dob"
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
                     className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                   />
                 </div>
@@ -199,10 +160,9 @@ const AddBeneficiary = () => {
                 <div className="mt-1">
                   <select
                     id="relationship"
+                    name="relationship"
                     required
                     aria-required="true"
-                    value={relationship}
-                    onChange={(e) => setRelationship(e.target.value)}
                     className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                   >
                     <option value="">Select Relationship</option>
@@ -247,11 +207,10 @@ const AddBeneficiary = () => {
                   <input
                     type="tel"
                     id="phone"
+                    name="phone"
                     required
                     placeholder="Phone Number"
                     autoComplete="current-phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
                     className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                   />
                 </div>
@@ -269,11 +228,10 @@ const AddBeneficiary = () => {
                   <input
                     type="text"
                     id="address"
+                    name="address"
                     required
                     placeholder="123 Maple Street"
                     autoComplete="current-address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
                     className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                   />
                 </div>
@@ -294,11 +252,10 @@ const AddBeneficiary = () => {
                   <input
                     type="text"
                     id="city"
+                    name="city"
                     required
                     placeholder="Ikeja"
                     autoComplete="current-city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
                     className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                   />
                 </div>
@@ -316,11 +273,10 @@ const AddBeneficiary = () => {
                   <input
                     type="text"
                     id="state"
+                    name="state"
                     required
                     placeholder="Lagos"
                     autoComplete="current-state"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
                     className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
                   />
                 </div>

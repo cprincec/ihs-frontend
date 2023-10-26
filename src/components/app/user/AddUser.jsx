@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { useNavigate } from "react-router-dom";
-import { userRoles } from "../../../data/enums";
-import { ChevronLeftIcon, UserAddIcon } from "@heroicons/react/outline";
-import { Helmet, HelmetProvider } from "react-helmet-async";
-import TopBarProgress from "react-topbar-progress-indicator";
+// import React, { useEffect, useState } from "react";
+// import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+// import { useNavigate } from "react-router-dom";
+// import { userRoles } from "../../../data/enums";
+// import { ChevronLeftIcon, UserAddIcon } from "@heroicons/react/outline";
+// import { Helmet, HelmetProvider } from "react-helmet-async";
+// import TopBarProgress from "react-topbar-progress-indicator";
 
 TopBarProgress.config({
   barColors: {
@@ -111,7 +111,7 @@ const AddUser = () => {
       <>
         <Helmet>
           <title>Add Admin User | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmia.com/" />
+          <link rel="canonical" href="https://www.ihsmdinc.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
           {loading && <TopBarProgress />}

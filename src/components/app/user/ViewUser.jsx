@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
 import { ChevronLeftIcon, UserIcon } from "@heroicons/react/outline";
 import { useNavigate, useParams } from "react-router-dom";
-import useAuth from "../../../hooks/useAuth";
 import ViewUserBeneficiaries from "./ViewUserBeneficiaries";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import UserDropdown from "./UserDropdown";
 import Shimmer from "../Shimmer";
 import { capitalizeString } from "../../../utils/capitalizeString";
+import useFetch from "../../../hooks/useFetch";
 
 const ViewUser = () => {
   const user = useParams();
@@ -28,7 +27,7 @@ const ViewUser = () => {
       <>
         <Helmet>
           <title>View User | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmia.com/" />
+          <link rel="canonical" href="https://www.ihsmdinc.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
           <button
