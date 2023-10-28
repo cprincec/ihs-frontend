@@ -41,13 +41,13 @@ const ParentContent = () => {
     setShowAddHealthWorkerModal(true);
   };
 
-	const staleTime = 1000 * 60 * 5
+  const staleTime = 1000 * 60 * 5;
   const { isSuccess, data, isLoading, refetch } = useFetch(
     "/worker/all",
     "healthWorkers",
-		staleTime
-	);
-	
+    staleTime
+  );
+
   return (
     <HelmetProvider>
       {isLoading && <TopBarProgress />}
@@ -64,7 +64,7 @@ const ParentContent = () => {
       <>
         <Helmet>
           <title>View Health Workers | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmdinc.com/" />
+          <link rel="canonical" href="https://www.ihsmia.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
           {/*Users Section*/}

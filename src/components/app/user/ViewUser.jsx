@@ -8,15 +8,19 @@ import { capitalizeString } from "../../../utils/capitalizeString";
 import useFetch from "../../../hooks/useFetch";
 
 const ViewUser = () => {
-  const { userId } = useParams();
+  const user = useParams();
   const navigate = useNavigate();
+  const { users } = useAuth();
+  const [userDetails, setUserDetails] = useState({});
+  const [loading, setLoading] = useState(true);
 
-  const staleTime = 1000 * 60 * 5;
-  const { isSuccess, isLoading, data } = useFetch(
-    `/user/${userId}`,
-    `user, ${userId}`,
-    staleTime
-  );
+  useEffect(() => {
+    const userId = user.userId;
+    const filteredUser = users.filter((user) => user.id === userId);
+    filteredUser.length === 0 ? navigate(-1) : setUserDetails(filteredUser[0]);
+    setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <HelmetProvider>
@@ -43,7 +47,7 @@ const ViewUser = () => {
                   </h3>
                 </div>
 
-                <UserDropdown userDetails={data} />
+                <UserDropdown userDetails={userDetails} />
               </div>
 
               <div className="my-10 ml-5 text-gray-600 text-md">
@@ -52,13 +56,12 @@ const ViewUser = () => {
                     Full Name:{" "}
                   </p>
                   <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                    {isLoading ? (
+                    {loading ? (
                       <Shimmer />
                     ) : (
-                      isSuccess &&
-                      `${capitalizeString(data.firstName)} ${capitalizeString(
-                        data.lastName
-                      )}`
+                      `${capitalizeString(
+                        userDetails?.firstName
+                      )} ${capitalizeString(userDetails?.lastName)}`
                     )}{" "}
                   </p>
                 </div>
@@ -67,7 +70,7 @@ const ViewUser = () => {
                     Email:{" "}
                   </p>
                   <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                    {isLoading ? <Shimmer /> : isSuccess && `${data.email}`}{" "}
+                    {loading ? <Shimmer /> : `${userDetails?.email}`}{" "}
                   </p>
                 </div>
                 <div className="grid grid-cols-5">
@@ -75,7 +78,7 @@ const ViewUser = () => {
                     Phone:{" "}
                   </p>
                   <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                    {isLoading ? <Shimmer /> : isSuccess && `${data.phone}`}
+                    {loading ? <Shimmer /> : `${userDetails?.phone}`}
                   </p>
                 </div>
                 <div className="grid grid-cols-5">
@@ -83,7 +86,7 @@ const ViewUser = () => {
                     Role:{" "}
                   </p>
                   <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                    {isLoading ? <Shimmer /> : isSuccess && `${data.userType}`}
+                    {loading ? <Shimmer /> : `${userDetails?.userType}`}
                   </p>
                 </div>
               </div>

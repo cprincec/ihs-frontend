@@ -1,30 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";
 import BeneficiaryTable from "./beneficiary/BeneficiaryTable";
 import AppointmentTable from "./appointment/AppointmentTable";
 import { userRoles } from "../../data/enums";
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import TopBarProgress from "react-topbar-progress-indicator";
 import AllAppointmentsTable from "./appointment/AllAppointmentsTable";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserProfile, storeLoggedInUser } from "../../redux/features/authSlice";
+import {
+  fetchUserProfile,
+  storeLoggedInUser,
+} from "../../redux/features/authSlice";
 import { getKey, setKey } from "../../utils/mobilePreferences";
-import OneSignal from 'onesignal-cordova-plugin';
-import {capitalizeString} from "../../utils/capitalizeString";
+import OneSignal from "onesignal-cordova-plugin";
+import { capitalizeString } from "../../utils/capitalizeString";
 import useFetch from "../../hooks/useFetch";
 
-
 TopBarProgress.config({
-	barColors: {
-		"0": "#05afb0"
-	},
-	shadowBlur: 5
+  barColors: {
+    0: "#05afb0",
+  },
+  shadowBlur: 5,
 });
 
 const Dashboard = () => {
-	const [mobileAuth, setMobileAuth] = useState("");
+  const [mobileAuth, setMobileAuth] = useState("");
   const [mobileLoggedInUser, setMobileLoggedInUser] = useState("");
   const dispatch = useDispatch();
 
@@ -44,7 +46,11 @@ const Dashboard = () => {
     setAppointments,
   } = useAuth();
 
-	const isAdminOrEmployee = mobileAuth?.userType === userRoles.Admin || userType === userRoles.Admin || mobileAuth?.userType === userRoles.Employee || userType === userRoles.Employee;
+  const isAdminOrEmployee =
+    mobileAuth?.userType === userRoles.Admin ||
+    userType === userRoles.Admin ||
+    mobileAuth?.userType === userRoles.Employee ||
+    userType === userRoles.Employee;
 
   useEffect(() => {
     async function initializeOnesignal() {
@@ -178,14 +184,20 @@ const Dashboard = () => {
     };
 
     if (isAdminOrEmployee) {
-				getAllAppointments();
-		}
+      getAllAppointments();
+    }
 
     return () => {
       isMounted = false;
       controller.abort();
     };
-  }, [axiosPrivate, setAllAppointments, userType, mobileAuth?.userType, isAdminOrEmployee]);
+  }, [
+    axiosPrivate,
+    setAllAppointments,
+    userType,
+    mobileAuth?.userType,
+    isAdminOrEmployee,
+  ]);
 
   // get appointments
   useEffect(() => {
@@ -214,16 +226,16 @@ const Dashboard = () => {
     };
   }, [axiosPrivate, setAppointments]);
 
-	const staleTime = 1000 * 60 * 5
+  const staleTime = 1000 * 60 * 5;
   const metrics = useFetch("/metrics", "metrics", staleTime);
 
-	// const trips = useFetchTrips("/metrics", "trips", staleTime)
+  // const trips = useFetchTrips("/metrics", "trips", staleTime)
   return (
     <HelmetProvider>
       <>
         <Helmet>
           <title>Dashboard | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmdinc.com/" />
+          <link rel="canonical" href="https://www.ihsmia.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
           {loading && <TopBarProgress />}
@@ -273,8 +285,8 @@ const Dashboard = () => {
                   <div className="h-40 md:p-5 p-3 rounded-md bg-ihs-green-shade-50 md:text-lg shadow-md flex flex-col justify-between">
                     <p>Total Users</p>
                     <p className="mb-4">
-											<span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">
-												{metrics.isSuccess ? metrics.data.totalUsers : 0}
+                      <span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">
+                        {metrics.isSuccess ? metrics.data.totalUsers : 0}
                       </span>
                       Users
                     </p>
@@ -284,8 +296,8 @@ const Dashboard = () => {
                   <div className="h-40 md:p-5 p-3 rounded-md bg-ihs-blue-shade-50 md:text-lg shadow-md flex flex-col justify-between">
                     <p>Total Appointments</p>
                     <p className="mb-4">
-											<span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">
-												{metrics.isSuccess ? metrics.data.totalAppointments : 0}
+                      <span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">
+                        {metrics.isSuccess ? metrics.data.totalAppointments : 0}
                       </span>
                       Appointments
                     </p>
@@ -295,8 +307,10 @@ const Dashboard = () => {
                   <div className="h-40 md:p-5 p-3 rounded-md bg-ihs-green-shade-50 md:text-lg shadow-md flex flex-col justify-between">
                     <p>Total Health Workers</p>
                     <p className="mb-4">
-											<span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">
-												{metrics.isSuccess ? metrics.data.totalHealthWorkers : 0}
+                      <span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">
+                        {metrics.isSuccess
+                          ? metrics.data.totalHealthWorkers
+                          : 0}
                       </span>
                       Health Workers
                     </p>

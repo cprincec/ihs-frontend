@@ -27,11 +27,11 @@ const ParentContent = () => {
   const [showAddServiceModal, setShowAddServiceModal] = useState(false);
   const [addServiceModalSuccess, setAddServiceModalSuccess] = useState(false);
 
-	const staleTime = 1000 * 60 * 5
+  const staleTime = 1000 * 60 * 5;
   const { isLoading, isSuccess, data, refetch } = useFetch(
     "/admin/service/all",
-		"allServices",
-		staleTime
+    "allServices",
+    staleTime
   );
 
   const handleShowAddServiceModal = () => {
@@ -55,7 +55,7 @@ const ParentContent = () => {
       <>
         <Helmet>
           <title>Services | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmdinc.com/" />
+          <link rel="canonical" href="https://www.ihsmia.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
           <div className="flex justify-between items-center my-5 lg:mt-10">

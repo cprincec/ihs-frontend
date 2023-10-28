@@ -22,7 +22,7 @@ const ViewHealthWorker = () => {
       <>
         <Helmet>
           <title>View Health Worker | IHS Dashboard</title>
-          <link rel="canonical" href="https://www.ihsmdinc.com/" />
+          <link rel="canonical" href="https://www.ihsmia.com/" />
         </Helmet>
         <div className="lg:px-20 lg:py-4 md:px-10 p-3">
           <button

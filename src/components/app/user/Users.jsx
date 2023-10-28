@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import ViewUser from "./ViewUser";
 import UserTable from "./UserTable";
-// import AddUser from "./AddUser";
 import { userRoles } from "../../../data/enums";
 import ViewUserBeneficiary from "./ViewUserBeneficiary";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -12,7 +11,6 @@ import { useSelector } from "react-redux";
 import { getKey } from "../../../utils/mobilePreferences";
 import SearchInput from "../../reusable/search/searchInput";
 import { axiosPrivate } from "../../../api/axios";
-import useFetch from "../../../hooks/useFetch";
 
 TopBarProgress.config({
   barColors: {
@@ -26,7 +24,7 @@ const Users = () => {
     <Routes>
       <Route index element={<ParentContent />} />
       <Route path="/viewuser/:userId" element={<ViewUser />} />
-      {/* <Route path="/adduser" element={<AddUser />} /> */}
+      <Route path="/adduser" element={<AddUser />} />
       <Route
         path="/viewuser/:userId/beneficiary/:beneficiaryId"
         element={<ViewUserBeneficiary />}
@@ -41,13 +39,6 @@ const ParentContent = () => {
   const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [addUserModalSuccess, setAddUserModalSuccess] = useState(false);
   const [mobileAuth, setMobileAuth] = useState("");
-
-  const staleTime = 1000 * 60 * 5;
-  const { isSuccess, isLoading, data } = useFetch(
-    "/users/all",
-    "users",
-    staleTime
-  );
 
   // get auth mobile preferences
   useEffect(() => {
@@ -115,8 +106,7 @@ const ParentContent = () => {
           <hr className="my-10" />
 
           {/*Users Table*/}
-          {isLoading && <TopBarProgress />}
-          {isSuccess && <UserTable users={data} />}
+          <UserTable />
         </div>
       </>
     </HelmetProvider>
