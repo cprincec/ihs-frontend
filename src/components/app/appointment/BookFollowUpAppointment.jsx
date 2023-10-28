@@ -68,7 +68,7 @@ const BookFollowUpAppointment = () => {
         bookAppointmentMutation.mutate(
             { url: "/appointment/createfollowup", body: appointmentData },
             {
-                onError: (error) => {
+                onError: () => {
                     setErrMsg("Something went wrong. Try again");
                 },
                 onSuccess: () => {
