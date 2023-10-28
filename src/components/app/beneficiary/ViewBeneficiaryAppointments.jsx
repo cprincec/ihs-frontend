@@ -103,7 +103,7 @@ import { Tab } from "@headlessui/react";
 import UpcomingAppointmentsTable from "../appointment/UpcomingAppointmentsTable";
 import CompletedAppointmentsTable from "../appointment/CompletedAppointmentsTable";
 import useFetch from "../../../hooks/useFetch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
