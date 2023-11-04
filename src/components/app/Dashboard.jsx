@@ -16,7 +16,6 @@ import {
 import { getKey, setKey } from "../../utils/mobilePreferences";
 import OneSignal from "onesignal-cordova-plugin";
 import { capitalizeString } from "../../utils/capitalizeString";
-import useFetch from "../../hooks/useFetch";
 
 TopBarProgress.config({
   barColors: {
@@ -38,6 +37,8 @@ const Dashboard = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [metrics, setMetrics] = useState({});
+
   const {
     beneficiaries,
     setBeneficiaries,
@@ -226,10 +227,35 @@ const Dashboard = () => {
     };
   }, [axiosPrivate, setAppointments]);
 
-  const staleTime = 1000 * 60 * 5;
-  const metrics = useFetch("/metrics", "metrics", staleTime);
+  // get metrics
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
 
-  // const trips = useFetchTrips("/metrics", "trips", staleTime)
+    const getMetrics = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosPrivate.get("/metrics", {
+          signal: controller?.signal,
+        });
+
+        isMounted && setMetrics(response.data.data);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    if (isAdminOrEmployee) {
+      getMetrics();
+    }
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [axiosPrivate, setMetrics, userType, mobileAuth?.userType]);
+
   return (
     <HelmetProvider>
       <>
@@ -277,7 +303,7 @@ const Dashboard = () => {
             </NavLink>
           </div>
 
-          {(mobileAuth?.userType || userType) !== userRoles.User && (
+          {isAdminOrEmployee && (
             <>
               {/*Admin Cards*/}
               <div className="grid md:grid-cols-3 grid-cols-2 md:gap-7 gap-3 my-10">
@@ -286,7 +312,8 @@ const Dashboard = () => {
                     <p>Total Users</p>
                     <p className="mb-4">
                       <span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">
-                        {metrics.isSuccess ? metrics.data.totalUsers : 0}
+                        {/* {metrics.isSuccess ? metrics.data.totalUsers : 0} */}
+                        {metrics?.totalUsers || 0}
                       </span>
                       Users
                     </p>
@@ -297,7 +324,8 @@ const Dashboard = () => {
                     <p>Total Appointments</p>
                     <p className="mb-4">
                       <span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">
-                        {metrics.isSuccess ? metrics.data.totalAppointments : 0}
+                        {/* {metrics.isSuccess ? metrics.data.totalAppointments : 0} */}
+                        {metrics?.totalAppointments || 0}
                       </span>
                       Appointments
                     </p>
@@ -308,9 +336,10 @@ const Dashboard = () => {
                     <p>Total Health Workers</p>
                     <p className="mb-4">
                       <span className="font-semibold md:text-3xl text-xl pr-0.5 md:pr-2">
-                        {metrics.isSuccess
+                        {/* {metrics.isSuccess
                           ? metrics.data.totalHealthWorkers
-                          : 0}
+                          : 0} */}
+                        {metrics?.totalHealthWorkers || 0}
                       </span>
                       Health Workers
                     </p>

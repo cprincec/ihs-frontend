@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8' ?>
 <resources>
-    <string name="app_name">IHSMDINC</string>
-    <string name="title_activity_main">IHSMDINC</string>
+    <string name="app_name">IHSMIA</string>
+    <string name="title_activity_main">IHSMIA</string>
     <string name="package_name">com.ihsmedical.inc</string>
     <string name="custom_url_scheme">com.ihsmedical.inc</string>
 </resources>
