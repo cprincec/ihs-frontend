@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ChevronLeftIcon, UserCircleIcon } from "@heroicons/react/outline";
 import { useNavigate, useParams } from "react-router-dom";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import TopBarProgress from "react-topbar-progress-indicator";
 import { timePeriod } from "../../../data/enums";
 import Shimmer from "../Shimmer";
 import { capitalizeString } from "../../../utils/capitalizeString";
+import useFetch from "../../../hooks/useFetch";
+import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 TopBarProgress.config({
     barColors: {
@@ -52,11 +53,17 @@ const ViewUserBeneficiary = () => {
         }
     };
 
-    const [beneficiaryDetails, setBeneficiaryDetails] = useState({});
-    const user = useParams();
+    const params = useParams();
+    const beneficiaryId = params.beneficiaryId;
+    const userId = params.userId;
     const navigate = useNavigate();
-    const axiosPrivate = useAxiosPrivate();
-    const [loading, setLoading] = useState();
+
+    const [errMsg, setErrMsg] = useState("");
+
+    const { isLoading, data, isError } = useFetch(
+        `/admin/user/${userId}/beneficiary/${beneficiaryId}`,
+        `beneficiary, ${beneficiaryId}`
+    );
 
     const getDate = (dateString) => {
         const date = new Date(dateString);
@@ -68,39 +75,6 @@ const ViewUserBeneficiary = () => {
         return formattedDate;
     };
 
-    useEffect(() => {
-        const beneficiaryId = user.beneficiaryId;
-        const userId = user.userId;
-
-        setLoading(true);
-        let isMounted = true;
-        const controller = new AbortController();
-
-        const getBeneficiary = async () => {
-            try {
-                const response = await axiosPrivate.get(
-                    `/admin/user/${userId}/beneficiary/${beneficiaryId}`,
-                    {
-                        signal: controller?.signal,
-                    }
-                );
-
-                isMounted && setBeneficiaryDetails(response.data.data);
-                setLoading(false);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        getBeneficiary();
-
-        return () => {
-            isMounted = false;
-            controller.abort();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     return (
         <HelmetProvider>
             <>
@@ -109,7 +83,22 @@ const ViewUserBeneficiary = () => {
                     <link rel="canonical" href="https://www.ihsmia.com/" />
                 </Helmet>
                 <div className="lg:px-20 lg:py-4 md:px-10 p-3">
-                    {loading && <TopBarProgress />}
+                    {isLoading && <TopBarProgress />}
+                    {isError && setErrMsg("Failed to get user")}
+                    {/* Error Handling */}
+                    <p
+                        className={
+                            errMsg
+                                ? "rounded-md p-4 my-4 shadow-md border-0 border-l-4 border-ihs-green-shade-500 text-slate-500 font-thin md:text-lg text-sm"
+                                : "absolute -left-[99999px]"
+                        }
+                        aria-live="assertive"
+                    >
+                        <span className="flex items-center">
+                            <ExclamationCircleIcon className="text-ihs-green w-6 mr-2 inline" />
+                            {errMsg}
+                        </span>
+                    </p>
                     <button
                         className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 lg:mt-10 my-5"
                         onClick={() => navigate(-1)}
@@ -130,9 +119,7 @@ const ViewUserBeneficiary = () => {
                                     <button
                                         className="xl:p-2 md:text-lg text-sm mx-2 p-2"
                                         onClick={() =>
-                                            navigate(
-                                                `/appointments/bookappointmentbyadmin/${beneficiaryDetails.id}`
-                                            )
+                                            navigate(`/appointments/bookappointmentbyadmin/${data.id}`)
                                         }
                                     >
                                         Book Appointment
@@ -146,12 +133,12 @@ const ViewUserBeneficiary = () => {
                                         Full Name:{" "}
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {loading ? (
+                                        {isLoading ? (
                                             <Shimmer />
                                         ) : (
-                                            `${capitalizeString(
-                                                beneficiaryDetails?.firstName
-                                            )}  ${capitalizeString(beneficiaryDetails?.lastName)}`
+                                            `${capitalizeString(data?.firstName)}  ${capitalizeString(
+                                                data?.lastName
+                                            )}`
                                         )}{" "}
                                     </p>
                                 </div>
@@ -160,13 +147,7 @@ const ViewUserBeneficiary = () => {
                                         Date of Birth:{" "}
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {loading ? (
-                                            <Shimmer />
-                                        ) : beneficiaryDetails ? (
-                                            getDate(beneficiaryDetails?.dob)
-                                        ) : (
-                                            ""
-                                        )}{" "}
+                                        {isLoading ? <Shimmer /> : data ? getDate(data?.dob) : ""}{" "}
                                     </p>
                                 </div>
                                 <div className="grid grid-cols-4">
@@ -174,13 +155,7 @@ const ViewUserBeneficiary = () => {
                                         Relationship:{" "}
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {loading ? (
-                                            <Shimmer />
-                                        ) : beneficiaryDetails ? (
-                                            beneficiaryDetails?.relationship
-                                        ) : (
-                                            ""
-                                        )}{" "}
+                                        {isLoading ? <Shimmer /> : data ? data?.relationship : ""}{" "}
                                     </p>
                                 </div>
                                 <div className="grid grid-cols-4">
@@ -188,13 +163,7 @@ const ViewUserBeneficiary = () => {
                                         Phone Number:{" "}
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {loading ? (
-                                            <Shimmer />
-                                        ) : beneficiaryDetails ? (
-                                            beneficiaryDetails?.phone
-                                        ) : (
-                                            ""
-                                        )}{" "}
+                                        {isLoading ? <Shimmer /> : data ? data?.phone : ""}{" "}
                                     </p>
                                 </div>
                                 <div className="grid grid-cols-4">
@@ -202,13 +171,7 @@ const ViewUserBeneficiary = () => {
                                         Address:{" "}
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {loading ? (
-                                            <Shimmer />
-                                        ) : beneficiaryDetails ? (
-                                            beneficiaryDetails?.address
-                                        ) : (
-                                            ""
-                                        )}{" "}
+                                        {isLoading ? <Shimmer /> : data ? data?.address : ""}{" "}
                                     </p>
                                 </div>
                                 <div className="grid grid-cols-4">
@@ -216,13 +179,7 @@ const ViewUserBeneficiary = () => {
                                         City:{" "}
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {loading ? (
-                                            <Shimmer />
-                                        ) : beneficiaryDetails ? (
-                                            beneficiaryDetails?.city
-                                        ) : (
-                                            ""
-                                        )}{" "}
+                                        {isLoading ? <Shimmer /> : data ? data?.city : ""}{" "}
                                     </p>
                                 </div>
                                 <div className="grid grid-cols-4">
@@ -230,13 +187,7 @@ const ViewUserBeneficiary = () => {
                                         State:{" "}
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {loading ? (
-                                            <Shimmer />
-                                        ) : beneficiaryDetails ? (
-                                            beneficiaryDetails?.state
-                                        ) : (
-                                            ""
-                                        )}{" "}
+                                        {isLoading ? <Shimmer /> : data ? data?.state : ""}{" "}
                                     </p>
                                 </div>
                                 <div className="grid grid-cols-4">
@@ -244,27 +195,27 @@ const ViewUserBeneficiary = () => {
                                         Coverage Status:{" "}
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                        {loading ? (
+                                        {isLoading ? (
                                             <Shimmer />
-                                        ) : beneficiaryDetails?.subscription ? (
-                                            beneficiaryDetails.subscription.status
+                                        ) : data?.subscription ? (
+                                            data.subscription.status
                                         ) : (
                                             "No Health Coverage"
                                         )}{" "}
                                     </p>
                                 </div>
-                                {loading ? (
+                                {isLoading ? (
                                     <Shimmer />
                                 ) : (
-                                    beneficiaryDetails?.subscription && (
+                                    data?.subscription && (
                                         <>
                                             <div className="grid grid-cols-4">
                                                 <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
                                                     Payment Frequency:{" "}
                                                 </p>
                                                 <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                                    {beneficiaryDetails?.subscription
-                                                        ? duration(beneficiaryDetails.subscription.amount)
+                                                    {data?.subscription
+                                                        ? duration(data.subscription.amount)
                                                         : ""}{" "}
                                                 </p>
                                             </div>
@@ -274,24 +225,21 @@ const ViewUserBeneficiary = () => {
                                                 </p>
                                                 {/*31536000 is 1 */}
                                                 <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                                    {beneficiaryDetails?.subscription
+                                                    {data?.subscription
                                                         ? coverageEndDate(
-                                                              beneficiaryDetails.subscription.startDate +
-                                                                  timePeriod.year
+                                                              data.subscription.startDate + timePeriod.year
                                                           )
                                                         : ""}{" "}
                                                 </p>
                                             </div>
-                                            {beneficiaryDetails?.subscription?.cancelAt !== null && (
+                                            {data?.subscription?.cancelAt !== null && (
                                                 <div className="grid grid-cols-4">
                                                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
                                                         Cancel Coverage On:{" "}
                                                     </p>
                                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                                        {beneficiaryDetails?.subscription?.cancelAt
-                                                            ? coverageEndDate(
-                                                                  beneficiaryDetails.subscription.cancelAt
-                                                              )
+                                                        {data?.subscription?.cancelAt
+                                                            ? coverageEndDate(data.subscription.cancelAt)
                                                             : ""}{" "}
                                                     </p>
                                                 </div>
