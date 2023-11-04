@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronLeftIcon, ClipboardCheckIcon } from "@heroicons/react/outline";
 import { useNavigate, useParams } from "react-router-dom";
 import { userRoles } from "../../../data/enums";
@@ -93,11 +93,7 @@ const ViewAppointment = () => {
                                     </h3>
                                 </div>
 
-                                {isSuccess && (
-                                    <AppointmentDropdown
-                                        appointmentDetails={data[0]}
-                                    />
-                                )}
+                                {isSuccess && <AppointmentDropdown appointmentDetails={data[0]} />}
                             </div>
 
                             <div className="mt-10 text-gray-600 md:text-xl text-md">
@@ -106,11 +102,7 @@ const ViewAppointment = () => {
                                         Beneficiary:
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            data[0]?.beneficiaryName
-                                        )}
+                                        {isLoading ? <Shimmer /> : data[0]?.beneficiaryName}
                                     </p>
                                 </div>
 
@@ -123,10 +115,8 @@ const ViewAppointment = () => {
                                             <Shimmer />
                                         ) : (
                                             `${
-                                                data[0]?.beneficiaryPhone ===
-                                                    "" ||
-                                                data[0]?.beneficiaryPhone ===
-                                                    undefined
+                                                data[0]?.beneficiaryPhone === "" ||
+                                                data[0]?.beneficiaryPhone === undefined
                                                     ? "No Contact Information"
                                                     : data[0]?.beneficiaryPhone
                                             }`
@@ -139,11 +129,7 @@ const ViewAppointment = () => {
                                         Service:
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            `${data[0]?.serviceName}`
-                                        )}{" "}
+                                        {isLoading ? <Shimmer /> : `${data[0]?.serviceName}`}{" "}
                                     </p>
                                 </div>
 
@@ -172,11 +158,7 @@ const ViewAppointment = () => {
                                         {isLoading ? (
                                             <Shimmer />
                                         ) : (
-                                            `${
-                                                data[0]?.date
-                                                    ? getDate(data[0]?.date)
-                                                    : ""
-                                            }`
+                                            `${data[0]?.date ? getDate(data[0]?.date) : ""}`
                                         )}
                                     </p>
                                 </div>
@@ -186,11 +168,7 @@ const ViewAppointment = () => {
                                         Time:
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            `${data[0]?.time}`
-                                        )}
+                                        {isLoading ? <Shimmer /> : `${data[0]?.time}`}
                                     </p>
                                 </div>
 
@@ -199,11 +177,7 @@ const ViewAppointment = () => {
                                         Status:
                                     </p>
                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            `${data[0]?.status}`
-                                        )}
+                                        {isLoading ? <Shimmer /> : `${data[0]?.status}`}
                                     </p>
                                 </div>
 
@@ -216,8 +190,7 @@ const ViewAppointment = () => {
                                             <Shimmer />
                                         ) : (
                                             `${
-                                                data[0]?.notes === "" ||
-                                                data[0]?.notes === undefined
+                                                data[0]?.notes === "" || data[0]?.notes === undefined
                                                     ? "No Notes Available"
                                                     : data[0].notes
                                             }`
@@ -233,11 +206,7 @@ const ViewAppointment = () => {
                                         {isLoading ? (
                                             <Shimmer />
                                         ) : (
-                                            `${
-                                                data[0]?.review
-                                                    ? data[0]?.review
-                                                    : "Unreviewed Appointment"
-                                            }`
+                                            `${data[0]?.review ? data[0]?.review : "Unreviewed Appointment"}`
                                         )}{" "}
                                     </p>
                                 </div>
@@ -268,10 +237,7 @@ const ViewAppointment = () => {
                                             Report:{" "}
                                         </p>
 
-                                        <button
-                                            className="px-3 my-2"
-                                            onClick={download}
-                                        >
+                                        <button className="px-3 my-2" onClick={download}>
                                             {" "}
                                             Download
                                         </button>

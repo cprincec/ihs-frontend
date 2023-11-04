@@ -31,18 +31,13 @@ const BookFollowUpAppointment = () => {
         setToggleModal(true);
     };
 
-    const fetchBeneficiary = useFetch(
-        `/user/beneficiary/${beneficiaryId}`,
-        `beneficiary, ${beneficiaryId}`
-    );
+    const fetchBeneficiary = useFetch(`/user/beneficiary/${beneficiaryId}`, `beneficiary, ${beneficiaryId}`);
     const fetchServices = useFetch("/admin/service/all", "services");
     const bookAppointmentMutation = usePost();
     const queryClient = useQueryClient();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        console.log(fetchBeneficiary.data.subscription?.status);
 
         if (fetchBeneficiary.data.subscription?.status !== "active") {
             clicked();
@@ -54,7 +49,7 @@ const BookFollowUpAppointment = () => {
             // beneficiaryName field is diabled, hence the manual extraction of value
             userName: e.target.beneficiaryName.value,
             beneficiaryId: e.target.beneficiaryName.dataset.beneficiaryId,
-            userId: e.target.beneficiaryName.dataset.beneficiaryId,
+            userId: fetchBeneficiary.data.userId,
             status: appointmentStatus.Booked,
         };
 
@@ -81,9 +76,7 @@ const BookFollowUpAppointment = () => {
     };
 
     const redirectToPricingPage = () => {
-        navigate(
-            `/beneficiaries/updatebeneficiary/${beneficiaryId}/addhealthcoverage`
-        );
+        navigate(`/beneficiaries/updatebeneficiary/${beneficiaryId}/addhealthcoverage`);
     };
 
     const getBeneficiaryName = (firstName, lastName) => {
@@ -100,13 +93,10 @@ const BookFollowUpAppointment = () => {
                     <link rel="canonical" href="https://www.ihsmdinc.com/" />
                 </Helmet>
                 <div className="lg:px-20 lg:py-4 md:px-10 p-3">
-                    {(fetchBeneficiary.isError || fetchServices.isError) &&
-                        setErrMsg("Something went wrong")}
+                    {(fetchBeneficiary.isError || fetchServices.isError) && setErrMsg("Something went wrong")}
                     {(fetchBeneficiary.isLoading ||
                         fetchServices.isLoading ||
-                        bookAppointmentMutation.isLoading) && (
-                        <TopBarProgress />
-                    )}
+                        bookAppointmentMutation.isLoading) && <TopBarProgress />}
 
                     <p
                         className={
@@ -160,9 +150,7 @@ const BookFollowUpAppointment = () => {
                                             name="beneficiaryName"
                                             required
                                             aria-required="true"
-                                            data-beneficiary-id={
-                                                fetchBeneficiary.data.id
-                                            }
+                                            data-beneficiary-id={fetchBeneficiary.data.id}
                                             defaultValue={getBeneficiaryName(
                                                 fetchBeneficiary.data.firstName,
                                                 fetchBeneficiary.data.lastName
@@ -196,24 +184,15 @@ const BookFollowUpAppointment = () => {
                                             aria-required="true"
                                             className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 text-gray-500 lg:w-96 md:w-72"
                                         >
-                                            <option value="">
-                                                Select a service
-                                            </option>
+                                            <option value="">Select a service</option>
                                             {fetchServices.data.length ? (
-                                                fetchServices.data.map(
-                                                    (service, index) => (
-                                                        <option
-                                                            key={index}
-                                                            value={service?.id}
-                                                        >
-                                                            {service?.name}
-                                                        </option>
-                                                    )
-                                                )
+                                                fetchServices.data.map((service, index) => (
+                                                    <option key={index} value={service?.id}>
+                                                        {service?.name}
+                                                    </option>
+                                                ))
                                             ) : (
-                                                <option value="">
-                                                    No services at this time
-                                                </option>
+                                                <option value="">No services at this time</option>
                                             )}
                                         </select>
                                     </div>
@@ -223,10 +202,7 @@ const BookFollowUpAppointment = () => {
 
                         <div className="flex md:pt-10 pt-5 md:flex-row flex-col">
                             <div>
-                                <label
-                                    htmlFor="date"
-                                    className="block text-md font-medium text-gray-500"
-                                >
+                                <label htmlFor="date" className="block text-md font-medium text-gray-500">
                                     Date
                                     <span className="text-red-600">*</span>
                                 </label>
@@ -246,10 +222,7 @@ const BookFollowUpAppointment = () => {
 
                         <div className="flex md:pt-10 pt-5 md:flex-row flex-col">
                             <div className="">
-                                <label
-                                    htmlFor="time"
-                                    className="block text-md font-medium text-gray-500"
-                                >
+                                <label htmlFor="time" className="block text-md font-medium text-gray-500">
                                     Time
                                     <span className="text-red-600">*</span>
                                 </label>
@@ -269,10 +242,7 @@ const BookFollowUpAppointment = () => {
 
                         <div className="flex md:pt-10 pt-5 md:flex-row flex-col">
                             <div className="">
-                                <label
-                                    htmlFor="notes"
-                                    className="block text-md font-medium text-gray-500"
-                                >
+                                <label htmlFor="notes" className="block text-md font-medium text-gray-500">
                                     Notes
                                 </label>
                                 <div className="mt-1">
