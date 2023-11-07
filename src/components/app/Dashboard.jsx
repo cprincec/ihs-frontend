@@ -7,7 +7,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import TopBarProgress from "react-topbar-progress-indicator";
 import AllAppointmentsTable from "./appointment/AllAppointmentsTable";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserProfile, storeLoggedInUser } from "../../redux/features/authSlice";
+import { storeLoggedInUser } from "../../redux/features/authSlice";
 import { getKey, setKey } from "../../utils/mobilePreferences";
 import OneSignal from "onesignal-cordova-plugin";
 import { capitalizeString } from "../../utils/capitalizeString";
@@ -100,21 +100,30 @@ const Dashboard = () => {
     }, []);
 
     // // get logged in user
+    const fetchUserProfile = useFetch("/user/profile", "userProfile");
     useEffect(() => {
-        dispatch(fetchUserProfile())
-            .unwrap()
-            .then(async (result) => {
-                dispatch(storeLoggedInUser(result));
+        // Store user
+        const storeUser = async (userProfile) => {
+            dispatch(storeLoggedInUser(userProfile));
+            // mobile storage
+            await setKey("loggedInUser", userProfile);
+        };
 
-                // mobile storage
-                await setKey("loggedInUser", result);
-            })
-            .catch((err) => {
-                if (err?.response?.status === 401) {
-                    navigate("/", { state: { from: location }, replace: true });
-                }
-            });
-    }, [dispatch, location, navigate]);
+        const info = fetchUserProfile.isSuccess ? fetchUserProfile.data : "";
+        let profileInfo = {};
+
+        if (fetchUserProfile.isSuccess) {
+            profileInfo = {
+                id: info.id,
+                firstName: info.firstName,
+                lastName: info.lastName,
+                phone: info.phone,
+                email: info.email,
+                customerId: info.stripeCustomerId,
+            };
+            storeUser(profileInfo);
+        }
+    }, [dispatch, fetchUserProfile.isSuccess]);
 
     // get user beneficiaries
     const fetchBeneficiaries = useFetch("/user/beneficiaries", "beneficiaries");
