@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import BeneficiaryTable from "./beneficiary/BeneficiaryTable";
 import AppointmentTable from "./appointment/AppointmentTable";
@@ -101,29 +101,25 @@ const Dashboard = () => {
 
     // // get logged in user
     const fetchUserProfile = useFetch("/user/profile", "userProfile");
-    useEffect(() => {
-        // Store user
-        const storeUser = async (userProfile) => {
-            dispatch(storeLoggedInUser(userProfile));
-            // mobile storage
-            await setKey("loggedInUser", userProfile);
+
+    const fetchUserData = useCallback(async () => {
+        const info = fetchUserProfile.data;
+        const profileInfo = {
+            id: info.id,
+            firstName: info.firstName,
+            lastName: info.lastName,
+            phone: info.phone,
+            email: info.email,
+            customerId: info.stripeCustomerId,
         };
+        dispatch(storeLoggedInUser(profileInfo));
+        // mobile storage
+        await setKey("loggedInUser", profileInfo);
+    }, []);
 
-        const info = fetchUserProfile.isSuccess ? fetchUserProfile.data : "";
-        let profileInfo = {};
-
-        if (fetchUserProfile.isSuccess) {
-            profileInfo = {
-                id: info.id,
-                firstName: info.firstName,
-                lastName: info.lastName,
-                phone: info.phone,
-                email: info.email,
-                customerId: info.stripeCustomerId,
-            };
-            storeUser(profileInfo);
-        }
-    }, [dispatch, fetchUserProfile.isSuccess]);
+    useEffect(() => {
+        if (fetchUserProfile.isSuccess) fetchUserData();
+    }, [fetchUserData, fetchUserProfile.isSuccess]);
 
     // get user beneficiaries
     const fetchBeneficiaries = useFetch("/user/beneficiaries", "beneficiaries");
