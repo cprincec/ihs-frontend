@@ -14,23 +14,11 @@ const Appointment = () => {
     return (
         <Routes>
             <Route index element={<ParentContent />} />
-            <Route
-                path="/viewappointment/:appointmentId"
-                element={<ViewAppointment />}
-            />
+            <Route path="/viewappointment/:appointmentId" element={<ViewAppointment />} />
             <Route path="/allappointments" element={<AllAppointmentsTable />} />
-            <Route
-                path="/updateappointment/:appointmentId"
-                element={<UpdateAppointment />}
-            />
-            <Route
-                path="/assignworker/:appointmentId"
-                element={<AssignHealthWorker />}
-            />
-            <Route
-                path="/updateappointment/:appointmentId/uploadreport"
-                element={<UploadReport />}
-            />
+            <Route path="/updateappointment/:appointmentId" element={<UpdateAppointment />} />
+            <Route path="/assignworker/:appointmentId" element={<AssignHealthWorker />} />
+            <Route path="/updateappointment/:appointmentId/uploadreport" element={<UploadReport />} />
         </Routes>
     );
 };
@@ -39,7 +27,9 @@ const ParentContent = () => {
     const [errMsg, setErrMsg] = useState(false);
     const { isLoading, isSuccess, data, isError, error } = useFetch(
         "/admin/appointments",
-        "allAppointments"
+        "allAppointments",
+        1000 * 60 * 60 * 24,
+        true
     );
 
     return (
@@ -66,11 +56,9 @@ const ParentContent = () => {
                         </span>
                     </p>
                     <div className="flex justify-between items-center my-5 lg:mt-10">
-                        <h2 className="md:text-2xl text-xl">
-                            All Appointments
-                        </h2>
+                        <h2 className="md:text-2xl text-xl">All Appointments</h2>
                     </div>
-                    <hr className="my-10" />
+                    <hr className="my-5" />
 
                     {/*	Mobile Appointment Table*/}
                     {isSuccess && <AllAppointmentsTable appointments={data} />}

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import BeneficiaryTable from "./beneficiary/BeneficiaryTable";
+import BeneficiariesTable from "./beneficiary/BeneficiariesTable";
 import AppointmentTable from "./appointment/AppointmentTable";
 import { userRoles } from "../../data/enums";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -29,7 +29,6 @@ const Dashboard = () => {
     const loggedInUser = useSelector((state) => state.auth.loggedInUser);
 
     const navigate = useNavigate();
-    const location = useLocation();
 
     const isAdminOrEmployee =
         mobileAuth?.userType === userRoles.Admin ||
@@ -104,6 +103,9 @@ const Dashboard = () => {
 
     const fetchUserData = useCallback(async () => {
         const info = fetchUserProfile.data;
+        if (!info) {
+            return;
+        }
         const profileInfo = {
             id: info.id,
             firstName: info.firstName,
@@ -118,7 +120,10 @@ const Dashboard = () => {
     }, []);
 
     useEffect(() => {
-        if (fetchUserProfile.isSuccess) fetchUserData();
+        if (fetchUserProfile.isSuccess) {
+            console.log("There is data: ", fetchUserProfile.data);
+            fetchUserData();
+        }
     }, [fetchUserData, fetchUserProfile.isSuccess]);
 
     // get user beneficiaries
@@ -250,7 +255,7 @@ const Dashboard = () => {
 
                             {/*Beneficiaries Table*/}
                             {fetchBeneficiaries.isSuccess && (
-                                <BeneficiaryTable beneficiaries={fetchBeneficiaries.data} />
+                                <BeneficiariesTable beneficiaries={fetchBeneficiaries.data} />
                             )}
 
                             {/*Appointments Section*/}

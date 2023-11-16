@@ -1,29 +1,38 @@
-// import { useMemo, useState } from "react";
+// import React, { useMemo, useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 // import Nodata from "../../../assets/images/noData.svg";
 // import Avatar from "react-avatar";
 // import { avatar, pageSize } from "../../../data/enums";
+// import TopBarProgress from "react-topbar-progress-indicator";
+// import { calculateAge } from "../../../hooks/useCalculateAge";
 // import Pagination from "../Pagination";
 // import { capitalizeString } from "../../../utils/capitalizeString";
+
+// TopBarProgress.config({
+//     barColors: {
+//         0: "#05afb0",
+//     },
+//     shadowBlur: 5,
+// });
 
 // const mobilePageSize = pageSize.Mobile;
 // const laptopPageSize = pageSize.Laptop;
 
-// const HealthWorkerTable = ({ healthWorkers }) => {
+// const BeneficiaryTable = ({ beneficiaries }) => {
 //     const navigate = useNavigate();
 //     const [currentPage, setCurrentPage] = useState(1);
 
 //     const laptopTableData = useMemo(() => {
 //         const firstPageIndex = (currentPage - 1) * laptopPageSize;
 //         const lastPageIndex = firstPageIndex + laptopPageSize;
-//         return healthWorkers.slice(firstPageIndex, lastPageIndex);
-//     }, [currentPage, healthWorkers]);
+//         return beneficiaries.slice(firstPageIndex, lastPageIndex);
+//     }, [currentPage, beneficiaries]);
 
 //     const mobileTableData = useMemo(() => {
 //         const firstPageIndex = (currentPage - 1) * mobilePageSize;
 //         const lastPageIndex = firstPageIndex + mobilePageSize;
-//         return healthWorkers.slice(firstPageIndex, lastPageIndex);
-//     }, [currentPage, healthWorkers]);
+//         return beneficiaries.slice(firstPageIndex, lastPageIndex);
+//     }, [currentPage, beneficiaries]);
 
 //     return (
 //         <>
@@ -33,15 +42,15 @@
 //                         <table className="table-auto min-w-full">
 //                             <thead>
 //                                 <tr>
-//                                     <th className="px-6 py-5 text-base font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-ihs-green-shade-50"></th>
+//                                     <th className="py-5 text-base font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-ihs-green-shade-50"></th>
 //                                     <th className="py-5 text-base font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-ihs-green-shade-50">
-//                                         <p>Name</p>
+//                                         <p>Beneficiary</p>
 //                                     </th>
 //                                     <th className="px-6 py-3 text-base font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-ihs-green-shade-50">
-//                                         Email
+//                                         Location
 //                                     </th>
 //                                     <th className="px-6 py-3 text-base font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-ihs-green-shade-50">
-//                                         Phone
+//                                         Age
 //                                     </th>
 //                                     <th className="px-6 py-3 text-base font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-ihs-green-shade-50">
 //                                         Actions
@@ -51,27 +60,29 @@
 
 //                             <tbody className="bg-white">
 //                                 {laptopTableData?.length ? (
-//                                     laptopTableData.map((worker, index) => (
+//                                     laptopTableData.map((beneficiary, index) => (
 //                                         <tr key={index}>
-//                                             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-//                                                 <div>
-//                                                     <Avatar
-//                                                         name={`${capitalizeString(
-//                                                             worker?.firstName
-//                                                         )} ${capitalizeString(worker?.lastName)}`}
-//                                                         color={avatar.BackgroundColor}
-//                                                         fgColor={avatar.ForegroundColor}
-//                                                         size={avatar.width}
-//                                                         round={true}
-//                                                     />
+//                                             <td className=" py-4 whitespace-no-wrap border-b border-gray-200">
+//                                                 <div className="flex items-center">
+//                                                     <div className="mx-4">
+//                                                         <Avatar
+//                                                             name={`${capitalizeString(
+//                                                                 beneficiary?.firstName
+//                                                             )} ${capitalizeString(beneficiary?.lastName)}`}
+//                                                             color={avatar.BackgroundColor}
+//                                                             fgColor={avatar.ForegroundColor}
+//                                                             size={avatar.width}
+//                                                             round={true}
+//                                                         />
+//                                                     </div>
 //                                                 </div>
 //                                             </td>
-//                                             <td className=" py-4 whitespace-no-wrap border-b border-gray-200">
+//                                             <td className="py-4 whitespace-no-wrap border-b border-gray-200">
 //                                                 <div className="flex items-center">
 //                                                     <div>
 //                                                         <div className="md:text-lg text-base font-medium leading-5 text-gray-500">
-//                                                             {capitalizeString(worker?.firstName)}&nbsp;
-//                                                             {capitalizeString(worker?.lastName)}
+//                                                             {capitalizeString(beneficiary?.firstName)}&nbsp;
+//                                                             {capitalizeString(beneficiary?.lastName)}
 //                                                         </div>
 //                                                     </div>
 //                                                 </div>
@@ -79,18 +90,20 @@
 
 //                                             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
 //                                                 <div className="md:text-lg text-base leading-5 text-gray-500">
-//                                                     {worker?.email}
+//                                                     {beneficiary?.city}, {beneficiary?.state}
 //                                                 </div>
 //                                             </td>
 
 //                                             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
 //                                                 <p className="md:text-lg text-base leading-5 text-gray-500">
-//                                                     {worker?.phone}
+//                                                     {calculateAge(beneficiary?.dob)}
 //                                                 </p>
 //                                             </td>
 
 //                                             <td className="px-6 py-4 md:text-lg text-base leading-5 text-ihs-green whitespace-no-wrap border-b border-gray-200">
-//                                                 <Link to={`/healthworkers/viewhealthworker/${worker?.id}`}>
+//                                                 <Link
+//                                                     to={`/beneficiaries/viewbeneficiary/${beneficiary?.id}`}
+//                                                 >
 //                                                     View
 //                                                 </Link>
 //                                             </td>
@@ -102,7 +115,7 @@
 //                                             <div className="flex flex-col justify-center items-center py-20">
 //                                                 <img src={Nodata} alt="No Data" className="w-40 my-10" />
 //                                                 <p className="text-lg md:mx-32 mx-5 text-center">
-//                                                     There Are No Health Workers
+//                                                     You have no beneficiaries. Add a Beneficiary to begin
 //                                                 </p>
 //                                             </div>
 //                                         </td>
@@ -112,7 +125,7 @@
 //                         </table>
 //                         <Pagination
 //                             currentPage={currentPage}
-//                             totalCount={healthWorkers.length}
+//                             totalCount={beneficiaries.length}
 //                             pageSize={mobilePageSize}
 //                             onPageChange={(page) => setCurrentPage(page)}
 //                         />
@@ -135,34 +148,38 @@
 
 //                             <tbody className="bg-white">
 //                                 {mobileTableData?.length ? (
-//                                     mobileTableData.map((healthWorker, index) => (
+//                                     mobileTableData.map((beneficiary, index) => (
 //                                         <tr
 //                                             className="py-4 whitespace-no-wrap border-b even:bg-gray-100"
 //                                             key={index}
 //                                             onClick={() =>
-//                                                 navigate(
-//                                                     `/healthworkers/viewhealthworker/${healthWorker?.id}`
-//                                                 )
+//                                                 navigate(`/beneficiaries/viewbeneficiary/${beneficiary?.id}`)
 //                                             }
 //                                         >
 //                                             <td className="p-4 ">
 //                                                 <div className="flex justify-between items-center text-md text-gray-800">
 //                                                     <span>
-//                                                         {capitalizeString(healthWorker?.firstName)}&nbsp;
-//                                                         {capitalizeString(healthWorker?.lastName)}
+//                                                         {capitalizeString(beneficiary?.firstName)}&nbsp;
+//                                                         {capitalizeString(beneficiary?.lastName)}
 //                                                     </span>
 //                                                 </div>
 //                                                 <div className="text-sm text-gray-500">
 //                                                     <p className="flex justify-between mt-1">
-//                                                         <span>Email</span>
+//                                                         <span>Relationship</span>
 //                                                         <span className="text-gray-800">
-//                                                             {healthWorker?.email}
+//                                                             {beneficiary?.relationship}
 //                                                         </span>
 //                                                     </p>
 //                                                     <p className="flex justify-between mt-1">
-//                                                         <span>Phone</span>
+//                                                         <span>Address</span>
 //                                                         <span className="text-gray-800">
-//                                                             {healthWorker?.phone}
+//                                                             {beneficiary?.city}, {beneficiary?.state}
+//                                                         </span>
+//                                                     </p>
+//                                                     <p className="flex justify-between mt-1">
+//                                                         <span>Age</span>
+//                                                         <span className="text-gray-800">
+//                                                             {calculateAge(beneficiary?.dob)} years
 //                                                         </span>
 //                                                     </p>
 //                                                 </div>
@@ -175,7 +192,7 @@
 //                                             <div className="flex flex-col justify-center items-center py-20">
 //                                                 <img src={Nodata} alt="No Data" className="w-40 my-10" />
 //                                                 <p className="text-lg md:mx-32 mx-5 text-center">
-//                                                     There Are No Health Workers.
+//                                                     You have no beneficiaries. Add a Beneficiary.
 //                                                 </p>
 //                                             </div>
 //                                         </td>
@@ -185,7 +202,7 @@
 //                         </table>
 //                         <Pagination
 //                             currentPage={currentPage}
-//                             totalCount={healthWorkers.length}
+//                             totalCount={beneficiaries.length}
 //                             pageSize={mobilePageSize}
 //                             onPageChange={(page) => setCurrentPage(page)}
 //                         />
@@ -196,17 +213,31 @@
 //     );
 // };
 
-// export default HealthWorkerTable;
+// export default BeneficiaryTable;
 
-import { Link } from "react-router-dom";
+import React, { useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Nodata from "../../../assets/images/noData.svg";
 import Avatar from "react-avatar";
-import { avatar } from "../../../data/enums";
+import { avatar, pageSize } from "../../../data/enums";
+import TopBarProgress from "react-topbar-progress-indicator";
+import { calculateAge } from "../../../hooks/useCalculateAge";
+import Pagination from "../Pagination";
+import { capitalizeString } from "../../../utils/capitalizeString";
 import BaseTable from "../table/BaseTable";
 
-const HealthWorkerTable = ({ healthWorkers }) => {
-    const rowsPerPage = 10; // number of healthWorkers per page
+TopBarProgress.config({
+    barColors: {
+        0: "#05afb0",
+    },
+    shadowBlur: 5,
+});
 
-    const mobileScreenHeaders = ["Health Worker"];
+const BeneficiariesTable = ({ beneficiaries }) => {
+    const rowsPerPage = 10;
+
+    // Array of table headings for the mobile view
+    const mobileScreenHeaders = ["Beneficiary"];
 
     const columns = [
         {
@@ -214,7 +245,7 @@ const HealthWorkerTable = ({ healthWorkers }) => {
             cell: (cell) => (
                 <span className="hidden sm:block px-0">
                     <Avatar
-                        name={`${cell.row.original.beneficiaryName}`}
+                        name={`${cell.row.original.firstName} ${cell.row.original.lastName}`}
                         color={avatar.BackgroundColor}
                         fgColor={avatar.ForegroundColor}
                         size={avatar.width}
@@ -224,17 +255,22 @@ const HealthWorkerTable = ({ healthWorkers }) => {
             ),
         },
         {
-            header: "NAME",
+            header: "BENEFICIARY",
             accessorFn: (row) => `${row.firstName} ${row.lastName}`,
             cell: (cell) => <p className="capitalize">{`${cell.getValue()}`}</p>,
         },
         {
-            header: "EMAIL",
-            accessorKey: "email",
+            header: "LOCATION",
+            accessorKey: "address",
         },
         {
-            header: "phone",
-            accessorKey: "phone",
+            header: "AGE",
+            accessorFn: (row) => calculateAge(row.dob),
+        },
+
+        {
+            header: "RELATIONSHIP",
+            accessorKey: "relationship",
         },
         {
             header: "ACTIONS",
@@ -242,7 +278,7 @@ const HealthWorkerTable = ({ healthWorkers }) => {
             cell: (cell) => (
                 <Link
                     className="text-ihs-green"
-                    to={`/healthworkers/viewhealthworker/${cell.row.original.id}`}
+                    to={`/beneficiaries/viewbeneficiary/${cell.row.original.id}`}
                 >
                     View
                 </Link>
@@ -253,10 +289,10 @@ const HealthWorkerTable = ({ healthWorkers }) => {
     return (
         <>
             <BaseTable
-                data={healthWorkers}
+                data={beneficiaries}
                 columns={columns}
                 rowsPerPage={rowsPerPage}
-                actionBaseUrl={"viewhealthworker/"}
+                actionBaseUrl={"viewbeneficiary/"}
                 options={{
                     mobileScreenHeaders: mobileScreenHeaders,
                 }}
@@ -265,4 +301,4 @@ const HealthWorkerTable = ({ healthWorkers }) => {
     );
 };
 
-export default HealthWorkerTable;
+export default BeneficiariesTable;

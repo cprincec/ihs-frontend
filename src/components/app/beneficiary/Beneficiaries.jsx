@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import AddBeneficiary from "./AddBeneficiary";
 import ViewBeneficiary from "./ViewBeneficiary";
 import UpdateBeneficiary from "./UpdateBeneficiary";
-import BeneficiaryTable from "./BeneficiaryTable";
+import BeneficiariesTable from "./BeneficiariesTable";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Checkout from "./Checkout";
 import useFetch from "../../../hooks/useFetch";
@@ -75,7 +75,7 @@ const ParentContent = () => {
                     <hr className="my-10" />
 
                     {/*Beneficiaries Table*/}
-                    {isSuccess && <BeneficiaryTable beneficiaries={data} />}
+                    {isSuccess && <BeneficiariesTable beneficiaries={data} />}
                 </div>
             </>
         </HelmetProvider>

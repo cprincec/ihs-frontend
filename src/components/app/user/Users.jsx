@@ -13,6 +13,7 @@ import SearchInput from "../../reusable/search/searchInput";
 import { axiosPrivate } from "../../../api/axios";
 import useFetch from "../../../hooks/useFetch";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import UsersTable from "./UserTable";
 
 TopBarProgress.config({
     barColors: {
@@ -120,7 +121,7 @@ const ParentContent = () => {
                     <hr className="my-10" />
 
                     {/*Users Table*/}
-                    {isSuccess && <UserTable users={data} />}
+                    {isSuccess && <UsersTable users={data} />}
                 </div>
             </>
         </HelmetProvider>
