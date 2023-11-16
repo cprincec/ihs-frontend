@@ -215,15 +215,10 @@
 
 // export default BeneficiaryTable;
 
-import React, { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Nodata from "../../../assets/images/noData.svg";
-import Avatar from "react-avatar";
-import { avatar, pageSize } from "../../../data/enums";
+import { Link } from "react-router-dom";
+import { avatar } from "../../../data/enums";
 import TopBarProgress from "react-topbar-progress-indicator";
 import { calculateAge } from "../../../hooks/useCalculateAge";
-import Pagination from "../Pagination";
-import { capitalizeString } from "../../../utils/capitalizeString";
 import BaseTable from "../table/BaseTable";
 
 TopBarProgress.config({
