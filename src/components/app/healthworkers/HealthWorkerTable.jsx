@@ -233,7 +233,7 @@ const HealthWorkerTable = ({ healthWorkers }) => {
             accessorKey: "email",
         },
         {
-            header: "phone",
+            header: "PHONE",
             accessorKey: "phone",
         },
         {

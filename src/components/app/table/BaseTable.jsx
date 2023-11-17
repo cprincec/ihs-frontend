@@ -39,7 +39,7 @@ const BaseTable = ({ data, columns, rowsPerPage, options, actionBaseUrl }) => {
             ) : (
                 <div className="flex flex-col justify-center items-center py-5">
                     <img src={noData} alt="No Data" className="w-40 my-5" />
-                    <p className="text-lg md:mx-32 mx-5 text-center">No Upcoming Appointments.</p>
+                    <p className="text-lg md:mx-32 mx-5 text-center">No data.</p>
                 </div>
             )}
         </div>
