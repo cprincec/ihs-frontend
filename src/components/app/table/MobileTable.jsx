@@ -1,7 +1,8 @@
 import { flexRender } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
+import noData from "../../../assets/images/noData.svg";
 
-const MobileTable = ({ table, actionBaseUrl, options }) => {
+const MobileTable = ({ table, actionBaseUrl, options, tableLength, tableTitle }) => {
     return (
         // small screen table
         <div className="sm:hidden grid gap-y-2" aria-label="table" role="table">
@@ -49,6 +50,12 @@ const MobileTable = ({ table, actionBaseUrl, options }) => {
                     </Link>
                 );
             })}
+            {tableLength < 1 && (
+                <div className="flex flex-col justify-center items-center py-5">
+                    <img src={noData} alt="No Data" className="w-40 my-5" />
+                    <p className="text-lg md:mx-32 mx-5 text-center">No {tableTitle}</p>
+                </div>
+            )}
         </div>
     );
 };

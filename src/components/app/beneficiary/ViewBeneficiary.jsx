@@ -10,6 +10,9 @@ import Shimmer from "../Shimmer";
 import { capitalizeString } from "../../../utils/capitalizeString";
 import useFetch from "../../../hooks/useFetch";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import FormModal from "../../shared/FormModal";
+import UpdateBeneficiaryForm from "./form/UpdateBeneficiaryForm";
+import PageHeading from "../../shared/PageHeading";
 
 TopBarProgress.config({
     barColors: {
@@ -21,11 +24,12 @@ TopBarProgress.config({
 const ViewBeneficiaryAppointments = lazy(() => import("./ViewBeneficiaryAppointments"));
 
 const ViewBeneficiary = () => {
-    const beneficiary = useParams();
-    const beneficiaryId = beneficiary.beneficiaryId;
+    const params = useParams();
+    const beneficiaryId = params.beneficiaryId;
     const navigate = useNavigate();
 
     const [errMsg, setErrMsg] = useState("");
+    const [showUpdateBeneficiary, setShowUpdateBeneficiary] = useState(false);
     const { isSuccess, isLoading, data, isError } = useFetch(
         `/user/beneficiary/${beneficiaryId}`,
         `beneficiary, ${beneficiaryId}`
@@ -57,8 +61,16 @@ const ViewBeneficiary = () => {
     };
 
     return (
-        <HelmetProvider>
-            <>
+        <>
+            {showUpdateBeneficiary && (
+                <FormModal
+                    showModal={showUpdateBeneficiary}
+                    setShowModal={setShowUpdateBeneficiary}
+                    targetForm={UpdateBeneficiaryForm}
+                    successMessage={"Beneficiary updated Successfully"}
+                />
+            )}
+            <HelmetProvider>
                 <Helmet>
                     <title>View Beneficiary | IHS Dashboard</title>
                     <link rel="canonical" href="https://www.ihsmdinc.com/" />
@@ -81,16 +93,29 @@ const ViewBeneficiary = () => {
                             {errMsg}
                         </span>
                     </p>
-                    <button
+                    {/* <button
                         className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 lg:mt-10 my-5"
                         onClick={() => navigate("/beneficiaries")}
                     >
                         <ChevronLeftIcon className="w-6" />{" "}
                         <p className="text-lg px-5">Back to Beneficiaries</p>
-                    </button>
+                    </button> */}
+
+                    <PageHeading
+                        pageName={"Beneficiary Details"}
+                        previousPageName={"Beneficiaries"}
+                        previousUrl={"/beneficiaries"}
+                    >
+                        {isSuccess && (
+                            <BeneficiaryDropdown
+                                beneficiary={data}
+                                setShowUpdateBeneficiary={setShowUpdateBeneficiary}
+                            />
+                        )}
+                    </PageHeading>
                     <div className="flex">
                         <div className="flex-1">
-                            <div className="flex justify-between items-center h-24 bg-ihs-green-shade-50 rounded-md shadow-sm text-gray-600">
+                            {/* <div className="flex justify-between items-center h-24 bg-ihs-green-shade-50 rounded-md shadow-sm text-gray-600">
                                 <div className="flex">
                                     <UserCircleIcon className="md:w-14 w-8 md:ml-10 ml-3" />
                                     <h3 className="md:text-3xl sm:text-2xl text-xl py-8 md:px-8 px-2">
@@ -98,8 +123,13 @@ const ViewBeneficiary = () => {
                                     </h3>
                                 </div>
 
-                                {isSuccess && <BeneficiaryDropdown beneficiary={data} />}
-                            </div>
+                                {isSuccess && (
+                                    <BeneficiaryDropdown
+                                        beneficiary={data}
+                                        setShowUpdateBeneficiary={setShowUpdateBeneficiary}
+                                    />
+                                )}
+                            </div> */}
 
                             <div className="my-10 ml-5 text-gray-600 md:text-xl text-md">
                                 <div className="grid grid-cols-4">
@@ -239,8 +269,8 @@ const ViewBeneficiary = () => {
                         <ViewBeneficiaryAppointments />
                     </Suspense>
                 </div>
-            </>
-        </HelmetProvider>
+            </HelmetProvider>
+        </>
     );
 };
 

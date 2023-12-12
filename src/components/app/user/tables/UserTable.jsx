@@ -219,9 +219,9 @@
 // export default UserTable;
 
 import Avatar from "react-avatar";
-import { avatar, userRoles } from "../../../data/enums";
+import { avatar, userRoles } from "../../../../data/enums";
 import { Link } from "react-router-dom";
-import BaseTable from "../table/BaseTable";
+import BaseTable from "../../table/BaseTable";
 
 const UsersTable = ({ users }) => {
     const rowsPerPage = 10; // number of users per page
@@ -261,7 +261,7 @@ const UsersTable = ({ users }) => {
             accessorKey: "userType",
             cell: (cell) => (
                 <span
-                    className={`px-2 py-1 break-normal capitalize ${
+                    className={`px-2 py-1 break-normal capitalize rounded text-xs ${
                         cell.getValue() === userRoles.Admin
                             ? "text-green-900 bg-green-100"
                             : cell.getValue() === userRoles.Employee
@@ -294,6 +294,7 @@ const UsersTable = ({ users }) => {
                 positionedColumn: "userType",
                 mobileScreenHeaders: mobileScreenHeaders,
             }}
+            tableTitle={"User"}
         />
     );
 };

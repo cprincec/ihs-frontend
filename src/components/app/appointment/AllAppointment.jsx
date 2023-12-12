@@ -6,7 +6,7 @@ import AssignHealthWorker from "./AssignHealthWorker";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import UploadReport from "./UploadReport";
 import TopBarProgress from "react-topbar-progress-indicator";
-import AllAppointmentsTable from "./AllAppointmentsTable";
+import AllAppointmentsTable from "./tables/AllAppointmentsTable";
 import useFetch from "../../../hooks/useFetch";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
@@ -39,7 +39,7 @@ const ParentContent = () => {
                     <title>View All Appointments | IHS Dashboard</title>
                     <link rel="canonical" href="https://www.ihsmdinc.com/" />
                 </Helmet>
-                <div className="lg:px-20 lg:py-4 md:px-10 p-3">
+                <div className="lg:px-20 lg:py-4 md:px-10 p-4">
                     {isLoading && <TopBarProgress />}
                     {isError && setErrMsg(error.message)}
                     <p
@@ -55,10 +55,10 @@ const ParentContent = () => {
                             {errMsg}
                         </span>
                     </p>
-                    <div className="flex justify-between items-center my-5 lg:mt-10">
+                    <div className="flex justify-between items-center my-4">
                         <h2 className="md:text-2xl text-xl">All Appointments</h2>
                     </div>
-                    <hr className="my-5" />
+                    <hr className="my-8" />
 
                     {/*	Mobile Appointment Table*/}
                     {isSuccess && <AllAppointmentsTable appointments={data} />}

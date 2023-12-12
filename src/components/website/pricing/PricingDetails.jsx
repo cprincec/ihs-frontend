@@ -45,7 +45,7 @@ const PricingDetails = () => {
     }, [isSuccess, data]);
 
     const redirectToWebApp = () => {
-        window.alert("Visit the web app at https://app.ihsmdinc.com");
+        window.alert("Visit the web app at https://app.ihsmia.com");
     };
 
     const handleCheckout = async (e) => {

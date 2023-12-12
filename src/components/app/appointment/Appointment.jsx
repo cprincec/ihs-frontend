@@ -1,49 +1,34 @@
 import { useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import BookAppointment from "./BookAppointment";
+import { Route, Routes } from "react-router-dom";
 import ViewAppointment from "./ViewAppointment";
-import ReviewAppointment from "./ReviewAppointment";
-import AppointmentTable from "./AppointmentTable";
+import AppointmentTable from "./tables/AppointmentTable";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import BookFollowUpAppointment from "./BookFollowUpAppointment";
-import BookAppointmentByAdmin from "./BookAppointmentByAdmin";
 import TopBarProgress from "react-topbar-progress-indicator";
 import useFetch from "../../../hooks/useFetch";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import FormModal from "../../shared/FormModal";
+import BookAppointmentForm from "./forms/BookAppointmentForm";
+import AddBeneficiaryForm from "../beneficiary/form/AddBeneficiaryForm";
 
 const Appointment = () => {
     return (
         <Routes>
             <Route index element={<ParentContent />} />
-            <Route path="/bookappointment" element={<BookAppointment />} />
-            <Route
-                path="/viewappointment/:appointmentId"
-                element={<ViewAppointment />}
-            />
-            <Route
-                path="/review/:appointmentId"
-                element={<ReviewAppointment />}
-            />
-            <Route
-                path="/bookfollowup/:beneficiaryId"
-                element={<BookFollowUpAppointment />}
-            />
-            <Route
-                path="/bookappointmentbyadmin/:beneficiaryId"
-                element={<BookAppointmentByAdmin />}
-            />
+            {/* <Route path="/bookappointment" element={<BookAppointment />} /> */}
+            <Route path="/viewappointment/:appointmentId" element={<ViewAppointment />} />
+            {/* <Route path="/review/:appointmentId" element={<ReviewAppointment />} /> */}
+            {/* <Route path="/bookfollowup/:beneficiaryId" element={<BookFollowUpAppointment />} /> */}
+            {/* <Route path="/bookappointmentbyadmin/:beneficiaryId" element={<BookAppointmentByAdmin />} /> */}
         </Routes>
     );
 };
 
 const ParentContent = () => {
-    const navigate = useNavigate();
     const [errMsg, setErrMsg] = useState(false);
+    const [showBookAppointmentModal, setShowBookAppointmentModal] = useState(false);
+    const [showAddBeneficiaryModal, setShowAddBeneficiaryModal] = useState(false);
 
-    const { isLoading, isSuccess, data, isError, error } = useFetch(
-        "/user/appointments",
-        "appointments"
-    );
+    const { isLoading, isSuccess, data, isError, error } = useFetch("/user/appointments", "appointments");
 
     return (
         <HelmetProvider>
@@ -70,31 +55,42 @@ const ParentContent = () => {
                             {errMsg}
                         </span>
                     </p>
-                    <div className="xs:flex-col justify-center md:flex items-center md:justify-between my-5 lg:mt-10">
-                        <h2 className="md:text-2xl text-xl py-2 md:py-2">
-                            Your Appointments
-                        </h2>
-                        <div className="space-x-2">
+                    <div className="xs:flex-col justify-center md:flex items-center md:justify-between my-4 ">
+                        <h2 className="md:text-2xl text-xl py-2 md:py-2">Your Appointments</h2>
+                        <div className="flex space-x-4 mt-4 md:mt-0">
                             <button
-                                className="py-3 md:px-4 px-2 text-sm"
-                                onClick={() =>
-                                    navigate("/appointments/bookappointment")
-                                }
+                                className="text-sm w-full md:w-[auto]"
+                                onClick={() => setShowBookAppointmentModal(true)}
                             >
                                 Book Appointment
                             </button>
                             <button
-                                className="py-3 md:px-4 px-2 text-sm"
-                                onClick={() =>
-                                    navigate("/beneficiaries/addbeneficiary")
-                                }
+                                className="text-sm w-full md:w-[auto]"
+                                onClick={() => setShowAddBeneficiaryModal(true)}
                             >
                                 Add Beneficiary
                             </button>
                         </div>
                     </div>
 
-                    <hr className="my-10" />
+                    <hr className="my-8" />
+
+                    {showBookAppointmentModal && (
+                        <FormModal
+                            showModal={showBookAppointmentModal}
+                            setShowModal={setShowBookAppointmentModal}
+                            targetForm={BookAppointmentForm}
+                            successMessage={"Appointment Booked Successfully!"}
+                        />
+                    )}
+                    {showAddBeneficiaryModal && (
+                        <FormModal
+                            showModal={showAddBeneficiaryModal}
+                            setShowModal={setShowAddBeneficiaryModal}
+                            targetForm={AddBeneficiaryForm}
+                            successMessage={"Beneficiary Added Successfully!"}
+                        />
+                    )}
 
                     {/*Appointments Table*/}
                     {isSuccess && <AppointmentTable appointments={data} />}

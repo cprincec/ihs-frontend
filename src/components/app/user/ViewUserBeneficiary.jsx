@@ -1,259 +1,269 @@
-import React, { useState } from "react";
-import { ChevronLeftIcon, UserCircleIcon } from "@heroicons/react/outline";
-import { useNavigate, useParams } from "react-router-dom";
-import { Helmet, HelmetProvider } from "react-helmet-async";
-import TopBarProgress from "react-topbar-progress-indicator";
-import { timePeriod } from "../../../data/enums";
-import Shimmer from "../Shimmer";
-import { capitalizeString } from "../../../utils/capitalizeString";
-import useFetch from "../../../hooks/useFetch";
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
+// import React, { useState } from "react";
+// import { ChevronLeftIcon, UserCircleIcon } from "@heroicons/react/outline";
+// import { useNavigate, useParams } from "react-router-dom";
+// import { Helmet, HelmetProvider } from "react-helmet-async";
+// import TopBarProgress from "react-topbar-progress-indicator";
+// import { timePeriod } from "../../../data/enums";
+// import Shimmer from "../Shimmer";
+// import { capitalizeString } from "../../../utils/capitalizeString";
+// import useFetch from "../../../hooks/useFetch";
+// import { ExclamationCircleIcon } from "@heroicons/react/solid";
+// import PageHeading from "../../shared/PageHeading";
 
-TopBarProgress.config({
-    barColors: {
-        0: "#05afb0",
-    },
-    shadowBlur: 5,
-});
+// TopBarProgress.config({
+//     barColors: {
+//         0: "#05afb0",
+//     },
+//     shadowBlur: 5,
+// });
 
-const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-];
+// const months = [
+//     "January",
+//     "February",
+//     "March",
+//     "April",
+//     "May",
+//     "June",
+//     "July",
+//     "August",
+//     "September",
+//     "October",
+//     "November",
+//     "December",
+// ];
 
-const ViewUserBeneficiary = () => {
-    const coverageEndDate = (timestamp) => {
-        let date;
-        date = new Date(timestamp * 1000);
-        date = date.toDateString();
+// const ViewUserBeneficiary = () => {
+//     const coverageEndDate = (timestamp) => {
+//         let date;
+//         date = new Date(timestamp * 1000);
+//         date = date.toDateString();
 
-        return getDate(date);
-    };
+//         return getDate(date);
+//     };
 
-    const duration = (amount) => {
-        switch (amount) {
-            case 50:
-                return "2 Weeks";
-            case 100:
-                return "1 Month";
-            case 1200:
-                return "1 Year";
-            default:
-                break;
-        }
-    };
+//     const duration = (amount) => {
+//         switch (amount) {
+//             case 50:
+//                 return "2 Weeks";
+//             case 100:
+//                 return "1 Month";
+//             case 1200:
+//                 return "1 Year";
+//             default:
+//                 break;
+//         }
+//     };
 
-    const params = useParams();
-    const beneficiaryId = params.beneficiaryId;
-    const userId = params.userId;
-    const navigate = useNavigate();
+//     const params = useParams();
+//     const beneficiaryId = params.beneficiaryId;
+//     const userId = params.userId;
+//     const navigate = useNavigate();
 
-    const [errMsg, setErrMsg] = useState("");
+//     const [errMsg, setErrMsg] = useState("");
 
-    const { isLoading, data, isError } = useFetch(
-        `/admin/user/${userId}/beneficiary/${beneficiaryId}`,
-        `beneficiary, ${beneficiaryId}`
-    );
+//     const { isLoading, data, isError } = useFetch(
+//         `/admin/user/${userId}/beneficiary/${beneficiaryId}`,
+//         `beneficiary, ${beneficiaryId}`
+//     );
 
-    const getDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const day = date.getDate();
-        const monthIndex = date.getMonth();
-        const monthName = months[monthIndex];
-        const formattedDate = `${day} ${monthName} ${year}`;
-        return formattedDate;
-    };
+//     const getDate = (dateString) => {
+//         const date = new Date(dateString);
+//         const year = date.getFullYear();
+//         const day = date.getDate();
+//         const monthIndex = date.getMonth();
+//         const monthName = months[monthIndex];
+//         const formattedDate = `${day} ${monthName} ${year}`;
+//         return formattedDate;
+//     };
 
-    return (
-        <HelmetProvider>
-            <>
-                <Helmet>
-                    <title>View User Beneficiary | IHS Dashboard</title>
-                    <link rel="canonical" href="https://www.ihsmia.com/" />
-                </Helmet>
-                <div className="lg:px-20 lg:py-4 md:px-10 p-3">
-                    {isLoading && <TopBarProgress />}
-                    {isError && setErrMsg("Failed to get user")}
-                    {/* Error Handling */}
-                    <p
-                        className={
-                            errMsg
-                                ? "rounded-md p-4 my-4 shadow-md border-0 border-l-4 border-ihs-green-shade-500 text-slate-500 font-thin md:text-lg text-sm"
-                                : "absolute -left-[99999px]"
-                        }
-                        aria-live="assertive"
-                    >
-                        <span className="flex items-center">
-                            <ExclamationCircleIcon className="text-ihs-green w-6 mr-2 inline" />
-                            {errMsg}
-                        </span>
-                    </p>
-                    <button
-                        className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 lg:mt-10 my-5"
-                        onClick={() => navigate(-1)}
-                    >
-                        <ChevronLeftIcon className="w-6" />{" "}
-                        <p className="text-lg px-5">Back to Beneficiaries</p>
-                    </button>
-                    <div className="flex">
-                        <div className="flex-1">
-                            <div className="flex justify-between items-center h-24 bg-ihs-green-shade-50 rounded-md shadow-sm text-gray-600">
-                                <div className="flex">
-                                    <UserCircleIcon className="md:w-12 w-8 xl:ml-10 ml-3" />
-                                    <h3 className="xl:text-3xl text-xl py-8 xl:px-8 px-4">
-                                        Beneficiary Details
-                                    </h3>
-                                </div>
-                                <div>
-                                    <button
-                                        className="xl:p-2 md:text-lg text-sm mx-2 p-2"
-                                        onClick={() =>
-                                            navigate(`/appointments/bookappointmentbyadmin/${data.id}`)
-                                        }
-                                    >
-                                        Book Appointment
-                                    </button>
-                                </div>
-                            </div>
+//     return (
+//         <HelmetProvider>
+//             <>
+//                 <Helmet>
+//                     <title>View User Beneficiary | IHS Dashboard</title>
+//                     <link rel="canonical" href="https://www.ihsmia.com/" />
+//                 </Helmet>
+//                 <div className="lg:px-20 lg:py-4 md:px-10 p-3">
+//                     {isLoading && <TopBarProgress />}
+//                     {isError && setErrMsg("Failed to get user")}
+//                     {/* Error Handling */}
+//                     <p
+//                         className={
+//                             errMsg
+//                                 ? "rounded-md p-4 my-4 shadow-md border-0 border-l-4 border-ihs-green-shade-500 text-slate-500 font-thin md:text-lg text-sm"
+//                                 : "absolute -left-[99999px]"
+//                         }
+//                         aria-live="assertive"
+//                     >
+//                         <span className="flex items-center">
+//                             <ExclamationCircleIcon className="text-ihs-green w-6 mr-2 inline" />
+//                             {errMsg}
+//                         </span>
+//                     </p>
+//                     <button
+//                         className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 lg:mt-10 my-5"
+//                         onClick={() => navigate(-1)}
+//                     >
+//                         <ChevronLeftIcon className="w-6" />{" "}
+//                         <p className="text-lg px-5">Back to Beneficiaries</p>
+//                     </button>
 
-                            <div className="my-10 ml-5 text-gray-600 lg:text-xl">
-                                <div className="grid grid-cols-4">
-                                    <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                        Full Name:{" "}
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            `${capitalizeString(data?.firstName)}  ${capitalizeString(
-                                                data?.lastName
-                                            )}`
-                                        )}{" "}
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-4">
-                                    <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                        Date of Birth:{" "}
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? <Shimmer /> : data ? getDate(data?.dob) : ""}{" "}
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-4">
-                                    <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                        Relationship:{" "}
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? <Shimmer /> : data ? data?.relationship : ""}{" "}
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-4">
-                                    <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                        Phone Number:{" "}
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? <Shimmer /> : data ? data?.phone : ""}{" "}
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-4">
-                                    <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                        Address:{" "}
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? <Shimmer /> : data ? data?.address : ""}{" "}
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-4">
-                                    <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                        City:{" "}
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? <Shimmer /> : data ? data?.city : ""}{" "}
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-4">
-                                    <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                        State:{" "}
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? <Shimmer /> : data ? data?.state : ""}{" "}
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-4">
-                                    <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                        Coverage Status:{" "}
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : data?.subscription ? (
-                                            data.subscription.status
-                                        ) : (
-                                            "No Health Coverage"
-                                        )}{" "}
-                                    </p>
-                                </div>
-                                {isLoading ? (
-                                    <Shimmer />
-                                ) : (
-                                    data?.subscription && (
-                                        <>
-                                            <div className="grid grid-cols-4">
-                                                <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                                    Payment Frequency:{" "}
-                                                </p>
-                                                <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                                    {data?.subscription
-                                                        ? duration(data.subscription.amount)
-                                                        : ""}{" "}
-                                                </p>
-                                            </div>
-                                            <div className="grid grid-cols-4">
-                                                <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                                    Coverage End Date:{" "}
-                                                </p>
-                                                {/*31536000 is 1 */}
-                                                <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                                    {data?.subscription
-                                                        ? coverageEndDate(
-                                                              data.subscription.startDate + timePeriod.year
-                                                          )
-                                                        : ""}{" "}
-                                                </p>
-                                            </div>
-                                            {data?.subscription?.cancelAt !== null && (
-                                                <div className="grid grid-cols-4">
-                                                    <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
-                                                        Cancel Coverage On:{" "}
-                                                    </p>
-                                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                                        {data?.subscription?.cancelAt
-                                                            ? coverageEndDate(data.subscription.cancelAt)
-                                                            : ""}{" "}
-                                                    </p>
-                                                </div>
-                                            )}
-                                        </>
-                                    )
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </>
-        </HelmetProvider>
-    );
-};
+//                     <PageHeading
+//                         pageName={"Beneficiary Details"}
+//                         previousPageName={"Beneficiaries"}
+//                         previousUrl={-1}
+//                         icon={UserCircleIcon}
+//                     >
+//                         {/* {isSuccess && <UserDropdown userDetails={data} />} */}
+//                     </PageHeading>
+//                     <div className="flex">
+//                         <div className="flex-1">
+//                             <div className="flex justify-between items-center h-24 bg-ihs-green-shade-50 rounded-md shadow-sm text-gray-600">
+//                                 <div className="flex">
+//                                     <UserCircleIcon className="md:w-12 w-8 xl:ml-10 ml-3" />
+//                                     <h3 className="xl:text-3xl text-xl py-8 xl:px-8 px-4">
+//                                         Beneficiary Details
+//                                     </h3>
+//                                 </div>
+//                                 <div>
+//                                     <button
+//                                         className="xl:p-2 md:text-lg text-sm mx-2 p-2"
+//                                         onClick={() =>
+//                                             navigate(`/appointments/bookappointmentbyadmin/${data.id}`)
+//                                         }
+//                                     >
+//                                         Book Appointment
+//                                     </button>
+//                                 </div>
+//                             </div>
 
-export default ViewUserBeneficiary;
+//                             <div className="my-10 ml-5 text-gray-600 lg:text-xl">
+//                                 <div className="grid grid-cols-4">
+//                                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                         Full Name:{" "}
+//                                     </p>
+//                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
+//                                         {isLoading ? (
+//                                             <Shimmer />
+//                                         ) : (
+//                                             `${capitalizeString(data?.firstName)}  ${capitalizeString(
+//                                                 data?.lastName
+//                                             )}`
+//                                         )}{" "}
+//                                     </p>
+//                                 </div>
+//                                 <div className="grid grid-cols-4">
+//                                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                         Date of Birth:{" "}
+//                                     </p>
+//                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
+//                                         {isLoading ? <Shimmer /> : data ? getDate(data?.dob) : ""}{" "}
+//                                     </p>
+//                                 </div>
+//                                 <div className="grid grid-cols-4">
+//                                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                         Relationship:{" "}
+//                                     </p>
+//                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
+//                                         {isLoading ? <Shimmer /> : data ? data?.relationship : ""}{" "}
+//                                     </p>
+//                                 </div>
+//                                 <div className="grid grid-cols-4">
+//                                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                         Phone Number:{" "}
+//                                     </p>
+//                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
+//                                         {isLoading ? <Shimmer /> : data ? data?.phone : ""}{" "}
+//                                     </p>
+//                                 </div>
+//                                 <div className="grid grid-cols-4">
+//                                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                         Address:{" "}
+//                                     </p>
+//                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
+//                                         {isLoading ? <Shimmer /> : data ? data?.address : ""}{" "}
+//                                     </p>
+//                                 </div>
+//                                 <div className="grid grid-cols-4">
+//                                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                         City:{" "}
+//                                     </p>
+//                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
+//                                         {isLoading ? <Shimmer /> : data ? data?.city : ""}{" "}
+//                                     </p>
+//                                 </div>
+//                                 <div className="grid grid-cols-4">
+//                                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                         State:{" "}
+//                                     </p>
+//                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
+//                                         {isLoading ? <Shimmer /> : data ? data?.state : ""}{" "}
+//                                     </p>
+//                                 </div>
+//                                 <div className="grid grid-cols-4">
+//                                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                         Coverage Status:{" "}
+//                                     </p>
+//                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
+//                                         {isLoading ? (
+//                                             <Shimmer />
+//                                         ) : data?.subscription ? (
+//                                             data.subscription.status
+//                                         ) : (
+//                                             "No Health Coverage"
+//                                         )}{" "}
+//                                     </p>
+//                                 </div>
+//                                 {isLoading ? (
+//                                     <Shimmer />
+//                                 ) : (
+//                                     data?.subscription && (
+//                                         <>
+//                                             <div className="grid grid-cols-4">
+//                                                 <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                                     Payment Frequency:{" "}
+//                                                 </p>
+//                                                 <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
+//                                                     {data?.subscription
+//                                                         ? duration(data.subscription.amount)
+//                                                         : ""}{" "}
+//                                                 </p>
+//                                             </div>
+//                                             <div className="grid grid-cols-4">
+//                                                 <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                                     Coverage End Date:{" "}
+//                                                 </p>
+//                                                 {/*31536000 is 1 */}
+//                                                 <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
+//                                                     {data?.subscription
+//                                                         ? coverageEndDate(
+//                                                               data.subscription.startDate + timePeriod.year
+//                                                           )
+//                                                         : ""}{" "}
+//                                                 </p>
+//                                             </div>
+//                                             {data?.subscription?.cancelAt !== null && (
+//                                                 <div className="grid grid-cols-4">
+//                                                     <p className="py-5 font-semibold col-start-1 md:col-span-1 col-span-2">
+//                                                         Cancel Coverage On:{" "}
+//                                                     </p>
+//                                                     <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
+//                                                         {data?.subscription?.cancelAt
+//                                                             ? coverageEndDate(data.subscription.cancelAt)
+//                                                             : ""}{" "}
+//                                                     </p>
+//                                                 </div>
+//                                             )}
+//                                         </>
+//                                     )
+//                                 )}
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </>
+//         </HelmetProvider>
+//     );
+// };
+
+// export default ViewUserBeneficiary;

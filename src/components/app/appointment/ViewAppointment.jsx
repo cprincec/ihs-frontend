@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ChevronLeftIcon, ClipboardCheckIcon } from "@heroicons/react/outline";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { userRoles } from "../../../data/enums";
 import { StarRating } from "react-star-rating-element";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -12,6 +11,13 @@ import { useSelector } from "react-redux";
 import { getKey } from "../../../utils/mobilePreferences";
 import useFetch from "../../../hooks/useFetch";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import FormModal from "../../shared/FormModal";
+import UpdateAppointmentForm from "./forms/UpdateAppointmentForm";
+import BookFollowupAppointmentForm from "./forms/BookFollowupAppointmentForm";
+import AssignHealthWorkerForm from "./forms/AssignHealthWorkerForm";
+import ReviewAppointmentForm from "./forms/ReviewAppoinementForm";
+import UploadReportForm from "./forms/UploadReportForm";
+import PageHeading from "../../shared/PageHeading";
 
 TopBarProgress.config({
     barColors: {
@@ -25,9 +31,13 @@ const ViewAppointment = () => {
 
     const params = useParams();
     const appointmentId = params.appointmentId;
-    const navigate = useNavigate();
     const [mobileAuth, setMobileAuth] = useState("");
     const [errMsg, setErrMsg] = useState(false);
+    const [showUpdateAppointmentForm, setShowUpdateAppointmentForm] = useState(false);
+    const [showBookFollowupAppointmentForm, setShowBookFollowupAppointmentForm] = useState(false);
+    const [showAssignHealthWorkerForm, setShowAssignHealthWorkerForm] = useState(false);
+    const [showReviewAppointmentForm, setShowReviewAppointmentForm] = useState(false);
+    const [showUploadReportForm, setShowUploadReportForm] = useState(false);
 
     const download = () => {
         window.open(data[0]?.reportUrl, "_blank");
@@ -54,8 +64,48 @@ const ViewAppointment = () => {
     }, []);
 
     return (
-        <HelmetProvider>
-            <>
+        <>
+            {showUpdateAppointmentForm && (
+                <FormModal
+                    showModal={showUpdateAppointmentForm}
+                    setShowModal={setShowUpdateAppointmentForm}
+                    targetForm={UpdateAppointmentForm}
+                    successMessage={"Appointment Updated Successfully!"}
+                />
+            )}
+            {showBookFollowupAppointmentForm && (
+                <FormModal
+                    showModal={showBookFollowupAppointmentForm}
+                    setShowModal={setShowBookFollowupAppointmentForm}
+                    targetForm={BookFollowupAppointmentForm}
+                    successMessage={"Appointment Booked Successfully!"}
+                />
+            )}
+            {showAssignHealthWorkerForm && (
+                <FormModal
+                    showModal={showAssignHealthWorkerForm}
+                    setShowModal={setShowAssignHealthWorkerForm}
+                    targetForm={AssignHealthWorkerForm}
+                    successMessage={"Health worker assigned successfully!"}
+                />
+            )}
+            {showReviewAppointmentForm && (
+                <FormModal
+                    showModal={showReviewAppointmentForm}
+                    setShowModal={setShowReviewAppointmentForm}
+                    targetForm={ReviewAppointmentForm}
+                    successMessage={"Review added successfully!"}
+                />
+            )}
+            {showUploadReportForm && (
+                <FormModal
+                    showModal={showUploadReportForm}
+                    setShowModal={setShowUploadReportForm}
+                    targetForm={UploadReportForm}
+                    successMessage={"Report uploaded successfully!"}
+                />
+            )}
+            <HelmetProvider>
                 <Helmet>
                     <title>View Appointment | IHS Dashboard</title>
                     <link rel="canonical" href="https://www.ihsmdinc.com/" />
@@ -76,26 +126,25 @@ const ViewAppointment = () => {
                             {errMsg}
                         </span>
                     </p>
-                    <button
-                        className="flex flex-row items-center justify-start h-10 border-0 bg-transparent text-slate-500 lg:mt-10 my-5"
-                        onClick={() => navigate("/allappointments")}
+
+                    <PageHeading
+                        pageName={"Appointment Details"}
+                        previousPageName={"Appointments"}
+                        previousUrl={"/allappointments"}
                     >
-                        <ChevronLeftIcon className="w-6" />
-                        <p className="text-lg px-5">Back to Appointments</p>
-                    </button>
+                        {isSuccess && (
+                            <AppointmentDropdown
+                                appointmentDetails={data[0]}
+                                setShowUpdateAppointmentForm={setShowUpdateAppointmentForm}
+                                setShowBookFollowupAppointmentForm={setShowBookFollowupAppointmentForm}
+                                setShowAssignHealthWorkerForm={setShowAssignHealthWorkerForm}
+                                setShowReviewAppointmentForm={setShowReviewAppointmentForm}
+                                setShowUploadReportForm={setShowUploadReportForm}
+                            />
+                        )}
+                    </PageHeading>
                     <div className="flex">
                         <div className="flex-1">
-                            <div className="flex justify-between items-center h-24 bg-ihs-green-shade-50 rounded-md shadow-sm text-gray-600">
-                                <div className="flex">
-                                    <ClipboardCheckIcon className="md:w-14 w-8 md:ml-10 ml-3" />
-                                    <h3 className="md:text-2xl text-lg py-8 md:px-8 px-2">
-                                        Appointments Details
-                                    </h3>
-                                </div>
-
-                                {isSuccess && <AppointmentDropdown appointmentDetails={data[0]} />}
-                            </div>
-
                             <div className="mt-10 text-gray-600 md:text-xl text-md">
                                 <div className="grid grid-cols-4 items-center">
                                     <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
@@ -247,8 +296,8 @@ const ViewAppointment = () => {
                         </div>
                     </div>
                 </div>
-            </>
-        </HelmetProvider>
+            </HelmetProvider>
+        </>
     );
 };
 

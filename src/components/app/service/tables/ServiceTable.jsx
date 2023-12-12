@@ -161,11 +161,10 @@
 // export default ServiceTable;
 
 import { Link } from "react-router-dom";
-import BaseTable from "../table/BaseTable";
+import BaseTable from "../../table/BaseTable";
 
 const ServiceTable = ({ services }) => {
     const rowsPerPage = 10; // number of healthWorkers per page
-    console.log(services);
     const mobileScreenHeaders = ["Service"];
 
     const columns = [
@@ -198,6 +197,7 @@ const ServiceTable = ({ services }) => {
                 options={{
                     mobileScreenHeaders: mobileScreenHeaders,
                 }}
+                tableTitle={"Service"}
             />
         </>
     );

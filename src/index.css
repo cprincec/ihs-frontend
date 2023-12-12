@@ -10,7 +10,7 @@
     }
 
     button {
-        @apply text-white border bg-ihs-green border-ihs-green hover:bg-transparent hover:text-ihs-green rounded-md
+        @apply px-4 py-2 text-white bg-ihs-green hover:bg-ihs-green-shade-700 rounded disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed
     }
 
     html {
@@ -23,65 +23,34 @@ body {
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-/* .table {
-    word-wrap: break-word;
-} */
-
-/* .table {
-    width: 100%;
+.error-message {
+    /* animation: flyIn .3s ease-in-out; */
+    transition: transform 2s ease-in-out;
 }
 
-.table {
-    grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
-    grid-auto-flow: column;
+.error-message.fade-in {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: transform 2s ease-in-out;
+
 
 }
 
-
-.table .td {
-    padding: 1rem;
-    border-bottom: 1px solid gray;
-    display: flex;
-    align-items: center;
-    word-wrap: break-word;
+.error-message.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
-.table .th {
-    background-color: #e6f7f7;
-    border-bottom: 1px solid gray;
-    padding: 1.5rem 1rem;
-} */
-
-@media screen and (max-width:32.5em) {
-    .table table {
-        /* display: block; */
-        grid-template-columns: 1fr auto;
-        row-gap: 1rem;
-        /* position: relative; */
-    }
-    .table td {
-        padding: .15rem;
-        border: none;
-        grid-column: 1/2;
-        /* margin: .5rem 0; */
+@keyframes flyIn-y {
+    0% {
+        transform: translateY(-10px);
+        opacity: 0;
     }
 
-    /* .table th {
-        grid-column: ;
-    } */
-
-
-
-    .table .right {
-        /* float: right; */
-        /* position: absolute; */
-        /* right: 0;
-        top: 0; */
-        grid-column: 2/3;
-        /* grid-row: 1/2; */
-    }
-
-    .float-right {
-        /* float: right; */
+    100% {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
+
+@media screen and (max-width:32.5em) {}

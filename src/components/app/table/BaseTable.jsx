@@ -1,6 +1,5 @@
 import { useReactTable, getCoreRowModel, getPaginationRowModel } from "@tanstack/react-table";
 import Pagination from "./Pagination";
-import noData from "../../../assets/images/noData.svg";
 import MobileTable from "./MobileTable";
 import DesktopTable from "./DesktopTable";
 
@@ -12,7 +11,7 @@ import DesktopTable from "./DesktopTable";
  * The actions columns must have an accessor key of "actions"
  *
  * */
-const BaseTable = ({ data, columns, rowsPerPage, options, actionBaseUrl }) => {
+const BaseTable = ({ data, columns, rowsPerPage, options, actionBaseUrl, tableTitle }) => {
     const table = useReactTable({
         data,
         columns,
@@ -28,20 +27,24 @@ const BaseTable = ({ data, columns, rowsPerPage, options, actionBaseUrl }) => {
 
     return (
         <div className="mb-6 mt-8">
-            {data.length > 1 ? (
-                <>
-                    <MobileTable table={table} options={options} actionBaseUrl={actionBaseUrl} />
-                    <DesktopTable table={table} options={options} />
-                    {data.length > 1 && data.length > rowsPerPage && (
-                        <Pagination table={table} pageCount={data.length} rowsPerPage={rowsPerPage} />
-                    )}
-                </>
-            ) : (
-                <div className="flex flex-col justify-center items-center py-5">
-                    <img src={noData} alt="No Data" className="w-40 my-5" />
-                    <p className="text-lg md:mx-32 mx-5 text-center">No data.</p>
-                </div>
-            )}
+            <>
+                <MobileTable
+                    tableLength={data.length}
+                    table={table}
+                    options={options}
+                    actionBaseUrl={actionBaseUrl}
+                    tableTitle={tableTitle}
+                />
+                <DesktopTable
+                    table={table}
+                    options={options}
+                    tableLength={data.length}
+                    tableTitle={tableTitle}
+                />
+                {data.length > 0 && data.length > rowsPerPage && (
+                    <Pagination table={table} pageCount={data.length} rowsPerPage={rowsPerPage} />
+                )}
+            </>
         </div>
     );
 };

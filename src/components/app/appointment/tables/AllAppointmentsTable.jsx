@@ -72,11 +72,15 @@
 
 // export default AllAppointmentsTable;
 
-import { appointmentStatus, avatar, booleanString } from "../../../data/enums";
-import BaseTable from "../table/BaseTable";
+import { appointmentStatus, avatar, booleanString } from "../../../../data/enums";
+import BaseTable from "../../table/BaseTable";
 import { Link } from "react-router-dom";
-import { getDate } from "../../../hooks/useFormatDate";
-import { filterInByProperty, filterOutByProperty, sortInDescOrder } from "../../../utils/utililtyFunctions";
+import { getDate } from "../../../../hooks/useFormatDate";
+import {
+    filterInByProperty,
+    filterOutByProperty,
+    sortInDescOrder,
+} from "../../../../utils/utililtyFunctions";
 import Avatar from "react-avatar";
 import { Tab } from "@headlessui/react";
 
@@ -126,7 +130,7 @@ const AllAppointmentsTable = ({ appointments }) => {
             accessorKey: "status",
             cell: (cell) => (
                 <span
-                    className={`px-2 py-1 break-normal ${
+                    className={`px-2 py-1 break-normal rounded text-xs ${
                         cell.row.original.completed.toString() === booleanString.True
                             ? "text-green-900 bg-green-100"
                             : cell.getValue() === appointmentStatus.Confirmed
@@ -161,15 +165,15 @@ const AllAppointmentsTable = ({ appointments }) => {
     return (
         <div className="w-full px-2 pb-16 sm:px-0">
             <Tab.Group>
-                <Tab.List className="flex space-x-1 rounded-md bg-gray-200 p-2 md:w-1/2">
+                <Tab.List className="flex space-x-1 rounded-md bg-gray-200 p-2 md:max-w-[40%]">
                     <Tab
                         key="upcoming"
                         className={({ selected }) =>
                             classNames(
-                                "w-full rounded-md py-2.5 text-sm leading-5 border-0 outline-none",
+                                "w-full rounded-md py-2 text-sm leading-5 border-0 outline-none",
                                 selected
                                     ? "bg-ihs-green text-white hover:bg-ihs-green hover:text-white"
-                                    : "text-gray-500 hover:text-gray-500"
+                                    : "text-gray-500 hover:text-gray-500 hover:bg-transparent"
                             )
                         }
                     >
@@ -179,10 +183,10 @@ const AllAppointmentsTable = ({ appointments }) => {
                         key="completed"
                         className={({ selected }) =>
                             classNames(
-                                "w-full rounded-md py-2.5 text-sm leading-5 border-0 outline-none",
+                                "w-full rounded-md py-2 text-sm leading-5 border-0 outline-none",
                                 selected
                                     ? "bg-ihs-green text-white hover:bg-ihs-green hover:text-white"
-                                    : "text-gray-500 hover:text-gray-500"
+                                    : "text-gray-500 hover:text-gray-500 hover:bg-transparent"
                             )
                         }
                     >
@@ -201,6 +205,7 @@ const AllAppointmentsTable = ({ appointments }) => {
                                 positionedColumn: "status",
                                 mobileScreenHeaders: mobileScreenHeaders,
                             }}
+                            tableTitle={"Upcoming Appointment"}
                         />
                     </Tab.Panel>
 
@@ -215,6 +220,7 @@ const AllAppointmentsTable = ({ appointments }) => {
                                 positionedColumn: "status",
                                 mobileScreenHeaders: mobileScreenHeaders,
                             }}
+                            tableTitle={"Completed Appointment"}
                         />
                     </Tab.Panel>
                 </Tab.Panels>

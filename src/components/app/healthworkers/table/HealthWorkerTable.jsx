@@ -200,8 +200,8 @@
 
 import { Link } from "react-router-dom";
 import Avatar from "react-avatar";
-import { avatar } from "../../../data/enums";
-import BaseTable from "../table/BaseTable";
+import { avatar } from "../../../../data/enums";
+import BaseTable from "../../table/BaseTable";
 
 const HealthWorkerTable = ({ healthWorkers }) => {
     const rowsPerPage = 10; // number of healthWorkers per page
@@ -260,6 +260,7 @@ const HealthWorkerTable = ({ healthWorkers }) => {
                 options={{
                     mobileScreenHeaders: mobileScreenHeaders,
                 }}
+                tableTitle={"Health Worker"}
             />
         </>
     );
