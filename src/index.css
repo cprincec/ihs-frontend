@@ -19,8 +19,25 @@
 }
 
 body {
-
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Standard syntax */
+::placeholder {
+    color: red;
+    opacity: 1;
+}
+
+/* Webkit (Safari, Chrome) */
+::-webkit-input-placeholder {
+    color: red;
+    opacity: 1;
+}
+
+/* Edge */
+::-ms-input-placeholder {
+    color: red;
+    opacity: 1;
 }
 
 .error-message {
@@ -32,8 +49,6 @@ body {
     opacity: 1;
     transform: translateY(0px);
     transition: transform 2s ease-in-out;
-
-
 }
 
 .error-message.fade-out {

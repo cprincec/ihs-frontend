@@ -1,18 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import usePost from "../../../../hooks/usePost";
-import { addUserSchema } from "../../../../utils/formSchema";
 import { useQueryClient } from "@tanstack/react-query";
-import { appointmentStatus, userRoles } from "../../../../data/enums";
-import { useState } from "react";
-import { useEffect } from "react";
-import { Capacitor } from "@capacitor/core";
-import useFetch from "../../../../hooks/useFetch";
-import { useNavigate } from "react-router-dom";
-import { WATDateString } from "../../../../hooks/useFormatDate";
-import { ClipboardCopyIcon } from "@heroicons/react/solid";
 import { ClipboardCheckIcon } from "@heroicons/react/outline";
-import { capitalizeString } from "../../../../utils/capitalizeString";
-import Modal from "../../Modal";
 
 const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
     const initialValues = {
@@ -30,7 +19,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
     const addBeneficiaryMutation = usePost();
     const queryClient = useQueryClient();
 
-    const handleSubmit = async (values, action) => {
+    const handleSubmit = async (values) => {
         // populate beneficiary data object
         const beneficiaryData = {
             firstName: values.firstName,
@@ -64,7 +53,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
             <div>
                 <div className="flex gap-x-2 items-center justify-between">
                     <div className="flex items-center gap-x-1">
-                        <ClipboardCheckIcon className="md:w-14 w-8 text-ihs-green" />
+                        <ClipboardCheckIcon className="w-8 text-ihs-green" />
                         <h2 className="md:text-xl font-semibold text-gray-800">Add Beneficiary</h2>
                     </div>
                     <span
@@ -80,7 +69,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                             <div className="grid lg:grid-cols-2 gap-x-6 gap-y-3 mt-8 items-center">
                                 <div className="grid transition">
                                     <label htmlFor="firstName">
-                                        Firstname
+                                        First Name
                                         <span className=" transition text-red-600">*</span>
                                     </label>
 
@@ -91,7 +80,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                                         id="firstName"
                                         autoComplete="true"
                                         placeholder="John"
-                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="firstName"
@@ -103,7 +92,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                                 </div>
                                 <div className="grid transition">
                                     <label htmlFor="lastName">
-                                        Lastname
+                                        Last Name
                                         <span className=" transition text-red-600">*</span>
                                     </label>
 
@@ -113,7 +102,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                                         id="lastName"
                                         autoComplete="true"
                                         placeholder="Doe"
-                                        className="transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="lastName"
@@ -134,7 +123,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                                         name="dob"
                                         id="dob"
                                         autoComplete="true"
-                                        className="transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="dob"
@@ -155,7 +144,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                                         as="select"
                                         name="relationship"
                                         id="relationship"
-                                        className="max-w-full border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     >
                                         <option disabled={true} value="">
                                             Select Relationship
@@ -201,8 +190,9 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                                         type="phone"
                                         name="phone"
                                         id="phone"
+                                        placeholder="Phone Number"
                                         autoComplete="true"
-                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="phone"
@@ -224,7 +214,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                                         id="address"
                                         placeholder="123 Maple Street"
                                         autoComplete="true"
-                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="address"
@@ -246,7 +236,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                                         id="city"
                                         placeholder="Ikeja"
                                         autoComplete="true"
-                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="city"
@@ -269,7 +259,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                                         id="state"
                                         placeholder="Lagos"
                                         autoComplete="true"
-                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="state"
@@ -283,7 +273,7 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
 
                             <div className="flex mt-2 gap-x-4">
                                 <button
-                                    className="transition flex-1 px-4 py-2 bg-gray-100 text-ihs-green md:text-base text-sm font-medium rounded-md"
+                                    className="transition flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-ihs-green md:text-base text-sm font-medium rounded-md"
                                     onClick={handleCancelClick}
                                 >
                                     Cancel
@@ -291,6 +281,9 @@ const AddBeneficiaryForm = ({ handleCancelClick, setFormSuccess }) => {
                                 <button
                                     type="submit"
                                     className="transition disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 disabled:shadow-none flex-1 px-4 py-2 ml-2 text-white md:text-base text-sm font-medium rounded-md bg-ihs-green"
+                                    disabled={
+                                        addBeneficiaryMutation.isLoading || Object.keys(errors).length > 0
+                                    }
                                 >
                                     {addBeneficiaryMutation.isLoading ? "Please wait..." : "Submit"}
                                 </button>

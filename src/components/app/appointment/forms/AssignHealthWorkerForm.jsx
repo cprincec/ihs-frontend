@@ -88,7 +88,7 @@ const AssignHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
             <div>
                 <div className="flex gap-x-2 items-center justify-between">
                     <div className="flex items-center gap-x-1">
-                        <ClipboardCheckIcon className="md:w-14 w-8 text-ihs-green" />
+                        <ClipboardCheckIcon className="w-8 text-ihs-green" />
                         <h2 className="md:text-xl font-semibold text-gray-800">Assign Health Worker</h2>
                     </div>
                     <span
@@ -112,7 +112,7 @@ const AssignHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                                         id="beneficiary"
                                         required={true}
                                         disabled={true}
-                                        className="lg:min-w-[300px] max-w-full border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="beneficiary"
@@ -132,7 +132,7 @@ const AssignHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                                         id="service"
                                         required={true}
                                         disabled={true}
-                                        className="lg:min-w-[300px] max-w-full border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="service"
@@ -152,7 +152,7 @@ const AssignHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                                         name="healthWorker"
                                         id="healthWorker"
                                         required={true}
-                                        className="lg:min-w-[300px] max-w-full border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] max-w-full border border-gray-300 p-2 text-black rounded-md focus:outline-none focus:ring-1"
                                     >
                                         <option disabled={true} value="">
                                             Select a Health Worker
@@ -222,7 +222,7 @@ const AssignHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                             </div>
                             <div className="flex mt-2 gap-x-4">
                                 <button
-                                    className="transition flex-1 px-4 py-2 bg-gray-100 text-ihs-green md:text-base text-sm font-medium rounded-md"
+                                    className="transition flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-ihs-green md:text-base text-sm font-medium rounded-md"
                                     onClick={handleCancelClick}
                                 >
                                     Cancel
@@ -230,10 +230,11 @@ const AssignHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                                 <button
                                     type="submit"
                                     className="transition disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 disabled:shadow-none flex-1 px-4 py-2 ml-2 text-white md:text-base text-sm font-medium rounded-md bg-ihs-green"
+                                    disabled={
+                                        assignHealthWorkerMutation.isLoading || Object.keys(errors).length > 0
+                                    }
                                 >
-                                    {assignHealthWorkerMutation.isLoading
-                                        ? "Please wait..."
-                                        : "Assign Health Worker"}
+                                    {assignHealthWorkerMutation.isLoading ? "Please wait..." : "Assign"}
                                 </button>
                             </div>
                         </Form>

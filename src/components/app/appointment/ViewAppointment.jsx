@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { userRoles } from "../../../data/enums";
+import { useNavigate, useParams } from "react-router-dom";
+import { appointmentStatus, userRoles } from "../../../data/enums";
 import { StarRating } from "react-star-rating-element";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import AppointmentDropdown from "./AppointmentDropdown";
-import TopBarProgress from "react-topbar-progress-indicator";
 import { getDate } from "../../../hooks/useFormatDate";
-import Shimmer from "../Shimmer";
 import { useSelector } from "react-redux";
 import { getKey } from "../../../utils/mobilePreferences";
 import useFetch from "../../../hooks/useFetch";
@@ -18,13 +16,9 @@ import AssignHealthWorkerForm from "./forms/AssignHealthWorkerForm";
 import ReviewAppointmentForm from "./forms/ReviewAppoinementForm";
 import UploadReportForm from "./forms/UploadReportForm";
 import PageHeading from "../../shared/PageHeading";
-
-TopBarProgress.config({
-    barColors: {
-        0: "#05afb0",
-    },
-    shadowBlur: 5,
-});
+import Spinner from "../SVGs/Spinner";
+import usePatch from "../../../hooks/usePatch";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ViewAppointment = () => {
     const userType = useSelector((state) => state.auth.userAccess.userType);
@@ -51,6 +45,28 @@ const ViewAppointment = () => {
         }`,
         `appointment, ${appointmentId}`
     );
+
+    const completeAppointmentMutation = usePatch();
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+
+    const completeAppointment = () => {
+        completeAppointmentMutation.mutate(
+            {
+                url: `/admin/appointment/${appointmentId}/complete`,
+                body: { status: appointmentStatus.Completed },
+            },
+            {
+                onError: () => setErrMsg("Something went wrong"),
+                onSuccess: () => {
+                    queryClient.invalidateQueries(["allAppointments"]);
+                    queryClient.invalidateQueries(["appointment"]);
+                    queryClient.invalidateQueries([`appointment, ${appointmentId}`]);
+                    navigate("/allappointments");
+                },
+            }
+        );
+    };
 
     // get auth mobile preferences
     useEffect(() => {
@@ -111,7 +127,6 @@ const ViewAppointment = () => {
                     <link rel="canonical" href="https://www.ihsmdinc.com/" />
                 </Helmet>
                 <div className="lg:px-20 lg:py-4 md:px-10 p-3">
-                    {isLoading && <TopBarProgress />}
                     {isError && setErrMsg(error)}
                     <p
                         className={
@@ -132,7 +147,7 @@ const ViewAppointment = () => {
                         previousPageName={"Appointments"}
                         previousUrl={"/allappointments"}
                     >
-                        {isSuccess && (
+                        {isSuccess ? (
                             <AppointmentDropdown
                                 appointmentDetails={data[0]}
                                 setShowUpdateAppointmentForm={setShowUpdateAppointmentForm}
@@ -140,161 +155,106 @@ const ViewAppointment = () => {
                                 setShowAssignHealthWorkerForm={setShowAssignHealthWorkerForm}
                                 setShowReviewAppointmentForm={setShowReviewAppointmentForm}
                                 setShowUploadReportForm={setShowUploadReportForm}
+                                completeAppointment={completeAppointment}
                             />
+                        ) : (
+                            <Spinner className="mr-8" style={{ width: "2rem" }} />
                         )}
                     </PageHeading>
-                    <div className="flex">
-                        <div className="flex-1">
-                            <div className="mt-10 text-gray-600 md:text-xl text-md">
-                                <div className="grid grid-cols-4 items-center">
-                                    <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                        Beneficiary:
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? <Shimmer /> : data[0]?.beneficiaryName}
-                                    </p>
-                                </div>
 
-                                <div className="grid grid-cols-4 items-center">
-                                    <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                        Contact:
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            `${
-                                                data[0]?.beneficiaryPhone === "" ||
-                                                data[0]?.beneficiaryPhone === undefined
-                                                    ? "No Contact Information"
-                                                    : data[0]?.beneficiaryPhone
-                                            }`
-                                        )}
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-4 items-center">
-                                    <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                        Service:
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? <Shimmer /> : `${data[0]?.serviceName}`}{" "}
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-4 items-center">
-                                    <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                        Health Worker:
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            `${
-                                                data[0]?.healthWorkerName
-                                                    ? data[0]?.healthWorkerName
-                                                    : "Unassigned"
-                                            }`
-                                        )}{" "}
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-4 items-center">
-                                    <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                        Date:
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            `${data[0]?.date ? getDate(data[0]?.date) : ""}`
-                                        )}
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-4 items-center">
-                                    <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                        Time:
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? <Shimmer /> : `${data[0]?.time}`}
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-4 items-center">
-                                    <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                        Status:
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                        {isLoading ? <Shimmer /> : `${data[0]?.status}`}
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-4 items-center">
-                                    <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                        Notes:
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2 capitalize">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            `${
-                                                data[0]?.notes === "" || data[0]?.notes === undefined
-                                                    ? "No Notes Available"
-                                                    : data[0].notes
-                                            }`
-                                        )}
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-4 items-center">
-                                    <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                        Review:
-                                    </p>
-                                    <p className="py-5 md:ml-5 md:col-start-2 col-span-2">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            `${data[0]?.review ? data[0]?.review : "Unreviewed Appointment"}`
-                                        )}{" "}
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-4 items-center">
-                                    <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                        Rating:
-                                    </p>
-
-                                    <div className="py-5 md:ml-3 md:col-start-2 col-span-2">
-                                        {isLoading ? (
-                                            <Shimmer />
-                                        ) : (
-                                            <StarRating
-                                                ratingValue={data[0]?.rating}
-                                                starEmptyColor="#999999"
-                                                starSpacing={5}
-                                                starDimension={25}
-                                                starRatedColor="#1eb7b8"
-                                            />
-                                        )}
-                                    </div>
-                                </div>
-
-                                {data && data[0]?.reportUrl && (
-                                    <div className="grid grid-cols-4 items-center">
-                                        <p className="py-5 font-semibold px-5 col-start-1 md:col-span-1 col-span-2">
-                                            Report:{" "}
-                                        </p>
-
-                                        <button className="px-3 my-2" onClick={download}>
-                                            {" "}
-                                            Download
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
+                    {isLoading ? (
+                        <div className="w-full min-h-40 p-6 grid items-center">
+                            <Spinner className="" style={{ width: "10%", margin: "2rem auto 0" }} />
                         </div>
-                    </div>
+                    ) : (
+                        <div className="my-10 text-gray-600 grid md:grid-cols-2 gap-y-4">
+                            <div className="flex space-x-4">
+                                <p className="col-span-2 lg:col-span-1 font-semibold">Beneficiary:</p>
+                                <p className="lg:col-start-2">{data[0]?.beneficiaryName}</p>
+                            </div>
+
+                            <div className="flex space-x-4">
+                                <p className="col-span-2 lg:col-span-1 font-semibold">Contact:</p>
+                                <p className="lg:col-start-2">
+                                    {data[0]?.beneficiaryPhone === "" ||
+                                    data[0]?.beneficiaryPhone === undefined
+                                        ? "No Contact Information"
+                                        : data[0]?.beneficiaryPhone}
+                                </p>
+                            </div>
+
+                            <div className="flex space-x-4">
+                                <p className="col-span-2 lg:col-span-1 font-semibold">Service:</p>
+                                <p className="lg:col-start-2">{`${data[0]?.serviceName}`}</p>
+                            </div>
+
+                            <div className="flex space-x-4">
+                                <p className="col-span-2 lg:col-span-1 font-semibold">Health Worker:</p>
+                                <p className="lg:col-start-2">
+                                    {data[0]?.healthWorkerName ? data[0]?.healthWorkerName : "Unassigned"}
+                                </p>
+                            </div>
+
+                            <div className="flex space-x-4">
+                                <p className="col-span-2 lg:col-span-1 font-semibold">Date:</p>
+                                <p className="lg:col-start-2">
+                                    {data[0]?.date ? getDate(data[0]?.date) : ""}
+                                </p>
+                            </div>
+
+                            <div className="flex space-x-4">
+                                <p className="col-span-2 lg:col-span-1 font-semibold">Time:</p>
+                                <p className="lg:col-start-2">{data[0]?.time}</p>
+                            </div>
+
+                            <div className="flex space-x-4">
+                                <p className="col-span-2 lg:col-span-1 font-semibold">Status:</p>
+                                <p className="lg:col-start-2 capitalize">{data[0]?.status}</p>
+                            </div>
+
+                            <div className="flex space-x-4">
+                                <p className="col-span-2 lg:col-span-1 font-semibold">Notes:</p>
+                                <p className="lg:col-start-2">
+                                    {data[0]?.notes === "" || data[0]?.notes === undefined
+                                        ? "No Notes Available"
+                                        : data[0].notes}
+                                </p>
+                            </div>
+
+                            <div className="flex space-x-4">
+                                <p className="col-span-2 lg:col-span-1 font-semibold">Review:</p>
+                                <p className="lg:col-start-2">
+                                    {data[0]?.review ? data[0]?.review : "Unreviewed Appointment"}
+                                </p>
+                            </div>
+
+                            <div className="flex space-x-4">
+                                <p className="col-span-2 lg:col-span-1 font-semibold">Rating:</p>
+                                <div className="lg:col-start-2">
+                                    {
+                                        <StarRating
+                                            ratingValue={data[0]?.rating}
+                                            starEmptyColor="#999999"
+                                            starSpacing={5}
+                                            starDimension={25}
+                                            starRatedColor="#1eb7b8"
+                                        />
+                                    }
+                                </div>
+                            </div>
+
+                            {data && data[0]?.reportUrl && (
+                                <div className="flex space-x-4 items-center">
+                                    <p className="col-span-2 lg:col-span-1 font-semibold">Report: </p>
+
+                                    <button className="lg:col-start-2 px-4" onClick={download}>
+                                        {" "}
+                                        Download
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </HelmetProvider>
         </>

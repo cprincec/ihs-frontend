@@ -123,7 +123,7 @@ const BaseForm = ({
 
                                     <div className="flex mt-2">
                                         <button
-                                            className="transition flex-1 px-4 py-2 bg-gray-100 text-ihs-green md:text-base text-sm font-medium rounded-md"
+                                            className="transition flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-ihs-green md:text-base text-sm font-medium rounded-md"
                                             onClick={handleCancelClick}
                                         >
                                             Cancel

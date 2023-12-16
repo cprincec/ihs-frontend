@@ -134,3 +134,12 @@ export const sendBulkEmailSchema = yup.object().shape({
     //     return emails.every(email => yup.string().email().isValidSync(email));
     //   }),
 });
+
+export const bookAppointmentSchema = yup.object().shape({
+    date: yup
+        .date()
+        .min(new Date(new Date().setDate(new Date().getDate() - 1)), "Date cannot be in the past")
+        .required("Date is required"),
+    time: yup.string().required("Time is required"),
+    notes: yup.string().optional().default(""),
+});

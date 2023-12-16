@@ -31,15 +31,15 @@ const AddHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
 
     return (
         <div>
-            <div className="flex gap-x-2 items-center justify-between justify-items-center">
-                <div className="flex items-center gap-x-1">
+            <div className="flex space-x-2 items-center justify-between justify-items-center">
+                <div className="flex items-center space-x-2">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="currentColor"
-                        className="w-12 h-12 text-ihs-green self-center"
+                        className="w-8 text-ihs-green self-center"
                     >
                         <path
                             strokeLinecap="round"
@@ -66,7 +66,7 @@ const AddHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                         <div className="grid lg:grid-cols-2 gap-x-6 gap-y-3 mt-8 items-start">
                             <div className="grid transition">
                                 <label htmlFor="firstName">
-                                    Firstname
+                                    First Name
                                     <span className=" transition text-red-600">*</span>
                                 </label>
 
@@ -77,7 +77,7 @@ const AddHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                                     id="firstName"
                                     autoComplete="true"
                                     placeholder="John"
-                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="firstName"
@@ -89,7 +89,7 @@ const AddHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                             </div>
                             <div className="grid transition">
                                 <label htmlFor="lastName">
-                                    Lastname
+                                    Last Name
                                     <span className=" transition text-red-600">*</span>
                                 </label>
 
@@ -99,7 +99,7 @@ const AddHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                                     id="lastName"
                                     autoComplete="true"
                                     placeholder="Doe"
-                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="lastName"
@@ -121,7 +121,7 @@ const AddHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                                     id="email"
                                     autoComplete="true"
                                     placeholder="example@gmail.com"
-                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="email"
@@ -142,7 +142,8 @@ const AddHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                                     name="phone"
                                     id="phone"
                                     autoComplete="true"
-                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    placeholder="Phone Number"
+                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="phone"
@@ -164,7 +165,7 @@ const AddHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                                     id="qualification"
                                     autoComplete="true"
                                     placeholder="Doctor"
-                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="qualification"
@@ -178,7 +179,7 @@ const AddHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
 
                         <div className="flex mt-2 gap-x-4">
                             <button
-                                className="transition flex-1 px-4 py-2 bg-gray-100 text-ihs-green md:text-base text-sm font-medium rounded-md"
+                                className="transition flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-ihs-green md:text-base text-sm font-medium rounded-md"
                                 onClick={handleCancelClick}
                             >
                                 Cancel
@@ -186,6 +187,7 @@ const AddHealthWorkerForm = ({ handleCancelClick, setFormSuccess }) => {
                             <button
                                 type="submit"
                                 className="transition disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 disabled:shadow-none flex-1 px-4 py-2 ml-2 text-white md:text-base text-sm font-medium rounded-md bg-ihs-green"
+                                disabled={addHealthWorkerMutation.isLoading || Object.keys(errors).length > 0}
                             >
                                 {addHealthWorkerMutation.isLoading ? "Please wait..." : "Submit"}
                             </button>

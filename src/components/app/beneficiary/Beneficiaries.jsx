@@ -5,12 +5,12 @@ import BeneficiariesTable from "./table/BeneficiariesTable";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Checkout from "./Checkout";
 import useFetch from "../../../hooks/useFetch";
-import TopBarProgress from "react-topbar-progress-indicator";
 import { useState } from "react";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import FormModal from "../../shared/FormModal";
 import BookAppointmentForm from "../appointment/forms/BookAppointmentForm";
 import AddBeneficiaryForm from "./form/AddBeneficiaryForm";
+import Spinner from "../SVGs/Spinner";
 
 const Beneficiaries = () => {
     return (
@@ -29,7 +29,7 @@ const ParentContent = () => {
     const [showBookAppointmentModal, setShowBookAppointmentModal] = useState(false);
     const [showAddBeneficiaryModal, setShowAddBeneficiaryModal] = useState(false);
 
-    const { isSuccess, isLoading, data, isError } = useFetch("/user/beneficiaries", "beneficiaries");
+    const { isSuccess, data, isError } = useFetch("/user/beneficiaries", "beneficiaries");
 
     return (
         <HelmetProvider>
@@ -38,7 +38,6 @@ const ParentContent = () => {
                     <title>My Beneficiaries | IHS Dashboard</title>
                     <link rel="canonical" href="https://www.ihsmdinc.com/" />
                 </Helmet>
-                {isLoading && <TopBarProgress />}
                 {isError && setErrMsg("Failed to get beneficiaries")}
                 {/* Error Handling */}
                 <p
@@ -88,7 +87,13 @@ const ParentContent = () => {
                     )}
 
                     {/*Beneficiaries Table*/}
-                    {isSuccess && <BeneficiariesTable beneficiaries={data} />}
+                    {isSuccess ? (
+                        <BeneficiariesTable beneficiaries={data} />
+                    ) : (
+                        <div className="w-full min-h-40 p-12 grid items-center">
+                            <Spinner className="" style={{ width: "10%", margin: "2rem auto 0" }} />
+                        </div>
+                    )}
                 </div>
             </>
         </HelmetProvider>

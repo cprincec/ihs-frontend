@@ -1,29 +1,27 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import TopBarProgress from "react-topbar-progress-indicator";
 import useFetch from "../../../hooks/useFetch";
 import BeneficiariesTable from "../beneficiary/table/BeneficiariesTable";
-
-TopBarProgress.config({
-    barColors: {
-        0: "#05afb0",
-    },
-    shadowBlur: 5,
-});
+import Spinner from "../SVGs/Spinner";
 
 const ViewUserBeneficiaries = () => {
     const params = useParams();
     const userId = params.userId;
 
-    const { isLoading, isSuccess, data } = useFetch(
+    const { isSuccess, data } = useFetch(
         `/admin/user/${userId}/beneficiaries`,
         `userBeneficiaries, ${userId}`
     );
 
     return (
         <>
-            {isLoading && <TopBarProgress />}
-            {isSuccess && <BeneficiariesTable beneficiaries={data} />}
+            {isSuccess ? (
+                <BeneficiariesTable beneficiaries={data} />
+            ) : (
+                <div className="w-full min-h-40 p-6 grid items-center">
+                    <Spinner className="" style={{ width: "10%", margin: "0 auto" }} />
+                </div>
+            )}
         </>
     );
 };

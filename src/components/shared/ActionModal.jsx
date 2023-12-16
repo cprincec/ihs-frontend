@@ -14,7 +14,7 @@ const ActionModal = ({ display, setDisplay, actionMessage, actionHeader, actionF
                     leaveFrom="bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-10 transition-opacity bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm" />
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-10 transition-opacity backdrop-filter backdrop-blur-sm" />
                 </Transition.Child>
 
                 <div className="fixed inset-0 z-40 overflow-y-auto md:py-4">
@@ -47,9 +47,9 @@ const ActionModal = ({ display, setDisplay, actionMessage, actionHeader, actionF
                                         {actionMessage}
                                     </p>
 
-                                    <div className="grid grid-cols-2 items-center mt-3">
+                                    <div className="w-full flex items-center mt-6">
                                         <button
-                                            className="flex-1 px-4 py-2 ml-2 text-white md:text-lg text-sm font-medium rounded-md bg-ihs-green"
+                                            className=" flex-1 px-4 py-2 ml-2 text-white md:text-lg text-sm font-medium rounded-md bg-ihs-green"
                                             onClick={() => setDisplay(false)}
                                         >
                                             No

@@ -3,17 +3,10 @@ import { Route, Routes } from "react-router-dom";
 import ViewService from "./ViewService";
 import ServiceTable from "./tables/ServiceTable";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import TopBarProgress from "react-topbar-progress-indicator";
 import useFetch from "../../../hooks/useFetch";
 import FormModal from "../../shared/FormModal";
 import AddServiceForm from "./forms/AddServiceForm";
-
-TopBarProgress.config({
-    barColors: {
-        0: "#05afb0",
-    },
-    shadowBlur: 5,
-});
+import Spinner from "../SVGs/Spinner";
 
 const Service = () => {
     return (
@@ -28,7 +21,7 @@ const ParentContent = () => {
     const [showAddServiceModal, setShowAddServiceModal] = useState(false);
 
     const staleTime = 1000 * 60 * 5;
-    const { isLoading, isSuccess, data } = useFetch("/admin/service/all", "allServices", staleTime);
+    const { isSuccess, data } = useFetch("/admin/service/all", "allServices", staleTime);
 
     const handleShowAddServiceModal = () => {
         setShowAddServiceModal(true);
@@ -36,8 +29,6 @@ const ParentContent = () => {
 
     return (
         <HelmetProvider>
-            {isLoading && <TopBarProgress />}
-
             {/*	show modal if modal is toggled*/}
             {showAddServiceModal && (
                 <FormModal
@@ -64,7 +55,13 @@ const ParentContent = () => {
                     <hr className="my-8" />
 
                     {/*Services Table*/}
-                    {isSuccess ? <ServiceTable services={data} /> : null}
+                    {isSuccess ? (
+                        <ServiceTable services={data} />
+                    ) : (
+                        <div className="w-full min-h-40 p-12 grid items-center">
+                            <Spinner className="" style={{ width: "10%", margin: "2rem auto 0" }} />
+                        </div>
+                    )}
                 </div>
             </>
         </HelmetProvider>

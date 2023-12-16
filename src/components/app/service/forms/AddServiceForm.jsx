@@ -34,7 +34,7 @@ const AddServiceForm = ({ handleCancelClick, setFormSuccess }) => {
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="currentColor"
-                        className="w-12 h-12 text-ihs-green self-center"
+                        className="w-8 text-ihs-green self-center"
                     >
                         <path
                             strokeLinecap="round"
@@ -66,7 +66,7 @@ const AddServiceForm = ({ handleCancelClick, setFormSuccess }) => {
                                 id="name"
                                 autoComplete="true"
                                 placeholder="Service name"
-                                className="transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                             />
                             <ErrorMessage
                                 name="name"
@@ -87,7 +87,7 @@ const AddServiceForm = ({ handleCancelClick, setFormSuccess }) => {
                                 as="select"
                                 name="category"
                                 id="category"
-                                className="max-w-full border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                             >
                                 <option disabled={true} value="">
                                     Select a service
@@ -106,7 +106,7 @@ const AddServiceForm = ({ handleCancelClick, setFormSuccess }) => {
 
                         <div className="flex mt-2">
                             <button
-                                className="transition flex-1 px-4 py-2 bg-gray-100 text-ihs-green md:text-base text-sm font-medium rounded-md"
+                                className="transition flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-ihs-green md:text-base text-sm font-medium rounded-md"
                                 onClick={handleCancelClick}
                             >
                                 Cancel
@@ -114,6 +114,7 @@ const AddServiceForm = ({ handleCancelClick, setFormSuccess }) => {
                             <button
                                 type="submit"
                                 className="transition disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 disabled:shadow-none flex-1 px-4 py-2 ml-2 text-white md:text-base text-sm font-medium rounded-md bg-ihs-green"
+                                disabled={addServiceMutation.isLoading || Object.keys(errors).length > 0}
                             >
                                 {addServiceMutation.isLoading ? "Please wait..." : "Submit"}
                             </button>

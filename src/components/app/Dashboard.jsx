@@ -153,10 +153,6 @@ const Dashboard = () => {
                     <link rel="canonical" href="https://www.ihsmia.com/" />
                 </Helmet>
                 <div className="lg:px-20 lg:py-4 md:px-10 p-3">
-                    {/* {(fetchAppointments.isLoading ||
-                        fetchBeneficiaries.isLoading ||
-                        fetchMetrics.isLoading ||
-                        fetchAllAppointments.isLoading) && <TopBarProgress />} */}
                     <div className="my-6">
                         <h2 className="md:text-4xl text-3xl mb-2">
                             Hello{" "}
@@ -176,17 +172,13 @@ const Dashboard = () => {
                         >
                             <p>Your Beneficiaries</p>
 
-                            <p className="flex items-center">
-                                {fetchBeneficiaries.isSuccess ? (
-                                    <span className="font-semibold md:text-3xl text-2xl pr-0.5 md:pr-2">
-                                        {fetchBeneficiaries.data ? fetchBeneficiaries.data?.length : 0}
-                                    </span>
-                                ) : (
-                                    // <Spinner style={{ width: "2rem" }} />
-                                    <Spinner style={{ width: "2rem" }} />
-                                )}
-                                {/* <span>Beneficiaries</span> */}
-                            </p>
+                            {fetchBeneficiaries.isSuccess ? (
+                                <span className="font-semibold md:text-3xl text-2xl pr-0.5 md:pr-2">
+                                    {fetchBeneficiaries.data ? fetchBeneficiaries.data?.length : 0}
+                                </span>
+                            ) : (
+                                <Spinner style={{ width: "2rem" }} />
+                            )}
                         </div>
 
                         <div
@@ -263,8 +255,12 @@ const Dashboard = () => {
                             </div>
 
                             {/*Beneficiaries Table*/}
-                            {fetchBeneficiaries.isSuccess && (
+                            {fetchBeneficiaries.isSuccess ? (
                                 <BeneficiariesTable beneficiaries={fetchBeneficiaries.data} />
+                            ) : (
+                                <div className="w-full min-h-40 p-6 grid items-center">
+                                    <Spinner style={{ width: "10%", margin: "0 auto" }} />
+                                </div>
                             )}
 
                             {/*Appointments Section*/}
@@ -279,8 +275,12 @@ const Dashboard = () => {
                             </div>
 
                             {/*Appointments Table*/}
-                            {fetchAppointments.isSuccess && (
+                            {fetchAppointments.isSuccess ? (
                                 <AppointmentTable appointments={fetchAppointments.data} />
+                            ) : (
+                                <div className="w-full min-h-40 p-6 grid items-center">
+                                    <Spinner style={{ width: "10%", margin: "0 auto" }} />
+                                </div>
                             )}
                         </>
                     )}
@@ -294,7 +294,7 @@ const Dashboard = () => {
                             {fetchAllAppointments.isSuccess ? (
                                 <AllAppointmentsTable appointments={fetchAllAppointments.data} />
                             ) : (
-                                <div className="w-full min-h-40 p-6 grid justfiy-center items-center">
+                                <div className="w-full min-h-40 p-6 grid items-center">
                                     <Spinner style={{ width: "10%", margin: "0 auto" }} />
                                 </div>
                             )}

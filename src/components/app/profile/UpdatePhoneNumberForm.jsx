@@ -29,7 +29,7 @@ const UpdatePhoneNumberForm = ({ handleCancelClick, setFormSuccess, formProps })
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="currentColor"
-                        className="w-12 h-12 text-ihs-green self-center"
+                        className="w-8 text-ihs-green self-center"
                     >
                         <path
                             strokeLinecap="round"
@@ -60,8 +60,9 @@ const UpdatePhoneNumberForm = ({ handleCancelClick, setFormSuccess, formProps })
                                 type="phone"
                                 name="phone"
                                 id="phone"
+                                placeholder="Phone Number"
                                 autoComplete="true"
-                                className="transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                             />
                             <ErrorMessage
                                 name="phone"
@@ -74,7 +75,7 @@ const UpdatePhoneNumberForm = ({ handleCancelClick, setFormSuccess, formProps })
 
                         <div className="flex mt-2">
                             <button
-                                className="transition flex-1 px-4 py-2 bg-gray-100 text-ihs-green md:text-base text-sm font-medium rounded-md"
+                                className="transition flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-ihs-green md:text-base text-sm font-medium rounded-md"
                                 onClick={handleCancelClick}
                             >
                                 Cancel
@@ -82,6 +83,9 @@ const UpdatePhoneNumberForm = ({ handleCancelClick, setFormSuccess, formProps })
                             <button
                                 type="submit"
                                 className="transition disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 disabled:shadow-none flex-1 px-4 py-2 ml-2 text-white md:text-base text-sm font-medium rounded-md bg-ihs-green"
+                                disabled={
+                                    updatePhoneNumberMutation.isLoading || Object.keys(errors).length > 0
+                                }
                             >
                                 {updatePhoneNumberMutation.isLoading ? "Please wait..." : "Submit"}
                             </button>

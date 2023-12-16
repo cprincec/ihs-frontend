@@ -77,7 +77,7 @@ const UploadReportForm = ({ handleCancelClick, setFormSuccess }) => {
         <div>
             <div className="flex gap-x-2 items-center justify-between">
                 <div className="flex items-center gap-x-1">
-                    <ClipboardCheckIcon className="md:w-14 w-8 text-ihs-green" />
+                    <ClipboardCheckIcon className="w-8 text-ihs-green" />
                     <h2 className="md:text-xl font-semibold text-gray-800">Upload report</h2>
                 </div>
                 <span
@@ -104,7 +104,7 @@ const UploadReportForm = ({ handleCancelClick, setFormSuccess }) => {
                                         required
                                         placeholder="Select file"
                                         onChange={handleChange}
-                                        className="w-full border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600 lg:w-96 md:w-72"
+                                        className="w-full text-black border border-gray-300 px-3 py-3 rounded-lg shadow-sm focus:outline-none focus:border:bg-ihs-green-shade-500 focus:ring-1 focus:ring-ihs-green-shade-600"
                                     />
                                 </div>
                             </div>
@@ -116,7 +116,7 @@ const UploadReportForm = ({ handleCancelClick, setFormSuccess }) => {
                         </div>
                         <div className="flex mt-2 gap-x-4">
                             <button
-                                className="transition flex-1 px-4 py-2 bg-gray-100 text-ihs-green md:text-base text-sm font-medium rounded-md"
+                                className="transition flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-ihs-green md:text-base text-sm font-medium rounded-md"
                                 onClick={handleCancelClick}
                             >
                                 Cancel
@@ -124,6 +124,7 @@ const UploadReportForm = ({ handleCancelClick, setFormSuccess }) => {
                             <button
                                 type="submit"
                                 className="transition disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 disabled:shadow-none flex-1 px-4 py-2 ml-2 text-white md:text-base text-sm font-medium rounded-md bg-ihs-green"
+                                disabled={uploadReportMutation.isLoading}
                             >
                                 {uploadReportMutation.isLoading ? "Please wait..." : "Upload Report"}
                             </button>

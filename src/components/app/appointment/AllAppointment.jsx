@@ -5,10 +5,10 @@ import UpdateAppointment from "./UpdateAppointment";
 import AssignHealthWorker from "./AssignHealthWorker";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import UploadReport from "./UploadReport";
-import TopBarProgress from "react-topbar-progress-indicator";
 import AllAppointmentsTable from "./tables/AllAppointmentsTable";
 import useFetch from "../../../hooks/useFetch";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import Spinner from "../SVGs/Spinner";
 
 const Appointment = () => {
     return (
@@ -16,16 +16,16 @@ const Appointment = () => {
             <Route index element={<ParentContent />} />
             <Route path="/viewappointment/:appointmentId" element={<ViewAppointment />} />
             <Route path="/allappointments" element={<AllAppointmentsTable />} />
-            <Route path="/updateappointment/:appointmentId" element={<UpdateAppointment />} />
-            <Route path="/assignworker/:appointmentId" element={<AssignHealthWorker />} />
-            <Route path="/updateappointment/:appointmentId/uploadreport" element={<UploadReport />} />
+            {/* <Route path="/updateappointment/:appointmentId" element={<UpdateAppointment />} /> */}
+            {/* <Route path="/assignworker/:appointmentId" element={<AssignHealthWorker />} /> */}
+            {/* <Route path="/updateappointment/:appointmentId/uploadreport" element={<UploadReport />} /> */}
         </Routes>
     );
 };
 
 const ParentContent = () => {
     const [errMsg, setErrMsg] = useState(false);
-    const { isLoading, isSuccess, data, isError, error } = useFetch(
+    const { isSuccess, data, isError, error } = useFetch(
         "/admin/appointments",
         "allAppointments",
         1000 * 60 * 60 * 24,
@@ -40,7 +40,6 @@ const ParentContent = () => {
                     <link rel="canonical" href="https://www.ihsmdinc.com/" />
                 </Helmet>
                 <div className="lg:px-20 lg:py-4 md:px-10 p-4">
-                    {isLoading && <TopBarProgress />}
                     {isError && setErrMsg(error.message)}
                     <p
                         className={
@@ -61,7 +60,13 @@ const ParentContent = () => {
                     <hr className="my-8" />
 
                     {/*	Mobile Appointment Table*/}
-                    {isSuccess && <AllAppointmentsTable appointments={data} />}
+                    {isSuccess ? (
+                        <AllAppointmentsTable appointments={data} />
+                    ) : (
+                        <div className="w-full min-h-40 p-12 grid items-center">
+                            <Spinner className="" style={{ width: "10%", margin: "2rem auto 0" }} />
+                        </div>
+                    )}
                 </div>
             </>
         </HelmetProvider>

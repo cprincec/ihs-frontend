@@ -3,7 +3,6 @@ import usePost from "../../../../hooks/usePost";
 import { addUserSchema } from "../../../../utils/formSchema";
 import { useQueryClient } from "@tanstack/react-query";
 import { userRoles } from "../../../../data/enums";
-import { useState } from "react";
 
 const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
     const initialValues = {
@@ -81,13 +80,18 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                     ⨉
                 </span>
             </div>
-            <Formik initialValues={initialValues} validationSchema={addUserSchema} onSubmit={handleSubmit}>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={addUserSchema}
+                validateOnChange={false}
+                onSubmit={handleSubmit}
+            >
                 {({ errors }) => (
                     <Form className="grid gap-y-6">
                         <div className="grid lg:grid-cols-2 gap-x-6 gap-y-3 mt-8 items-start">
                             <div className="grid transition">
                                 <label htmlFor="firstName">
-                                    Firstname
+                                    First Name
                                     <span className=" transition text-red-600">*</span>
                                 </label>
 
@@ -98,7 +102,7 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                                     id="firstName"
                                     autoComplete="true"
                                     placeholder="John"
-                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="firstName"
@@ -110,7 +114,7 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                             </div>
                             <div className="grid transition">
                                 <label htmlFor="lastName">
-                                    Lastname
+                                    Last Name
                                     <span className=" transition text-red-600">*</span>
                                 </label>
 
@@ -120,7 +124,7 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                                     id="lastName"
                                     autoComplete="true"
                                     placeholder="Doe"
-                                    className="transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="lastName"
@@ -142,7 +146,7 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                                     id="email"
                                     autoComplete="true"
                                     placeholder="example@gmail.com"
-                                    className="transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="email"
@@ -163,7 +167,7 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                                     name="password"
                                     id="password"
                                     autoComplete="true"
-                                    className="transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="password"
@@ -184,7 +188,8 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                                     name="phone"
                                     id="phone"
                                     autoComplete="true"
-                                    className="transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    placeholder="Phone Number"
+                                    className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="phone"
@@ -204,7 +209,7 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                                     as="select"
                                     name="role"
                                     id="role"
-                                    className="max-w-full border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 >
                                     <option disabled={true} value="">
                                         Select a Role
@@ -231,7 +236,7 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                                     name="dob"
                                     id="dob"
                                     autoComplete="true"
-                                    className="transition border border-gray-300 p-2 text-gray-500 rounded-md focus:outline-none focus:ring-1"
+                                    className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                 />
                                 <ErrorMessage
                                     name="dob"
@@ -244,7 +249,7 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                         </div>
                         <div className="flex mt-2 gap-x-4">
                             <button
-                                className="transition flex-1 px-4 py-2 bg-gray-100 text-ihs-green md:text-base text-sm font-medium rounded-md"
+                                className="transition flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-ihs-green md:text-base text-sm font-medium rounded-md"
                                 onClick={handleCancelClick}
                             >
                                 Cancel
@@ -252,6 +257,7 @@ const AddUserForm = ({ handleCancelClick, setFormSuccess }) => {
                             <button
                                 type="submit"
                                 className="transition disabled:bg-ihs-green-shade-200 disabled:text-slate-600 disabled:border-slate-200 disabled:shadow-none flex-1 px-4 py-2 ml-2 text-white md:text-base text-sm font-medium rounded-md bg-ihs-green"
+                                disabled={addUserMutation.isLoading || Object.keys(errors).length > 0}
                             >
                                 {addUserMutation.isLoading ? "Please wait..." : "Submit"}
                             </button>

@@ -24,7 +24,7 @@ const FormModal = ({ showModal, setShowModal, successMessage, targetForm: Target
                     leaveFrom="bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-10 transition-opacity bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm" />
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-10 transition-opacity  backdrop-filter backdrop-blur-sm" />
                 </Transition.Child>
 
                 <div className="fixed inset-0 z-40 overflow-y-auto md:py-4">
