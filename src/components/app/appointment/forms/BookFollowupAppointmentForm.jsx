@@ -169,7 +169,7 @@ const BookFollowupAppointmentForm = ({ handleCancelClick, setFormSuccess }) => {
                                         } text-red-500 text-xs mt-1 transition-all duration-500`}
                                     />
                                 </div>
-                                <div className="grid col-span-2 transition">
+                                <div className="grid lg:col-span-2 transition">
                                     <label htmlFor="notes">Notes</label>
 
                                     <Field

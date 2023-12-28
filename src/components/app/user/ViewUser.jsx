@@ -71,7 +71,7 @@ const ViewUser = () => {
                             </div>
                             <div className="flex space-x-4">
                                 <p className="col-span-2 lg:col-span-1 font-semibold">Phone: </p>
-                                <p className="lg:col-start-2">data?.phone}</p>
+                                <p className="lg:col-start-2">{data?.phone}</p>
                             </div>
                             <div className="flex space-x-4">
                                 <p className="col-span-2 lg:col-span-1 font-semibold ">Role: </p>

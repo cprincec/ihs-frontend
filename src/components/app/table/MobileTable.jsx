@@ -8,7 +8,7 @@ const MobileTable = ({ table, actionBaseUrl, options, tableLength, tableTitle })
         <div className="sm:hidden grid gap-y-2" aria-label="table" role="table">
             <div
                 aria-label="table-head"
-                className="flex justify-between text-base font-medium leading-4 tracking-wider text-left bg-ihs-green-shade-100 p-6 "
+                className="flex justify-between text-lg font-medium leading-4 tracking-wider text-left bg-ihs-green-shade-100 py-6 px-4"
             >
                 {options.mobileScreenHeaders
                     ? options.mobileScreenHeaders.map((header, index) => <span key={index}>{header}</span>)
@@ -42,7 +42,6 @@ const MobileTable = ({ table, actionBaseUrl, options, tableLength, tableTitle })
                                         } ${cell.column.id.toLowerCase() !== "email" ? "capitalize" : ""}`}
                                     >
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}{" "}
-                                        {cell.column.id.toLowerCase() === "age" ? "years" : ""}
                                     </div>
                                 );
                             } else return null;

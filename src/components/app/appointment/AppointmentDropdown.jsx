@@ -57,7 +57,7 @@ export default function AppointmentDropdown({
                                         className="text-ihs-green block px-4 py-3 text-sm hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
                                         onClick={() => completeAppointment()}
                                     >
-                                        Mark Complete
+                                        Complete Appointment
                                     </div>
                                 </Menu.Item>
                                 <hr />

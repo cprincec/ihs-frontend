@@ -72,7 +72,7 @@ export default function UserDropdown({ userDetails }) {
                             <Menu.Item>
                                 <div
                                     onClick={clicked}
-                                    className="w-full text-gray-700 block px-4 py-3 text-sm hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
+                                    className="w-full text-[red] block px-4 py-3 text-sm hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
                                 >
                                     Deactivate User
                                 </div>

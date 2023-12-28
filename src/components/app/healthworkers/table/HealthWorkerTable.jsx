@@ -226,15 +226,29 @@ const HealthWorkerTable = ({ healthWorkers }) => {
         {
             header: "NAME",
             accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-            cell: (cell) => <p className="capitalize">{`${cell.getValue()}`}</p>,
+            cell: (cell) => (
+                <p className="capitalize text-lg md:text-base font-semibold md:font-normal">{`${cell.getValue()}`}</p>
+            ),
         },
         {
             header: "EMAIL",
             accessorKey: "email",
+            cell: (cell) => (
+                <p className="flex justify-between">
+                    <span className="md:hidden">Email:</span>
+                    <span className="font-semibold md:font-normal"> {`${cell.getValue()}`}</span>
+                </p>
+            ),
         },
         {
             header: "PHONE",
             accessorKey: "phone",
+            cell: (cell) => (
+                <p className="flex justify-between">
+                    <span className="md:hidden">Phone:</span>
+                    <span className="font-semibold md:font-normal"> {`${cell.getValue()}`}</span>
+                </p>
+            ),
         },
         {
             header: "ACTIONS",

@@ -165,16 +165,25 @@ import BaseTable from "../../table/BaseTable";
 
 const ServiceTable = ({ services }) => {
     const rowsPerPage = 10; // number of healthWorkers per page
-    const mobileScreenHeaders = ["Service"];
+    const mobileScreenHeaders = ["Services"];
 
     const columns = [
         {
             header: "NAME",
             accessorKey: "name",
+            cell: (cell) => (
+                <p className="capitalize text-lg md:text-base font-semibold md:font-normal">{`${cell.getValue()}`}</p>
+            ),
         },
         {
             header: "CATEGORY",
             accessorKey: "category",
+            cell: (cell) => (
+                <p className="capitalize flex justify-between">
+                    <span className="md:hidden">Category:</span>
+                    <span className="capitalize font-semibold md:font-normal">{`${cell.getValue()}`}</span>
+                </p>
+            ),
         },
         {
             header: "ACTIONS",

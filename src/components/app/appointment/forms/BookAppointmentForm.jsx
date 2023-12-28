@@ -110,7 +110,7 @@ const BookAppointmentForm = ({ handleCancelClick, setFormSuccess }) => {
                 <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                     {({ errors }) => (
                         <Form className="grid gap-y-6">
-                            <div className="grid lg:grid-cols-2 gap-x-6 gap-y-3 mt-8 items-center">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-3 mt-8 items-center">
                                 <div className="grid transition w-full">
                                     <label htmlFor="beneficiaryId">
                                         Beneficiary
@@ -121,7 +121,7 @@ const BookAppointmentForm = ({ handleCancelClick, setFormSuccess }) => {
                                         name="beneficiaryId"
                                         id="beneficiaryId"
                                         required={true}
-                                        className="lg:min-w-[300px] min-w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     >
                                         <option disabled={true} value="">
                                             Select Beneficiary
@@ -155,7 +155,7 @@ const BookAppointmentForm = ({ handleCancelClick, setFormSuccess }) => {
                                         name="serviceId"
                                         id="serviceId"
                                         required={true}
-                                        className="lg:min-w-[300px] min-w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     >
                                         <option disabled={true} value="">
                                             Select a Service
@@ -189,7 +189,7 @@ const BookAppointmentForm = ({ handleCancelClick, setFormSuccess }) => {
                                         name="date"
                                         id="date"
                                         autoComplete="true"
-                                        className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="date"
@@ -211,7 +211,7 @@ const BookAppointmentForm = ({ handleCancelClick, setFormSuccess }) => {
                                         name="time"
                                         id="time"
                                         autoComplete="true"
-                                        className="transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
+                                        className="lg:min-w-[300px] transition border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1"
                                     />
                                     <ErrorMessage
                                         name="time"
@@ -221,7 +221,7 @@ const BookAppointmentForm = ({ handleCancelClick, setFormSuccess }) => {
                                         } text-red-500 text-xs mt-1 transition-all duration-500`}
                                     />
                                 </div>
-                                <div className="grid col-span-2 transition">
+                                <div className="grid lg:col-span-2 transition">
                                     <label htmlFor="notes">Notes</label>
 
                                     <Field

@@ -233,7 +233,7 @@ const BeneficiariesTable = ({ beneficiaries }) => {
     const rowsPerPage = 10;
 
     // Array of table headings for the mobile view
-    const mobileScreenHeaders = ["Beneficiary"];
+    const mobileScreenHeaders = ["Beneficiaries"];
 
     const columns = [
         {
@@ -253,21 +253,44 @@ const BeneficiariesTable = ({ beneficiaries }) => {
         {
             header: "BENEFICIARY",
             accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-            cell: (cell) => <p className="capitalize">{`${cell.getValue()}`}</p>,
+            cell: (cell) => (
+                <p className="capitalize text-lg md:text-base font-semibold md:font-normal">{`${cell.getValue()}`}</p>
+            ),
+        },
+        {
+            header: "RELATIONSHIP",
+            accessorKey: "relationship",
+            cell: (cell) => (
+                <p className="capitalize flex justify-between">
+                    <span className="md:hidden">Relationship:</span>
+                    <span className="font-semibold md:font-normal"> {`${cell.getValue()}`}</span>
+                </p>
+            ),
         },
         {
             header: "LOCATION",
             accessorKey: "address",
+            cell: (cell) => (
+                <p className="capitalize flex justify-between">
+                    <span className="md:hidden">Address:</span>
+                    <span className="font-semibold md:font-normal"> {`${cell.getValue()}`}</span>
+                </p>
+            ),
         },
         {
             header: "AGE",
             accessorFn: (row) => calculateAge(row.dob),
+            cell: (cell) => (
+                <p className="capitalize flex justify-between">
+                    <span className="md:hidden">Age:</span>
+                    <span className="lowercase font-semibold md:font-normal">
+                        {" "}
+                        {`${cell.getValue()}`} years
+                    </span>
+                </p>
+            ),
         },
 
-        {
-            header: "RELATIONSHIP",
-            accessorKey: "relationship",
-        },
         {
             header: "ACTIONS",
             accessorKey: "actions",

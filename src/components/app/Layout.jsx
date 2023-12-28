@@ -9,6 +9,7 @@ import { Capacitor } from "@capacitor/core";
 import { iosStyles } from "../../mobileStyles";
 import { getKey } from "../../utils/mobilePreferences";
 import { capitalizeString } from "../../utils/capitalizeString";
+import Spinner from "./SVGs/Spinner";
 
 const Layout = () => {
     const loggedInUser = useSelector((state) => state.auth.loggedInUser);
@@ -48,33 +49,38 @@ const Layout = () => {
                         <img src={Logo} alt="logo" className="w-28 ml-10" />
                     </div>
 
-                    <div className="flex flex-row items-center">
-                        <p className="text-xl text-gray-700 hidden md:block">
-                            <Link to="/profile">
-                                {capitalizeString(loggedInUser?.firstName) ||
-                                    capitalizeString(mobileLoggedInUser?.firstName)}{" "}
-                                {capitalizeString(loggedInUser?.lastName) ||
-                                    capitalizeString(mobileLoggedInUser?.lastName)}
-                            </Link>
-                        </p>
-                        <div className="px-5">
-                            <Link to="/profile">
-                                <Avatar
-                                    name={`${
-                                        capitalizeString(loggedInUser?.firstName) ||
-                                        capitalizeString(mobileLoggedInUser?.firstName)
-                                    } ${
-                                        capitalizeString(loggedInUser?.lastName) ||
-                                        capitalizeString(mobileLoggedInUser?.lastName)
-                                    }`}
-                                    color={avatar.BackgroundColor}
-                                    fgColor={avatar.ForegroundColor}
-                                    size={avatar.width}
-                                    round={true}
-                                />
-                            </Link>
+                    {(loggedInUser?.firstName || mobileLoggedInUser?.firstName) &&
+                    (loggedInUser?.lastName || mobileLoggedInUser?.lastName) ? (
+                        <div className="flex flex-row items-center">
+                            <p className="text-xl text-gray-700 hidden md:block">
+                                <Link to="/profile">
+                                    {capitalizeString(loggedInUser?.firstName) ||
+                                        capitalizeString(mobileLoggedInUser?.firstName)}{" "}
+                                    {capitalizeString(loggedInUser?.lastName) ||
+                                        capitalizeString(mobileLoggedInUser?.lastName)}
+                                </Link>
+                            </p>
+                            <div className="px-5">
+                                <Link to="/profile">
+                                    <Avatar
+                                        name={`${
+                                            capitalizeString(loggedInUser?.firstName) ||
+                                            capitalizeString(mobileLoggedInUser?.firstName)
+                                        } ${
+                                            capitalizeString(loggedInUser?.lastName) ||
+                                            capitalizeString(mobileLoggedInUser?.lastName)
+                                        }`}
+                                        color={avatar.BackgroundColor}
+                                        fgColor={avatar.ForegroundColor}
+                                        size={avatar.width}
+                                        round={true}
+                                    />
+                                </Link>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <Spinner className="mr-8" style={{ width: "2rem" }} />
+                    )}
                 </nav>
                 <Fragment>
                     <Outlet />

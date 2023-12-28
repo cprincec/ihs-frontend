@@ -96,7 +96,7 @@ const AllAppointmentsTable = ({ appointments }) => {
     let completedAppointments = filterInByProperty(appointments, "status", appointmentStatus.Completed);
     completedAppointments = sortInDescOrder(completedAppointments);
 
-    const mobileScreenHeaders = ["Beneficiary", "Status"];
+    const mobileScreenHeaders = ["Beneficiaries", "Status"];
 
     const columns = [
         {

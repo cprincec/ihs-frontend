@@ -4,7 +4,6 @@ import Logo from "../../assets/images/logo.svg";
 import { userRoles } from "../../data/enums";
 import { adminLinks, employeeLinks, footerLinks, userLinks } from "../../data/data";
 import { NavLink, useNavigate } from "react-router-dom";
-import Modal from "./Modal";
 import axios from "../../api/axios";
 import OutsideClick from "../../hooks/outsideClick";
 import { revertAll } from "../../redux/features/authSlice";

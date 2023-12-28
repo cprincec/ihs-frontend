@@ -30,7 +30,6 @@ const UpdateAppointmentForm = ({ handleCancelClick, setFormSuccess }) => {
     );
 
     const updateAppointmentMutation = usePatch();
-    const completeAppointmentMutation = usePatch();
     const queryClient = useQueryClient();
 
     // get auth mobile preferences
@@ -192,7 +191,7 @@ const UpdateAppointmentForm = ({ handleCancelClick, setFormSuccess }) => {
                                         } text-red-500 text-xs mt-1 transition-all duration-500`}
                                     />
                                 </div>
-                                <div className="grid col-span-2 transition">
+                                <div className="grid lg:col-span-2 transition">
                                     <label htmlFor="notes">Notes</label>
 
                                     <Field
@@ -225,9 +224,7 @@ const UpdateAppointmentForm = ({ handleCancelClick, setFormSuccess }) => {
                                         updateAppointmentMutation.isLoading || Object.keys(errors).length > 0
                                     }
                                 >
-                                    {updateAppointmentMutation.isLoading
-                                        ? "Please wait..."
-                                        : "Update Appointment"}
+                                    {updateAppointmentMutation.isLoading ? "Please wait..." : "Update"}
                                 </button>
                             </div>
                         </Form>
